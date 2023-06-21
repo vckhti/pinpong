@@ -1,0 +1,75 @@
+<div [ngClass]="{
+      'd-none': isLoading,
+      'd-block': !isLoading
+      }"
+     class="content-wrapper">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table text-start ">
+          <thead class="table-st">
+          <tr>
+            <th scope="col">Общий заказ</th>
+            <th scope="col">Клиент</th>
+            <th scope="col">Кол-во позиций</th>
+            <th scope="col">На сумму</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{order?.note}}</td>
+            <td>{{model.getUsernameByIdFromAllUsersDesritions(order?.user_id)}}</td>
+            <td>{{order?.qty}}</td>
+            <td>{{order?.total}}руб.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box">
+        <h3 class="box-title">Детали заказа</h3>
+        <div class="box-content">
+          <div class="table-responsive w-50">
+            <table class="table text-start">
+              <tr>
+                <td>Номера заказа</td>
+                <td>{{orderProduct?.order_id}}</td>
+              </tr>
+              <tr>
+                <td>Статус</td>
+                <td class="alert"[ngClass]="{
+      'alert-success': orderProduct?.complete === 1,
+      'alert-danger': orderProduct?.complete === 0
+      }">{{orderProduct?.complete === 1 ? 'Завершен' : 'Новый' }}</td>
+              </tr>
+              <tr>
+                <td>Стоимость товара</td>
+                <td>{{orderProduct?.price}} рублей</td>
+              </tr>
+              <tr>
+                <td>Наименование</td>
+                <td>{{orderProduct?.title}}</td>
+              </tr>
+              <tr>
+                <td>Количество</td>
+                <td>{{orderProduct?.product_qty}}</td>
+              </tr>
+              <tr>
+                <td>Итоговая сумма</td>
+                <td>{{orderProduct?.sum}} рублей</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-success btn-flat" (click)="setStatusConfirm(orderProduct?.id)">Изменить статус на Завершен</button>
+      <button class="btn btn-danger btn-flat" (click)="setStatusNotConfirm(orderProduct?.id)">Изменить статус на Новый</button>
+      <button class="btn btn-dark" (click)="goBack()">Назад</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+  <div class="spinner-border text-dark" role="status">
+    <span class="sr-only">Загрузка...</span>
+  </div>
+</div>
+

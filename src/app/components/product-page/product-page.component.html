@@ -1,0 +1,32 @@
+<ui-utils-breadcrumbs [breadcrumbs]="breadcrumbs"></ui-utils-breadcrumbs>
+<div *ngIf="product; else loading">
+  <div class="product">
+    <div class="header right">
+      <button (click)="goBack()" class="btn btn-dark">Назад</button>
+    </div>
+
+    <div class="flex">
+      <div class="item text-center">
+        <h2>{{ product.title}}</h2>
+        <div class="flex-center">
+          <img class="flex-center ava" src="{{product.img}}">
+        </div>
+        <div>
+          <h2>Цена: {{product.price}} рублей</h2>
+          <button class="btn btn-success" (click)="addProduct(product)">Добавить товра в корзину</button>
+        </div>
+      </div>
+
+      <div class="item">
+        <h2>Информация о товаре:</h2>
+        <div>
+          <span> {{product.content}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Загрузка...</p>
+</ng-template>

@@ -1,0 +1,19 @@
+<div class="accordion-group" [class.pointer-cursor]="pointerCursor">
+	<div class="accordion-group__head" (click)="click()">
+		<div class="accordion-group__head__inner-wrapper">
+			<div class="accordion-group__head__left-block">
+
+				<ng-container *ngIf="head">
+					<ng-container *ngTemplateOutlet="head"></ng-container>
+				</ng-container>
+
+				<div class="accordion-group__head__title" *ngIf="title">{{ title }}</div>
+				<div class="accordion-group__head__subtitle" *ngIf="subtitle">{{ subtitle }}</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="accordion-group__content" *ngIf="isOpened" @closeOpen>
+		<ng-content></ng-content>
+	</div>
+</div>

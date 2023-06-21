@@ -1,0 +1,76 @@
+<div [ngClass]="{
+      'd-none': isLoading,
+      'd-block': !isLoading
+      }"
+     class="content-wrapper">
+
+  <ui-utils-breadcrumbs [breadcrumbs]="breadcrumbs"></ui-utils-breadcrumbs>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="input-sort">Сортировать по:</label>
+        <select #sortParams class="form-select" id="input-sort" (change)="doSort(sortParams)">
+          <option selected="" disabled></option>
+          <option value="price_asc">Возрастанию цены</option>
+
+          <option value="price_desc">Убыванию цены</option>
+
+          <option value="title_asc">По названию, в прямом порядке</option>
+
+          <option value="title_desc">По названию, в обратном порядке</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="input-group mb-3">
+        <input #search type="text" class="form-control" placeholder="Фильтровать по названию">
+      </div>
+    </div>
+  </div>
+
+  <section class="featured-products">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 ">
+          <h6 class="section-title">Товары в выбранной категории:</h6>
+        </div>
+        <div *ngFor="let product of tempArray" class="col-lg-4 col-sm-6 mb-3">
+          <div class="product-card">
+            <div class="product-tumb">
+              <a [routerLink]="['/product/',product.id]"><img src="{{product.img}}" alt=""></a>
+            </div>
+            <div class="product-details">
+              <h4><a class="nav-link" [routerLink]="['/product/',product.id]"
+              >{{product.title}}</a></h4>
+              <p class="exerpt">{{product.exerpt}} </p>
+              <div class="product-bottom-details d-flex justify-content-between">
+                <div class="product-price"><small>{{product.old_price}}</small>{{product.price}}</div>
+                <span *ngIf="product.hit === 1" class="hit ">&nbsp; Хит продаж &nbsp; </span>
+                <div class="product-links">
+                  <a><i class="fas" [ngClass]="{
+                  'fa-shopping-cart': !productAlreadyInCart(product),
+                  'fa-luggage-cart': productAlreadyInCart(product)
+                  }"
+                        (click)="addItemToCart(product)"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <mc-pagination
+    [total]="totalArrayLengthForPagination"
+    [limit]="limit"
+    [url]="baseUrl"
+    [currentPage]="currentPage"
+    (newItemEvent)="handleCurrentPage($event)"
+  ></mc-pagination>
+</div>
+<div *ngIf="isLoading" class="d-flex justify-content-center" >
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Загрузка...</span>
+  </div>
+</div>

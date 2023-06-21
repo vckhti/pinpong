@@ -1,0 +1,66 @@
+<div [ngClass]="{
+      'd-none': isLoading,
+      'd-block': !isLoading
+      }" class="wrapper">
+<div class="card" *ngIf="allOrdersProduct.length; else noOrders">
+  <div class="card-body">
+    <div class="table-responsive">
+      <p-table [value]="allOrdersProduct"
+               [paginator]="true"
+               sortField="updated_at" [sortOrder]="-1"
+               [rows]="13"
+               [showCurrentPageReport]="true"
+               [rowsPerPageOptions]="[7, 10, 13, 20]"
+               currentPageReportTemplate="Всего записей: {totalRecords}"
+               [tableStyle]="{ }">
+        <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="slug">Наименование товара<p-sortIcon field="slug"></p-sortIcon></th>
+          <th>Цена за шт.</th>
+          <th pSortableColumn="note">Телефон_адрес <p-sortIcon field="note"></p-sortIcon></th>
+          <th pSortableColumn="client">Клиент <p-sortIcon field="client"></p-sortIcon></th>
+          <th>Статус</th>
+          <th pSortableColumn="created_at">Создан <p-sortIcon field="created_at"></p-sortIcon></th>
+          <th>Кол-во</th>
+          <th>Сумма</th>
+          <th><i class="fas fa-pencil-alt"></i> </th>
+        </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-orderProduct>
+        <tr>
+          <td><a [routerLink]="['/product', orderProduct.product_id]">{{orderProduct.title}}</a><!--= $order['updated_at'] --></td>
+          <td>{{orderProduct.price}}</td>
+          <td>{{orderProduct.note}}</td>
+          <td>
+            {{model.getUsernameByIdFromAllUsersDesritions(orderProduct.user_id)}}
+          </td>
+          <td [ngClass]="{
+      'alert-success': orderProduct?.complete === 1,
+      'alert-danger': orderProduct?.complete === 0
+      }">
+            {{orderProduct.complete ? 'Завершен' : 'Новый'}}
+          </td>
+          <td>{{orderProduct.created_at | date:"dd.MM.yyyy"}}</td>
+          <td>{{orderProduct.product_qty}}</td>
+          <td>{{orderProduct.sum}}</td>
+          <td width="50">
+            <a [routerLink]="['/admin','product',orderProduct.product_id,'edit']" [queryParams]="{orderId: orderProduct.id}" class="btn btn-info btn-sm" >
+              <i class="fas fa-pencil-alt" title="Редактировать"></i>
+            </a>
+          </td>
+        </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<ng-template #noOrders>
+  <p class="text-center">Заказов не найдено......</p>
+</ng-template>
+</div>
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+  <div class="spinner-border text-dark" role="status">
+    <span class="sr-only">Загрузка...</span>
+  </div>
+</div>

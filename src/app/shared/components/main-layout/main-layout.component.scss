@@ -1,0 +1,119 @@
+.firstImage {
+  width: 32px;
+  height: 32px;
+}
+
+.secondImage {
+  width: 32px;
+  height: 32px;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.main-content {
+  flex: 1 1 auto;
+}
+
+.main-header {
+  margin-top: 0 !important;
+}
+
+.navi {
+  min-height: 50px;
+  z-index: 999;
+}
+
+.auth-menu {
+  select {
+    max-width: 130px;
+    max-height: 32.83px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px 10px !important;
+  }
+
+  select:focus {
+    outline: none;
+  }
+}
+
+.signin{
+  font-size: 16px;
+  margin-left: 5px;
+  text-decoration: none;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 7;
+  width: 90px;
+  height: 30px;
+  color: white;
+  font-size: 16px;
+  background-color: #03043f;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.ava-wrapper{
+  position: relative;
+  bottom: 3px;
+}
+
+.on-hover {
+  cursor: pointer;
+  color: white;
+}
+.ava-text {
+  font-size: 16px;
+  padding-left: 4px;
+  color: white;
+  cursor: default;
+}
+
+.show-tooltip-text {
+  visibility: visible;
+}
+
+#top {
+  top: -50px;
+  left: -30px;
+}
+
+#bottom {
+  top: 25px;
+  left: -50%;
+}
+
+#left {
+  top: -9px;
+  right: 77%;
+}
+
+#right {
+  top: -5px;
+  left: 19%;
+}
+
+.hover-text {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  text-align: center;
+  z-index: 99999999;
+  top: 10px;
+  cursor: pointer;
+}
+
+span{
+  font-family: "Comic Sans MS";
+}
+
+
+

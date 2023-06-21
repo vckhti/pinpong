@@ -1,0 +1,14 @@
+<div class="breadcrumbs-wrapper" *ngIf="breadcrumbs && breadcrumbs.length">
+	<ul class="breadcrumbs">
+		<ng-container *ngFor="let breadcrumb of breadcrumbs; let index = index">
+			<li>
+				<a [routerLink]="breadcrumb.url"
+				   *ngIf="breadcrumb.url != ''"
+				   [state]="{breadcrumbSource: true}">{{ breadcrumb.label }}</a>
+
+				<span *ngIf="breadcrumb.url == ''">{{ breadcrumb.label }}</span>
+			</li>
+			<li *ngIf="index != (breadcrumbs.length - 1)" class="separator"> > </li>
+		</ng-container>
+	</ul>
+</div>

@@ -1,0 +1,5 @@
+<div class="input-errors" *ngIf="control?.dirty || control?.touched">
+	<div class="input-error" *ngFor="let error of errors" @error>
+		{{ error }}
+	</div>
+</div>

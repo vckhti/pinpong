@@ -1,0 +1,26 @@
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.box {
+    width: 33.333%;
+    margin-top: 2rem;
+}
+
+img {
+  max-width: 250px;
+}
+
+.hit{
+  float: right;
+  border: 1px solid #646161;
+  background-color: #028a3c;
+  border-radius: 5px;
+  color: white;
+  padding-top: 3px;
+}
+
+.exerpt {
+  font-size: 12px;
+}

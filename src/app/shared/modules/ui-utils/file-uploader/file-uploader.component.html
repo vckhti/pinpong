@@ -1,0 +1,12 @@
+<div class="uploader">
+	<div class="app-button" (click)="onUploadButtonClick()">Выбрать файл</div>
+	<div class="uploader__file-name" *ngIf="file">
+		{{ file.name }} - <span class="uploader__file-name__size" *ngIf="fileSize">{{ fileSize }}</span>
+	</div>
+</div>
+
+<input type="file"
+	   #inputFileElement
+	   style="display: none;"
+	   [accept]="acceptFormats_"
+	   (change)="onFileSelected($event)">

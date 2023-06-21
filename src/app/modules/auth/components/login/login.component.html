@@ -1,0 +1,50 @@
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h3 class="text-center fw-bold">Вход в личный кабинет</h3>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <fieldset>
+            <fieldset class="form-group">
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="Имя пользователя"
+                formControlName="email"
+                autocomplete="on"
+              />
+            </fieldset>
+            <fieldset class="form-group">
+              <input
+                type="password"
+                class="form-control form-control-lg"
+                placeholder="Пароль"
+                formControlName="password"
+                autocomplete="on"
+              />
+            </fieldset>
+            <button
+              class="btn btn-lg btn-primary pull-xs-right"
+              type="submit"
+              id="button"
+              [disabled]="(isSubmitting$ | async) || (form.invalid)"
+            >
+              Войти
+            </button>
+          </fieldset>
+        </form>
+        <br>
+        <div>
+          <mc-backend-error-messages
+            *ngIf="backendErrors$ | async"
+            [backendErrors]="backendErrors$ | async"
+          ></mc-backend-error-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-panel">
+
+  </div>
+</div>

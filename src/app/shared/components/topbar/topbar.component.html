@@ -1,0 +1,26 @@
+<div *ngIf="screenWidth < 500; else elseBlock">
+  <div class="hamburger" (click)="onHamburgerClick()" style="z-index: 2;"></div>
+</div>
+<ng-template #elseBlock>
+  <nav class="navbar navbar-expand navbar-light ">
+    <div class="container-fluid p-0 d-flex">
+      <div *ngIf="categories" class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul *ngFor="let category of categories" class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li
+            class="nav-item {{(category && category.children && category.children.length > 0) ? 'dropdown' : '' }}">
+            <a
+              class="nav-link {{(category && category.children && category.children.length > 0) ? 'dropdown-toggle': '' }}"
+              [routerLink]="['/category/',category?.slug]" data-bs-toggle="dropdown" (click)="setLoadingIndicator()"
+            >{{ category?.title }}</a>
+            <ul *ngIf="(category && category.children)" class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li *ngFor="let categoryItem of getChildrens(category); index as i;">
+                <a class="dropdown-item"
+                   [routerLink]="['/category/',categoryItem?.slug]">{{categoryItem.title}}<br></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</ng-template>

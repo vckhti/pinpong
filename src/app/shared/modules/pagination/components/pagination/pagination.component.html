@@ -1,0 +1,33 @@
+<div *ngIf="(totalItemLengthProps/limitProps) > 1" class="pagination">
+<ul class="pagination__pages">
+  <div class="pagination">
+    <button [disabled]="currentPageProps === 1" (click)="onClicked(1)" [routerLink]="[urlProps]" [queryParams]="{page: 1}"><<</button>
+    <button [disabled]="currentPageProps === 1" (click)="onClicked(currentPageProps - 1)" [routerLink]="[urlProps]" [queryParams]="{page: currentPageProps - 1}">
+      <
+    </button>
+    <button
+      *ngFor="let page of visiblePages"
+      [ngClass]="currentPageProps === page? 'selected' : ''"
+      (click)="onClicked(page)"
+      [routerLink]="[urlProps]" [queryParams]="{page: page}"
+    >
+      {{ page }}
+    </button>
+    <button
+      [disabled]="currentPageProps === pagesCount"
+      (click)="onClicked(currentPageProps + 1)"
+      [routerLink]="[urlProps]" [queryParams]="{page: currentPageProps + 1}"
+    >
+      >
+    </button>
+    <button
+      [disabled]="currentPageProps === pagesCount"
+      (click)="onClicked(pagesCount)"
+      [routerLink]="[urlProps]" [queryParams]="{page: pagesCount}"
+    >
+      >>
+    </button>
+  </div>
+
+</ul>
+</div>

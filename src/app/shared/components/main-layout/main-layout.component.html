@@ -1,0 +1,104 @@
+<div class="main-wrapper">
+  <div class="main-header">
+    <div class="header-top py-2">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div *ngIf="!sidebarVisible" class="col align-items-center d-flex flex-row justify-content-between">
+            <div class="input-group active" #search id="search">
+              <input *ngIf="currentRouteUrl === '/'" type="text" class="form-control" placeholder="Поиск" name="s">
+            </div>
+            <div class="d-flex icons">
+              <div class="d-flex">
+                <a [routerLink]="'/cart'" class="relative" data-bs-toggle="modal" data-bs-target="#cart-modal">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span class="badge bg-danger rounded-pill count-items">{{basketArraySelectorCount$ | async}}</span>
+                </a>
+              </div>
+              <div *ngIf="currentUserSelector; else elseBlock" class="dropdown hover-text">
+
+                <span class="tooltip-text"
+                      [ngClass]="{
+                  'show-tooltip-text': showExitSpan,
+                  }"
+                      (click)="logout()" id="right">Выйти</span>
+                <div class="ava-wrapper">
+                  <i class="far fa-user on-hover" (click)="showExitSpan = !showExitSpan"></i>
+                  <span class="ava-text">{{currentUserSelector}}</span>
+                </div>
+
+              </div>
+              <ng-template #elseBlock>
+                <a [routerLink]="'/login'" class="signin">Войти</a>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- header-top -->
+    <div class="header-bottom py-2 navi">
+      <div class="container navi" >
+        <p-sidebar [(visible)]="sidebarVisible" styleClass="topbar" [showCloseIcon]="false"
+                   position="top">
+          <ng-template pTemplate="header">
+            <app-topbar-mobile (itemClick)="sidebarVisible = false"></app-topbar-mobile>
+          </ng-template>
+        </p-sidebar>
+        <app-topbar (itemClick)="sidebarVisible = !sidebarVisible"></app-topbar>
+
+      </div>
+    </div>
+  </div>
+  <!--end header-top -->
+
+  <!--Content-->
+  <div class="main-content" style="z-index: 3;">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <!--end Content-->
+  <!--Footer-->
+  <div class="footer mt-4">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-3 col-6">
+          <h4>Информация</h4>
+          <ul class="list-unstyled">
+            <li><a href="#">Главная</a></li>
+            <li><a href="#">О магазине</a></li>
+            <li><a href="#">Оплата и доставка</a></li>
+            <li><a href="#">Контакты</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <h4>Время работы</h4>
+          <ul class="list-unstyled">
+            <li>г. Абаза, ул. Пушкина, 10</li>
+            <li>пн-вс: 9:00 - 18:00</li>
+            <li>без перерыва</li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <h4>Контакты</h4>
+          <ul class="list-unstyled">
+            <li><a href="tel:999">999 999-99-99</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <h4>Мы в сети</h4>
+          <div class="footer-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end Footer-->
+</div>

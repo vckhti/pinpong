@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.onlyAdmin = exports.userCanEdit = exports.currentUserSelector = exports.isAnonymousSelector = exports.isLoggedInSelector = exports.validationErrorsSelector = exports.isSubmittingSelector = exports.authFeatureSelector = void 0;
+var store_1 = require("@ngrx/store");
+exports.authFeatureSelector = (0, store_1.createFeatureSelector)('auth');
+exports.isSubmittingSelector = (0, store_1.createSelector)(exports.authFeatureSelector, function (authState) { return authState.isSubmitting; });
+exports.validationErrorsSelector = (0, store_1.createSelector)(exports.authFeatureSelector, function (authState) { return authState.validationErrors; });
+exports.isLoggedInSelector = (0, store_1.createSelector)(exports.authFeatureSelector, function (authState) { return authState.isLoggedIn; });
+exports.isAnonymousSelector = (0, store_1.createSelector)(exports.authFeatureSelector, function (authState) { return authState.isLoggedIn === false; });
+exports.currentUserSelector = (0, store_1.createSelector)(exports.authFeatureSelector, function (authState) { return authState.currentUser; });
+exports.userCanEdit = (0, store_1.createSelector)(exports.authFeatureSelector, function (authState) { var _a, _b; return (((_a = authState.currentUser) === null || _a === void 0 ? void 0 : _a.roles.includes('ROLE_ADMIN')) || ((_b = authState.currentUser) === null || _b === void 0 ? void 0 : _b.roles.includes('ROLE_EDITOR'))); });
+exports.onlyAdmin = (0, store_1.createSelector)(exports.authFeatureSelector, function (authState) { var _a; return ((_a = authState.currentUser) === null || _a === void 0 ? void 0 : _a.roles.includes('ROLE_ADMIN')); });

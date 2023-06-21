@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+    <h2>Войти под администратором</h2>
+
+    <div class="form-control">
+        <label for="name">Имя</label>
+        <input id="name" formControlName="name">
+        <div *ngIf="form.get('name').touched && form.get('name').invalid" class="validation">
+            <small *ngIf="form.get('name').errors.required">Enter name</small>
+        </div>
+    </div>
+
+    <div class="form-control">
+        <label for="password">Пароль</label>
+        <input id="password" type="password" formControlName="password">
+        <div *ngIf="form.get('password').touched && form.get('password').invalid" class="validation">
+            <small *ngIf="form.get('password').errors.required">Enter Password</small>
+            <small *ngIf="form.get('password').errors.minlength">
+                Пароль должен содержать  {{form.get('password').errors.minlength.requiredLength}} символов.
+                Вы ввели только {{form.get('password').errors.minlength.actualLength}}
+            </small>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || submitted">Войти</button>
+
+
+</form>
