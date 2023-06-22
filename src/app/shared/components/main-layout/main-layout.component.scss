@@ -48,11 +48,12 @@
   text-decoration: none;
 }
 
+
 .tooltip-text {
   visibility: hidden;
   position: absolute;
   z-index: 7;
-  width: 90px;
+  width: 110px;
   height: 30px;
   color: white;
   font-size: 16px;
@@ -60,6 +61,10 @@
   border-radius: 10px;
   padding: 2px;
 }
+.teh {
+  margin-right: 60px;
+}
+
 
 .ava-wrapper{
   position: relative;
@@ -72,10 +77,12 @@
 }
 .ava-text {
   font-size: 16px;
-  padding-left: 4px;
+  padding-left: 5px;
   color: white;
   cursor: default;
+  min-width: 130px;
 }
+
 
 .show-tooltip-text {
   visibility: visible;
@@ -98,7 +105,7 @@
 
 #right {
   top: -5px;
-  left: 19%;
+  left: 20%;
 }
 
 .hover-text {
@@ -114,6 +121,26 @@
 span{
   font-family: "Comic Sans MS";
 }
+
+@media (max-width: 501px) {
+  .tooltip-text {
+    height:22px;
+    width: 80px;
+    font-size: 15px;
+    padding: 1px;
+  }
+  #right {
+    top: -5px;
+    left: 20%;
+  }
+  .teh {
+    margin-right: 30px;
+  }
+  .ava-text {
+    font-size: 14px;
+  }
+}
+
 
 
 

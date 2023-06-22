@@ -7,14 +7,14 @@
             <div class="input-group active" #search id="search">
               <input *ngIf="currentRouteUrl === '/'" type="text" class="form-control" placeholder="Поиск" name="s">
             </div>
-            <div class="d-flex icons">
+            <div class="d-flex icons teh">
               <div class="d-flex">
                 <a [routerLink]="'/cart'" class="relative" data-bs-toggle="modal" data-bs-target="#cart-modal">
                   <i class="fas fa-shopping-cart"></i>
                   <span class="badge bg-danger rounded-pill count-items">{{basketArraySelectorCount$ | async}}</span>
                 </a>
               </div>
-              <div *ngIf="currentUserSelector; else elseBlock" class="dropdown hover-text">
+              <div *ngIf="currentUserSelector; else elseBlock" class="dropdown hover-text ">
 
                 <span class="tooltip-text"
                       [ngClass]="{
