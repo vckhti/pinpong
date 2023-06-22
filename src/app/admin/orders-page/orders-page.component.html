@@ -7,6 +7,7 @@
     <div class="table-responsive">
       <p-table [value]="allOrdersProduct"
                [paginator]="true"
+               #table
                sortField="updated_at" [sortOrder]="-1"
                [rows]="13"
                [showCurrentPageReport]="true"
@@ -16,19 +17,75 @@
         <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="slug">Наименование товара<p-sortIcon field="slug"></p-sortIcon></th>
-          <th>Цена</th>
+          <th pSortableColumn="price">Цена</th>
           <th pSortableColumn="note">Контактная информация<p-sortIcon field="note"></p-sortIcon></th>
-          <th pSortableColumn="client">Клиент <p-sortIcon field="client"></p-sortIcon></th>
-          <th>Статус</th>
+          <th pSortableColumn="client">Клиент</th>
+          <th pSortableColumn="status">Статус</th>
           <th pSortableColumn="created_at">Дата<p-sortIcon field="created_at"></p-sortIcon></th>
-          <th>Кол-во</th>
-          <th>Сумма</th>
+          <th pSortableColumn="product_qty">Кол-во</th>
+          <th pSortableColumn="sum">Сумма</th>
           <th><i class="fas fa-pencil-alt"></i> </th>
         </tr>
+          <tr>
+            <ng-container>
+              <th>
+                <input type="text"
+                       class="table-filter"
+                       (input)="table.filter($any($event).target.value, 'slug' ,'contains')">
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+                <input type="text"
+                       class="table-filter"
+                       (input)="table.filter($any($event).target.value, 'price' ,'contains')">
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+                <input type="text"
+                       class="table-filter"
+                       (input)="table.filter($any($event).target.value, 'note' ,'contains')">
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+                <input type="text"
+                       class="table-filter"
+                       (input)="table.filter($any($event).target.value, 'created_at' ,'contains')">
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+                <input type="text"
+                       class="table-filter"
+                       (input)="table.filter($any($event).target.value, 'product_qty' ,'contains')">
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+                <input type="text"
+                       class="table-filter"
+                       (input)="table.filter($any($event).target.value, 'sum' ,'contains')">
+              </th>
+            </ng-container>
+            <ng-container>
+              <th>
+              </th>
+            </ng-container>
+          </tr>
         </ng-template>
         <ng-template pTemplate="body" let-orderProduct>
         <tr>
-          <td><a [routerLink]="['/product', orderProduct.product_id]">{{orderProduct.title}}</a><!--= $order['updated_at'] --></td>
+          <td><a [routerLink]="['/product', orderProduct.product_id]">{{orderProduct.title}}</a></td>
           <td>{{orderProduct.price}}</td>
           <td>{{orderProduct.note}}</td>
           <td>
