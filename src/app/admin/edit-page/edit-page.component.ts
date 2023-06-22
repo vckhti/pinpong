@@ -52,7 +52,6 @@ export class EditPageComponent implements OnInit {
     );
   }
 
-
   goBack() {
     window.history.back();
   }
@@ -76,6 +75,4 @@ export class EditPageComponent implements OnInit {
       )
     );
   }
-
-
 }

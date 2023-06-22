@@ -19,7 +19,7 @@ export class ProductPageComponent implements OnInit {
   breadcrumbs: Breadcrumb[] = [
     {label: 'Главная', url: '/'},
   ];
-  subscriptions: Subscription;
+  private subscriptions: Subscription;
   product: TtproductInterface;
   productId: number;
 

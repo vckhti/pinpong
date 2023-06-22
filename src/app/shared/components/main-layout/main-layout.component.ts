@@ -27,7 +27,7 @@ import {AlertService} from "../../services/alert.service";
 })
 export class MainLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   basketArraySelectorCount$: Observable<number> = this.store.select(basketArraySelectorCount).pipe(filter(res => res !== undefined));
-  subscriptions: Subscription;
+  private subscriptions: Subscription;
   type = 'Phone';
   temp: any[] = [];
   currentRouteUrl: string;
@@ -49,7 +49,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-
     this.subscriptions.add(
       this.store.select(isAnonymousSelector).subscribe(
         (response) => {

@@ -16,7 +16,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   @Output() itemClick = new EventEmitter();
 
   categories: CategoryInterface[] = [];
-  subscriptions: Subscription;
+  private subscriptions: Subscription;
   screenWidth: number;
 
   constructor(

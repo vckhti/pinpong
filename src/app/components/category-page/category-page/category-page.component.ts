@@ -28,7 +28,7 @@ import {AlertService} from "../../../shared/services/alert.service";
 })
 export class CategoryPageComponent extends ComponentWithPaginationComponent implements OnInit, OnDestroy, AfterViewInit {
   breadcrumbs: Breadcrumb[] = [];
-  subscriptions: Subscription;
+  private subscriptions: Subscription;
   slug: string;
   currentCategory: CategoryInterface = {title: ''};
   id: number;

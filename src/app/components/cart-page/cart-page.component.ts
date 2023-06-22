@@ -38,9 +38,8 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   totalPrice = 0;
   totalQTY = 0;
   added = '';
-  subscriptions: Subscription;
+  private subscriptions: Subscription;
   showDelivery = false;
-  stopCicle: number = 0;
   currentUser: CurrentUserInterface;
 
   form: UntypedFormGroup;
@@ -67,8 +66,8 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.add(
       this.store.select(currentUserSelector).pipe(
       ).subscribe((currentUser: CurrentUserInterface) => {
-          this.currentUser = currentUser;
-        })
+        this.currentUser = currentUser;
+      })
     );
 
     this.subscriptions.add(
@@ -99,7 +98,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.submitted = true
 
-    const order: OrderRequestInteface ={
+    const order: OrderRequestInteface = {
       user_id: this.currentUser?.id ? this.currentUser?.id : 1,
       note: this.form.value.phone + '_' + this.form.value.address + '_' + this.form.value.payment,
       cart_sum: this.totalPrice,
@@ -193,7 +192,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   checkout() {
     this.showDelivery = !this.showDelivery;
-    setTimeout(() => this.inputName.nativeElement.focus(),500);
+    setTimeout(() => this.inputName.nativeElement.focus(), 500);
   }
 
   ngAfterViewInit(): void {

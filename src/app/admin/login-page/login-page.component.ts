@@ -15,7 +15,7 @@ import {AlertService} from "../../shared/services/alert.service";
 export class LoginPageComponent implements OnInit, OnDestroy {
   form: UntypedFormGroup;
   submitted = false;
-  subscriptions: Subscription;
+  private subscriptions: Subscription;
 
   constructor(
     private auth: AuthService,

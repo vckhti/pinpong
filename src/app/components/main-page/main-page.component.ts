@@ -19,7 +19,7 @@ import {ActivatedRoute, Params} from "@angular/router";
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent extends ComponentWithPaginationComponent implements OnInit, OnDestroy {
-  subscriptions: Subscription;
+  private subscriptions: Subscription;
   tempArray: TtproductInterface[] = [];
 
   constructor(
