@@ -48,7 +48,8 @@ export class EditPageModel {
     return this.order;
   }
 
-  getUsernameByIdFromAllUsersDesritions(id: number | null): string {
+  //TODO переделать возврать значения через pipe, для улучшения производительности.
+  getUsernameByIdFromAllUsersDescriptions(id: number | null): string {
     if (id && this.usersDecriptions && this.usersDecriptions.length > 0) {
       for (let i = 0; i < this.usersDecriptions.length; i++) {
         if (this.usersDecriptions[i].id === id) {

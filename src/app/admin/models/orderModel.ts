@@ -28,7 +28,8 @@ export class OrderModel {
     return this._products;
   }
 
-  getUsernameByIdFromAllUsersDesritions(id: number | null): string {
+  //TODO переделать возврать значения через pipe, для улучшения производительности.
+  getUsernameByIdFromAllUsersDesriptions(id: number | null): string {
     if (id && this._users && this._users.length > 0) {
       for (let i = 0; i < this._users.length; i++) {
         if (this._users[i].id === id) {
