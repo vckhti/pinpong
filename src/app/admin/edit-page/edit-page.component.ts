@@ -7,6 +7,7 @@ import {BehaviorSubject, Subscription} from "rxjs";
 import {EditPageModel} from "../models/editPageModel";
 import {OrderProductInterface} from "../shared/types/orderProductInterface";
 import {OrderInterface} from "../../shared/types/order.interface";
+import {AlertService} from "../../shared/services/alert.service";
 
 @Component({
   selector: 'app-edit-page',
@@ -28,7 +29,8 @@ export class EditPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private alert: AlertService
   ) {
     this.model = new EditPageModel();
     this.listInitializer = new BehaviorSubject(this.model);
@@ -63,6 +65,7 @@ export class EditPageComponent implements OnInit {
     this.subscriptions.add(
       this.productService.setStatusConfirm(orderProductId, true).subscribe(
         (response: number) => {
+          this.alert.success('Заказ завершен!');
           this.orderProduct.complete = response;
           this.cdr.detectChanges();
         }
@@ -74,6 +77,7 @@ export class EditPageComponent implements OnInit {
     this.subscriptions.add(
       this.productService.setStatusConfirm(orderProductId, false).subscribe(
         (response: number) => {
+          this.alert.warning('Заказ отправлен в обработку!');
           this.orderProduct.complete = response;
           this.cdr.detectChanges();
         }
