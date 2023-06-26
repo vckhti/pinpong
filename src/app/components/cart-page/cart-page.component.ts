@@ -98,7 +98,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const order: OrderRequestInteface = {
       user_id: this.currentUser?.id ? this.currentUser?.id : 1,
-      note: this.form.value.phone + '_' + this.form.value.address + '_' + this.form.value.payment,
+      note: this.form.value.name + '_' + this.form.value.phone + '_' + this.form.value.address + '_' + this.form.value.payment,
       cart_sum: this.totalPrice,
       cart_qty: this.totalQTY,
       orders: this.uniqueCartProducts,

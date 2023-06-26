@@ -5,7 +5,7 @@ import {
   fetchProductsByCategory,
   removeProductFromBasket
 } from "../../../core/store/app-actions";
-import {debounceTime, distinctUntilChanged, EMPTY, Subscription, take} from "rxjs";
+import {debounceTime, distinctUntilChanged, EMPTY, Subscription} from "rxjs";
 import {ProductService} from "../../../shared/services/product.service";
 import {
   basketArraySelector,
