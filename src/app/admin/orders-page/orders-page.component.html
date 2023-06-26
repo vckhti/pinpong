@@ -89,7 +89,7 @@
           <td>{{orderProduct.price}}</td>
           <td>{{orderProduct.note}}</td>
           <td>
-            {{model.getUsernameByIdFromAllUsersDesriptions(orderProduct.user_id)}}
+            {{orderProduct.user_id | username : this.model.getUsersDescription()}}
           </td>
           <td [ngClass]="{
       'alert-success': orderProduct?.complete === 1,

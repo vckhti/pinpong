@@ -18,7 +18,7 @@
           <tbody>
           <tr>
             <td class="top-table-item">{{order?.note}}</td>
-            <td class="top-table-item">{{model.getUsernameByIdFromAllUsersDescriptions(order?.user_id)}}</td>
+            <td class="top-table-item">{{order?.user_id | username : model.getUsersDescriptions()}}</td>
             <td class="top-table-item">{{order?.qty}}</td>
             <td class="top-table-item">{{order?.total}}руб.</td>
           </tr>

@@ -9,10 +9,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {AuthGuard} from './services/auth.guard';
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
+import {UsernamePipe} from "./shared/pipes/username.pipe";
 
 @NgModule({
   declarations: [
     AdminLayoutComponent,
+    UsernamePipe,
     LoginPageComponent,
     EditPageComponent,
     OrdersPageComponent,

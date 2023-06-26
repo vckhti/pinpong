@@ -61,8 +61,6 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    currentUserSelector
-
     this.subscriptions.add(
       this.store.select(currentUserSelector).pipe(
       ).subscribe((currentUser: CurrentUserInterface) => {
@@ -93,10 +91,10 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submit() {
     if (this.form.invalid) {
-      return
+      return;
     }
 
-    this.submitted = true
+    this.submitted = true;
 
     const order: OrderRequestInteface = {
       user_id: this.currentUser?.id ? this.currentUser?.id : 1,
@@ -117,20 +115,6 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  delete(product) {
-    this.totalPrice -= +product.price
-    this.cartProducts.splice(this.cartProducts.indexOf(product), 1)
-  }
-
-  uniqueNumbers(array: number[]): number[] {
-    let result = array.reduce((acc: number[], item: number) => {
-      if (acc.includes(item)) {
-        return acc;
-      }
-      return [...acc, item];
-    }, []);
-    return result;
-  }
 
   containsObject(obj, list) {
     for (let i = 0; i < list.length; i++) {

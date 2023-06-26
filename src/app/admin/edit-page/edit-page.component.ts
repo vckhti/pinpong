@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {ProductService} from 'src/app/shared/services/product.service';
 import {switchMap} from 'rxjs/operators';
@@ -11,7 +11,8 @@ import {OrderInterface} from "../../shared/types/order.interface";
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit-page.component.html',
-  styleUrls: ['./edit-page.component.scss']
+  styleUrls: ['./edit-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditPageComponent implements OnInit {
   model: EditPageModel;
@@ -27,6 +28,7 @@ export class EditPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private cdr: ChangeDetectorRef
   ) {
     this.model = new EditPageModel();
     this.listInitializer = new BehaviorSubject(this.model);
@@ -48,6 +50,7 @@ export class EditPageComponent implements OnInit {
           this.orderProduct = model.getOrderProduct();
           this.order = model.getOrder();
           this.isLoading = false;
+          this.cdr.detectChanges();
         })
     );
   }
@@ -61,6 +64,7 @@ export class EditPageComponent implements OnInit {
       this.productService.setStatusConfirm(orderProductId, true).subscribe(
         (response: number) => {
           this.orderProduct.complete = response;
+          this.cdr.detectChanges();
         }
       )
     );
@@ -71,6 +75,7 @@ export class EditPageComponent implements OnInit {
       this.productService.setStatusConfirm(orderProductId, false).subscribe(
         (response: number) => {
           this.orderProduct.complete = response;
+          this.cdr.detectChanges();
         }
       )
     );

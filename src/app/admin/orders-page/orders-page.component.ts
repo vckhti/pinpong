@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { OrderService } from 'src/app/shared/services/order.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {OrderModel} from "../models/orderModel";
@@ -8,7 +8,8 @@ import {OrderProductInterface} from "../shared/types/orderProductInterface";
 @Component({
   selector: 'app-orders-page',
   templateUrl: './orders-page.component.html',
-  styleUrls: ['./orders-page.component.scss']
+  styleUrls: ['./orders-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersPageComponent implements OnInit, OnDestroy {
   model: OrderModel;
@@ -18,7 +19,8 @@ export class OrdersPageComponent implements OnInit, OnDestroy {
   private listInitializer: BehaviorSubject<OrderModel>;
 
   constructor(
-    private orderService: OrderService
+    private orderService: OrderService,
+    private cdr: ChangeDetectorRef
   ) {
     this.model = new OrderModel();
     this.subscriptions = new Subscription();
@@ -30,6 +32,7 @@ export class OrdersPageComponent implements OnInit, OnDestroy {
       this.orderService.getOrders().subscribe( (orders: OrderProductInterface[]) => {
       this.allOrdersProduct = orders;
       this.isLoading = false;
+        this.cdr.detectChanges();
     })
     );
 
@@ -37,13 +40,17 @@ export class OrdersPageComponent implements OnInit, OnDestroy {
       this.listInitializer.pipe(
         switchMap((model: OrderModel) => this.orderService.fetchProductsToModel(model)),
         switchMap((model: OrderModel) => this.orderService.fetchUsersToModel(model)))
-        .subscribe()
+        .subscribe(() => {
+          this.cdr.detectChanges();
+        })
     );
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
+
+
 
 
 }
