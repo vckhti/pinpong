@@ -29,9 +29,9 @@
           <tr>
             <ng-container>
               <th>
-                <input type="text"
+                <input type="text" focus
                        class="table-filter"
-                       (input)="table.filter($any($event).target.value, 'slug' ,'contains')">
+                       (input)="table.filter($any($event).target.value, 'title' ,'contains')">
               </th>
             </ng-container>
             <ng-container>

@@ -10,10 +10,12 @@ import {AuthGuard} from './services/auth.guard';
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
 import {UsernamePipe} from "./shared/pipes/username.pipe";
+import {FocusDirective} from "./shared/directive/focus.directive";
 
 @NgModule({
   declarations: [
     AdminLayoutComponent,
+    FocusDirective,
     UsernamePipe,
     LoginPageComponent,
     EditPageComponent,
@@ -36,7 +38,8 @@ import {UsernamePipe} from "./shared/pipes/username.pipe";
       }
     ])
   ],
-  exports: [RouterModule],
+  exports: [
+    RouterModule],
 })
 
 export class AdminModule {
