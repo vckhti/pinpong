@@ -78,7 +78,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     this.form = new UntypedFormGroup({
-      name: new UntypedFormControl(null),
+      name: new UntypedFormControl(null, Validators.required),
       phone: new UntypedFormControl(null, Validators.required),
       address: new UntypedFormControl(null, Validators.required),
       payment: new UntypedFormControl('Cash'),

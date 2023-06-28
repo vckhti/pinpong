@@ -63,7 +63,7 @@
 
       <div class="form-control">
         <label for="name">Имя</label>
-        <input #name id="name" type="name" formControlName="name">
+        <input #name id="name" type="name" formControlName="name" maxlength="25">
         <div *ngIf="form.get('name').touched && form.get('name').invalid" class="validation">
           <small *ngIf="form.get('name').errors.required">Введите имя</small>
         </div>
@@ -71,17 +71,17 @@
 
       <div class="form-control">
         <label for="phone">Номер телефона</label>
-        <input id="phone" type="phone" formControlName="phone">
+        <input id="phone" type="phone" formControlName="phone" maxlength="11">
         <div *ngIf="form.get('phone').touched && form.get('phone').invalid" class="validation">
-          <small *ngIf="form.get('phone').errors.required">Введите номер телефона</small>
+          <small *ngIf="form.get('phone').errors.required">Введите номер телефона(максимум 11 символов)</small>
         </div>
       </div>
 
       <div class="form-control">
         <label for="address">Адрес</label>
-        <input id="address" type="address" formControlName="address">
+        <input id="address" type="address" formControlName="address" maxlength="35">
         <div *ngIf="form.get('address').touched && form.get('address').invalid" class="validation">
-          <small *ngIf="form.get('address').errors.required">Введите адрес</small>
+          <small *ngIf="form.get('address').errors.required">Введите адрес(максимум 45 символов)</small>
         </div>
       </div>
 

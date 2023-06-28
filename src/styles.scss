@@ -12,47 +12,47 @@ $size-m: $base-gutter * 5;
 $size-l: $base-gutter * 6;
 
 // gray
-$black:      #000000;
+$black: #000000;
 $mine-shaft: #333333;
-$dove-gray:  #474747;
-$boulder:    #777777;
-$silver:     #cccccc;
-$alto:       #dddddd;
-$concrete:   #f2f2f2;
-$white:      #ffffff;
+$dove-gray: #474747;
+$boulder: #777777;
+$silver: #cccccc;
+$alto: #dddddd;
+$concrete: #f2f2f2;
+$white: #ffffff;
 
 // green
-$firefly:   #0f3d3d;
-$elm-2:     #165b5b;
-$elm-1:     #1e7a7a;
-$elm:       #269999; //base
-$sindbad:   #a8d6d6;
+$firefly: #0f3d3d;
+$elm-2: #165b5b;
+$elm-1: #1e7a7a;
+$elm: #269999; //base
+$sindbad: #a8d6d6;
 $aqua-haze: #d3eaea;
 
 // blue
-$elephant:      #143d51;
-$blumine:       #1e5b7a;
-$jelly-bean:    #287aa3;
-$shakespeare:   #3399cc; //base
+$elephant: #143d51;
+$blumine: #1e5b7a;
+$jelly-bean: #287aa3;
+$shakespeare: #3399cc; //base
 $regent-stblue: #add6ea;
-$spindle:       #d6eaf4;
+$spindle: #d6eaf4;
 
 // orange
-$sepia:         #663c13;
-$desert:        #995b1c;
-$ochre:         #cc7926;
-$neon-carrot:   #ff9830; //base
-$peach-orange:  #ffd5ac;
-$karry:         #ffead5;
+$sepia: #663c13;
+$desert: #995b1c;
+$ochre: #cc7926;
+$neon-carrot: #ff9830; //base
+$peach-orange: #ffd5ac;
+$karry: #ffead5;
 
 // red
-$cocoa-bean:    #5c2424;
-$sanguine-brown:#8a3737;
-$chestnut:      #b84949;
-$sunglo:        #e65c5c; //base
+$cocoa-bean: #5c2424;
+$sanguine-brown: #8a3737;
+$chestnut: #b84949;
+$sunglo: #e65c5c; //base
 $beauty-bush-1: #f5bdbd;
 $beauty-bush-2: #fadede;
-$bright-red   : #e16a54;
+$bright-red: #e16a54;
 
 
 :root {
@@ -1891,6 +1891,7 @@ footer {
     }
   }
 }
+
 @media only screen and (max-width: 420px) {
   .header-top #search {
     //width: 60px;
@@ -2030,19 +2031,20 @@ footer {
 section {
   padding: 10px 0 !important;
 }
-.p-toast .p-toast-message .p-toast-message-content{
+
+.p-toast .p-toast-message .p-toast-message-content {
   z-index: 9999999 !important;
 }
 
-p-toast{
-  .p-toast .p-toast-message .p-toast-message-content{
+p-toast {
+  .p-toast .p-toast-message .p-toast-message-content {
     padding: 10px;
     display: flex;
     align-items: center;
     text-align: center;
     white-space: pre-wrap;
 
-   // border: 1px solid $elm !important;
+    // border: 1px solid $elm !important;
     color: black;
     margin: 5px;
     font-weight: 600;
@@ -2054,16 +2056,21 @@ p-toast{
 
   }
 
-  .p-toast .p-toast-message .p-toast-message-content .p-toast-detail{
+  .p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
     margin-top: 0;
     line-height: 1;
   }
 
-  .p-toast .p-toast-message .p-toast-icon-close{
+  .p-toast .p-toast-message .p-toast-icon-close {
     flex-shrink: 0;
   }
 }
 
-h6{
+h6 {
   font-family: "Comic Sans MS";
+}
+
+.pressed {
+  background-color: red !important;
+  color: white !important;
 }
