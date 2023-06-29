@@ -1,9 +1,9 @@
-import { Directive, HostBinding, HostListener, ElementRef } from "@angular/core";
+import { Directive, HostBinding, HostListener} from "@angular/core";
 
 @Directive({
   selector: "tr"
 })
-export class ClickableElementDirective {
+export class HighlightDirective {
 
   constructor() {
   }

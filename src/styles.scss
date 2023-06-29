@@ -2044,7 +2044,6 @@ p-toast {
     text-align: center;
     white-space: pre-wrap;
 
-    // border: 1px solid $elm !important;
     color: black;
     margin: 5px;
     font-weight: 600;
@@ -2072,4 +2071,8 @@ h6 {
 
 .mouseenter {
   background-color: #d3d3d3 !important;
+}
+
+input::placeholder {
+  opacity: 0.5;
 }
