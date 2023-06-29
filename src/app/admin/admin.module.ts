@@ -11,11 +11,13 @@ import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
 import {UsernamePipe} from "./shared/pipes/username.pipe";
 import {FocusDirective} from "./shared/directive/focus.directive";
+import {ClickableElementDirective} from "./shared/directive/clickable-element.directive";
 
 @NgModule({
   declarations: [
     AdminLayoutComponent,
     FocusDirective,
+    ClickableElementDirective,
     UsernamePipe,
     LoginPageComponent,
     EditPageComponent,
