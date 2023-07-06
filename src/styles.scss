@@ -2038,32 +2038,49 @@ section {
 
 p-toast {
   .p-toast .p-toast-message .p-toast-message-content {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    white-space: pre-wrap;
-
+    font-family: "Comic Sans MS";
     color: black;
-    margin: 5px;
-    font-weight: 600;
-
-    width: 96%;
-    height: 50px;
-
-    border-radius: 10px;
-
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+  }
+  .p-toast-icon-close {
+    justify-self: end !important;
   }
 
-  .p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
-    margin-top: 0;
-    line-height: 1;
-  }
-
-  .p-toast .p-toast-message .p-toast-icon-close {
-    flex-shrink: 0;
-  }
 }
+
+//p-toast {
+//  .p-toast .p-toast-message .p-toast-message-content {
+//    padding: 10px;
+//    display: flex;
+//    align-items: center;
+//    text-align: center;
+//    white-space: pre-wrap;
+//
+//    color: black;
+//    margin: 5px;
+//    font-weight: 600;
+//
+//    width: 96%;
+//    height: 50px;
+//
+//    border-radius: 10px;
+//
+//  }
+//
+//  .p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+//    margin-top: 0;
+//    line-height: 1;
+//  }
+//
+//  .p-toast .p-toast-message .p-toast-icon-close {
+//    flex-shrink: 0;
+//  }
+//}
 
 h6 {
   font-family: "Comic Sans MS";
