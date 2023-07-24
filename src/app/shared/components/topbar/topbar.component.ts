@@ -57,8 +57,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   setLoadingIndicator() {
+    //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
-    setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 1500);
+    setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
   }
 
   onHamburgerClick(): void {

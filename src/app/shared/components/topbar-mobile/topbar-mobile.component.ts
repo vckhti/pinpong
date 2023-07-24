@@ -45,8 +45,9 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
   }
 
   onCategorySelect() {
+    //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
-    setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 1500);
+    setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
   }
 
 }
