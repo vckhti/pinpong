@@ -71,7 +71,14 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.add(
       this.store.select(basketArraySelector)
         .subscribe((basket: TtproductInterface[]) => {
-          this.cartProducts = basket;
+          this.cartProducts = basket.sort((a: TtproductInterface, b: TtproductInterface) => {
+            if (a.title > b.title) {
+              return  1 ;
+            } else if (a.title < b.title) {
+              return  -1;
+            }
+            return 0;
+          });
           this.calculateProductsQTY();
           this.filterOnlyUniqueProducts();
         })
