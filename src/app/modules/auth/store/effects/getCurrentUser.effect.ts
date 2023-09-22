@@ -24,14 +24,12 @@ export class GetCurrentUserEffect {
             const roles = this.persistanceService.get('roles');
             const user_id = this.persistanceService.get('id');
             const tokenExpire = parseInt(this.persistanceService.get('token-exp'));
-            // // console.log('token', token, new Date().getTime());
             if (tokenExpire && (new Date().getTime() > tokenExpire)) {
               this.store.dispatch(logOutAction());
               this.router.navigateByUrl('login');
               this.store.dispatch(getCurrentUserFailureAction());
             } else {
               if (tokenExpire && (new Date().getTime() < tokenExpire) && email && email.split('@')[0]) {
-                // // console.log('else email:', email.split('@')[0]);
                 let currentUser: CurrentUserInterface = {
                   id: user_id,
                   username: email.split('@')[0],

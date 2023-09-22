@@ -3,7 +3,7 @@ import {ProductService} from '../../shared/services/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {catchError, exhaustMap, filter} from 'rxjs/operators';
 import {productsArraySelector} from "../../core/store/app-selectors";
-import {EMPTY, Subscription} from "rxjs";
+import {EMPTY, of, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {TtproductInterface} from "../../shared/types/ttproduct.interface";
 import {Breadcrumb} from "../../shared/modules/ui-utils/breadcrumbs/breadcrumb";
@@ -20,8 +20,9 @@ export class ProductPageComponent implements OnInit {
     {label: 'Главная', url: '/'},
   ];
   private subscriptions: Subscription;
-  product: TtproductInterface;
+  product: TtproductInterface | undefined = undefined;
   productId: number;
+  isLoading=true;
 
   editorStyle = {
     height: '200px'
@@ -42,6 +43,7 @@ export class ProductPageComponent implements OnInit {
       this.store.select(productsArraySelector).subscribe(
         (response: TtproductInterface[]) => {
           if (this.productId && response && response.length > 0) {
+            this.isLoading = false;
             this.product = response.find((item: TtproductInterface) => item.id === this.productId);
           }
         }
@@ -50,18 +52,19 @@ export class ProductPageComponent implements OnInit {
 
     this.subscriptions.add(
       this.store.select(productsArraySelector).pipe(
-        filter((response) => response === undefined),
+        filter((response) => (response === undefined || this.product === undefined)),
         exhaustMap(() => this.productServ.getProducts().pipe(
             catchError((err) => {
               this.alertService.danger(err);
               console.error(err);
-              return EMPTY;
+              return of(null);
             })
           )
         ),
       ).subscribe(
         (response) => {
-          if (this.productId) {
+          this.isLoading = false;
+          if (this.productId && response && response.length > 0) {
             this.product = response.find((item: TtproductInterface) => item.id === this.productId);
           }
         }

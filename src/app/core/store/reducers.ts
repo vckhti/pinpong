@@ -77,7 +77,7 @@ export function reducers(state: AppState = initialState, action: AppActions) {
     case ActionTypes.CLEAN_PRODUCTS:
       return ({
         ...state,
-        products: [],
+        products: undefined,
       })
 
     case ActionTypes.FETCH_PRODUCTS_BY_CATEGORY:
