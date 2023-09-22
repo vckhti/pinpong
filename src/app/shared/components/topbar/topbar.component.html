@@ -11,6 +11,7 @@
             <a
               class="nav-link {{(category && category.children && category.children.length > 0) ? 'dropdown-toggle': '' }}"
               [routerLink]="['/category/',category?.slug]" data-bs-toggle="dropdown" (click)="setLoadingIndicator()"
+              [ngClass]="{'disabled': isLoading,'': !isLoading}"
             >{{ category?.title }}</a>
             <ul *ngIf="(category && category.children)" class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li *ngFor="let categoryItem of getChildrens(category); index as i;">

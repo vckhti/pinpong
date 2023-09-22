@@ -123,7 +123,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
-  containsObject(obj, list) {
+  containsObject(obj, list): boolean {
     for (let i = 0; i < list.length; i++) {
       if (JSON.stringify(list[i]) === JSON.stringify(obj)) {
         return true;

@@ -15,3 +15,7 @@ a {
   font-family: "Comic Sans MS";
 }
 
+a.disabled {
+  pointer-events: none;
+  }
+

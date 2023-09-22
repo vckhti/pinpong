@@ -12,10 +12,16 @@ a {
   right: 26px;
   text-decoration: none;
 }
+
 .dropdown {
   border: 1px solid red !important;
   color: black !important;
 }
+
 a {
   font-family: "Comic Sans MS";
+}
+
+a.disabled {
+  pointer-events: none;
 }

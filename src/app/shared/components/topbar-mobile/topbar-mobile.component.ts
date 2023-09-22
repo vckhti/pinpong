@@ -2,9 +2,10 @@ import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from 
 import {CategoryInterface} from "../../types/category.interface";
 import {Menu} from "../../types/menu.interface";
 import {ProductService} from "../../services/product.service";
-import {Subscription} from "rxjs";
+import {delayWhen, interval, of, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {setLoadingIndicator} from "../../../core/store/app-actions";
+import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
 
 @Component({
   selector: 'app-topbar-mobile',
@@ -16,6 +17,7 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
 
   categories: CategoryInterface[] = [];
   private subscriptions: Subscription;
+  isLoading: boolean;
 
   constructor(
     private productService: ProductService,
@@ -34,6 +36,19 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.store.select(selectIsLoadingSelector).pipe(
+        delayWhen(IsLoading => !IsLoading ? interval(1000) : of(false))
+      ).subscribe(
+        (selectIsLoadingSelector: any) => {
+          if (selectIsLoadingSelector) {
+            this.isLoading = selectIsLoadingSelector;
+          } else {
+            this.isLoading = selectIsLoadingSelector;
+          }
+        }
+      )
+    );
 
     this.subscriptions.add(
       this.productService.getMenuItems().subscribe(

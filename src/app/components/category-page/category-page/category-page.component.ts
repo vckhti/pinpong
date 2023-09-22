@@ -5,7 +5,7 @@ import {
   fetchProductsByCategory,
   removeProductFromBasket
 } from "../../../core/store/app-actions";
-import {debounceTime, distinctUntilChanged, EMPTY, Subscription} from "rxjs";
+import {debounceTime, delayWhen, distinctUntilChanged, EMPTY, interval, of, Subscription} from "rxjs";
 import {ProductService} from "../../../shared/services/product.service";
 import {
   basketArraySelector,
@@ -47,9 +47,16 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
 
   ngOnInit() {
     this.subscriptions.add(
-      this.store.select(selectIsLoadingSelector).subscribe(
-        (selectIsLoadingSelector: boolean) => {
-          this.isLoading = selectIsLoadingSelector;
+      this.store.select(selectIsLoadingSelector).pipe(
+        delayWhen(IsLoading => !IsLoading ? interval(1000) : of(false))
+      ).subscribe(
+        (selectIsLoadingSelector: any) => {
+          // костыль для лечения перывания индикатора загрузки.
+          if (selectIsLoadingSelector) {
+            this.isLoading = selectIsLoadingSelector;
+          } else {
+            this.isLoading = selectIsLoadingSelector;
+          }
         }
       )
     );

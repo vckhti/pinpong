@@ -6,6 +6,7 @@
           <a
             class="nav-link"
             [routerLink]="['/category/',category?.slug]"
+            [ngClass]="{'disabled': isLoading,'': !isLoading}"
             (click)="onCategorySelect()"
             >{{ category?.title }}</a>
           <ul *ngIf="(category && category.children)" >
