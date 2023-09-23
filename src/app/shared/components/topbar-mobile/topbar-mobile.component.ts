@@ -38,7 +38,7 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
-        delayWhen(IsLoading => !IsLoading ? interval(1000) : of(true))
+        delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
         (selectIsLoadingSelector: any) => {
           if (selectIsLoadingSelector) {

@@ -51,7 +51,6 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
         (selectIsLoadingSelector: any) => {
-          // костыль для лечения перывания индикатора загрузки.
           if (selectIsLoadingSelector) {
             this.isLoading = selectIsLoadingSelector;
           } else {
@@ -89,12 +88,14 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
           }
         }),
         switchMap(() => this.productServ.getCategories().pipe(
-            catchError((err) => {
-              this.alert.danger(err);
-              console.error(err);
-              return EMPTY;
-            }),
-            filter(res => res !== undefined)
+            filter(res => res !== undefined),
+            distinctUntilChanged(),
+            debounceTime(1000),
+          catchError((err) => {
+            this.alert.danger(err);
+            console.error(err);
+            return EMPTY;
+          }),
           )
         )
       ).subscribe((response) => {
