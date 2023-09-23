@@ -23,6 +23,8 @@ export class ComponentWithPaginationComponent {
   protected isLoading: boolean;
   private _sortConfig: SortConfigInterface;
 
+  protected filterString='';
+
   public productsInBasket: TtproductInterface[] = [];
   public router = inject(Router);
   public store = inject(Store);
@@ -36,7 +38,10 @@ export class ComponentWithPaginationComponent {
   }
 
   protected setPaginationToFirstPageAndPaginate() {
-    this.currentPage = 1;
+    if (this.filterString.length > 0) {
+      this.currentPage = 1;
+    }
+
     this.paginate();
   }
 

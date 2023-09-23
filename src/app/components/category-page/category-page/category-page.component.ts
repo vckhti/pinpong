@@ -12,7 +12,7 @@ import {
   categoriesArraySelector,
   productsArraySelector, selectIsLoadingSelector,
 } from "../../../core/store/app-selectors";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Params} from "@angular/router";
 import {catchError, filter, map, switchMap, tap} from "rxjs/operators";
 import {CategoryInterface} from "../../../shared/types/category.interface";
 import {Breadcrumb} from "../../../shared/modules/ui-utils/breadcrumbs/breadcrumb";
@@ -46,6 +46,13 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
   }
 
   ngOnInit() {
+    this.subscriptions.add(this.route.queryParams.subscribe(
+      (params: Params) => {
+        this.currentPage = Number(params['page'] || '1');
+      }
+      )
+    );
+
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
@@ -88,9 +95,9 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
           }
         }),
         switchMap(() => this.productServ.getCategories().pipe(
-            filter(res => res !== undefined),
-            distinctUntilChanged(),
-            debounceTime(1000),
+          filter(res => res !== undefined),
+          distinctUntilChanged(),
+          debounceTime(1000),
           catchError((err) => {
             this.alert.danger(err);
             console.error(err);
@@ -132,6 +139,7 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
         distinctUntilChanged(),
         debounceTime(100),
         switchMap((searchString: string) => {
+          this.filterString = searchString;
           return this.store.select(productsArraySelector).pipe(
             map((allProducts: TtproductInterface[]) => {
               return allProducts.filter((item: TtproductInterface) =>

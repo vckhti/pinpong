@@ -66,7 +66,7 @@ export class MainPageComponent extends ComponentWithPaginationComponent implemen
 
     this.subscriptions.add(this.route.queryParams.subscribe(
         (params: Params) => {
-          this.currentPage = Number(params['page'] || '1')
+          this.currentPage = Number(params['page'] || '1');
         }
       )
     );
