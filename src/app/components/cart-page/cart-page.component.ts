@@ -82,7 +82,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.calculateProductsQTY();
           this.filterOnlyUniqueProducts();
-          setTimeout(() => this.isLoading = false,500);
+          setTimeout(() => this.isLoading = false,1500);
         })
     );
 
