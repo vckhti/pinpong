@@ -1,6 +1,7 @@
 .pagination__pages {
   margin: 0 auto;
-  max-width: 400px;
+  max-width: 330px;
+  min-width: 100px;
   position: fixed;
   z-index: 9;
   justify-content: center;
@@ -9,6 +10,7 @@
   right: 0;
   align-self: end;
   display: flex;
+  padding-left: 0 !important;
 
   li {
     list-style-type: none;
