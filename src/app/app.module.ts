@@ -35,6 +35,7 @@ import {SidebarModule} from "primeng/sidebar";
 import { TopbarComponent } from './shared/components/topbar/topbar.component';
 import {TopbarMobileComponent} from "./shared/components/topbar-mobile/topbar-mobile.component";
 import {ScreenService} from "./shared/services/screen.service";
+import {LoadingModule} from "./shared/modules/loading/loading.module";
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {ScreenService} from "./shared/services/screen.service";
     SidebarModule,
     ConfirmDialogModule,
     UiUtilsModule,
+    LoadingModule,
     HttpClientModule,
     StoreModule.forRoot({app: reducers}),
     EffectsModule.forRoot([AppEffects]),
