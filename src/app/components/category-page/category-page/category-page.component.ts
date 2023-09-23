@@ -48,7 +48,7 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
   ngOnInit() {
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
-        delayWhen(IsLoading => !IsLoading ? interval(1000) : of(false))
+        delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
         (selectIsLoadingSelector: any) => {
           // костыль для лечения перывания индикатора загрузки.
