@@ -38,6 +38,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   totalPrice = 0;
   totalQTY = 0;
   added = '';
+  isLoading = true;
   private subscriptions: Subscription;
   showDelivery = false;
   currentUser: CurrentUserInterface;
@@ -81,6 +82,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.calculateProductsQTY();
           this.filterOnlyUniqueProducts();
+          setTimeout(() => this.isLoading = false,500);
         })
     );
 

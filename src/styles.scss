@@ -2093,3 +2093,10 @@ h6 {
 input::placeholder {
   opacity: 0.5;
 }
+
+.product-tumb {
+  img {
+    width: 300px !important;
+    height: 200px !important;
+  }
+}

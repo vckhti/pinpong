@@ -1,103 +1,114 @@
-<div class="container">
+<div [ngClass]="{
+      'd-none': isLoading,
+      'd-block': !isLoading
+      }"
+     class="container">
   <ui-utils-breadcrumbs [breadcrumbs]="breadcrumbs"></ui-utils-breadcrumbs>
-</div>
-<div *ngIf="cartProducts && cartProducts.length > 0; else empty" class="wrapper">
-  <div class="container py-3">
-    <div class="row">
-      <div class="col-lg-12 category-content">
-        <div class="table-responsive cart-table">
-          <table class="table">
-            <thead class="table-primary">
-            <tr>
-              <th scope="col">Изображение товара</th>
-              <th scope="col">Наименование</th>
-              <th scope="col">Добавить</th>
-              <th scope="col">Количество</th>
-              <th scope="col">Уменьшить</th>
-              <th scope="col">Стоимость</th>
-              <th scope="col"><i class="far fa-trash-alt"></i></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="align-middle" *ngFor="let cartProduct of uniqueCartProducts; let i = index">
-              <td>
-                <a [routerLink]="['/product', cartProduct.id]"><img *ngIf="cartProduct" class="small-image-size"
-                                                                    src="{{cartProduct.img}}" alt="img"></a>
-              </td>
-              <td><a [routerLink]="['/product', cartProduct.id]">{{cartProduct.title}}</a></td>
-              <td><span class="increment" (click)="incrementProduct(cartProduct)"><b>+</b></span></td>
-              <td>{{cartProduct.qty}}</td>
-              <td><span class="increment" (click)="decrementProduct(cartProduct)"><b>-</b></span></td>
-              <td>{{cartProduct.price}} рублей</td>
-              <td><i class="far fa-trash-alt trash" (click)="deleteProductFromCart(cartProduct)"></i></td>
-            </tr>
-            <tr>
-              <td colspan="4" class="text-end">Кол-во:</td>
-              <td class="cart-qty-basket">{{totalQTY}}</td>
-            </tr>
-            <tr>
-              <td colspan="4" class="text-end">Сумма:</td>
-              <td class="cart-sum-basket">{{totalPrice}} рублей</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="d-flex float-right">
-          <button type="button" class="btn btn-success ripple" (click)="goBack()" data-bs-dismiss="modal">Продолжить покупки</button>
-          <div *ngIf="cartProducts && cartProducts.length > 0">
-            <a (click)="checkout()"
-               class="btn btn-primary">{{showDelivery ? 'Вернуться в корзину' : 'Оформить заказ'}}</a>
+
+  <div *ngIf="cartProducts && cartProducts.length > 0; else empty" class="wrapper">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-lg-12 category-content">
+          <div class="table-responsive cart-table">
+            <table class="table">
+              <thead class="table-primary">
+              <tr>
+                <th scope="col">Изображение товара</th>
+                <th scope="col">Наименование</th>
+                <th scope="col">Добавить</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Уменьшить</th>
+                <th scope="col">Стоимость</th>
+                <th scope="col"><i class="far fa-trash-alt"></i></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="align-middle" *ngFor="let cartProduct of uniqueCartProducts; let i = index">
+                <td>
+                  <a [routerLink]="['/product', cartProduct.id]"><img *ngIf="cartProduct" class="small-image-size"
+                                                                      src="{{cartProduct.img}}" alt="img"></a>
+                </td>
+                <td><a [routerLink]="['/product', cartProduct.id]">{{cartProduct.title}}</a></td>
+                <td><span class="increment" (click)="incrementProduct(cartProduct)"><b>+</b></span></td>
+                <td>{{cartProduct.qty}}</td>
+                <td><span class="increment" (click)="decrementProduct(cartProduct)"><b>-</b></span></td>
+                <td>{{cartProduct.price}} рублей</td>
+                <td><i class="far fa-trash-alt trash" (click)="deleteProductFromCart(cartProduct)"></i></td>
+              </tr>
+              <tr>
+                <td colspan="4" class="text-end">Кол-во:</td>
+                <td class="cart-qty-basket">{{totalQTY}}</td>
+              </tr>
+              <tr>
+                <td colspan="4" class="text-end">Сумма:</td>
+                <td class="cart-sum-basket">{{totalPrice}} рублей</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
-          <button type="button" id="clear-cart" class="btn btn-danger" (click)="cleanCart()">Очистить корзину</button>
+          <div class="d-flex float-right">
+            <button type="button" class="btn btn-success ripple" (click)="goBack()" data-bs-dismiss="modal">Продолжить
+              покупки
+            </button>
+            <div *ngIf="cartProducts && cartProducts.length > 0">
+              <a (click)="checkout()"
+                 class="btn btn-primary">{{showDelivery ? 'Вернуться в корзину' : 'Оформить заказ'}}</a>
+            </div>
+            <button type="button" id="clear-cart" class="btn btn-danger" (click)="cleanCart()">Очистить корзину</button>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="container" *ngIf="cartProducts.length > 0 && showDelivery">
+      <h5 class="text-center">Параметры доставки:</h5>
+
+      <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="form-control">
+          <label for="name">Имя</label>
+          <input #name id="name" type="name" formControlName="name" maxlength="25" placeholder="Иван">
+          <div *ngIf="form.get('name').touched && form.get('name').invalid" class="validation">
+            <small *ngIf="form.get('name').errors.required">Введите имя</small>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label for="phone">Номер телефона</label>
+          <input id="phone" type="phone" formControlName="phone" maxlength="12" placeholder="+79991112233">
+          <div *ngIf="form.get('phone').touched && form.get('phone').invalid" class="validation">
+            <small *ngIf="form.get('phone').errors.required">Введите номер телефона</small>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label for="address">Адрес</label>
+          <input id="address" type="address" formControlName="address" maxlength="50"
+                 placeholder="655000, г.Москва, ул.Пушкина д.1, кв.23">
+          <div *ngIf="form.get('address').touched && form.get('address').invalid" class="validation">
+            <small *ngIf="form.get('address').errors.required">Введите адрес</small>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <span>Метод оплаты:</span>
+          <select formControlName="payment">
+            <option value="Наличные">Наложенным платежом</option>
+            <option value="Перевод">Переводом на карту</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || submitted">Отправить заявку
+        </button>
+      </form>
+    </div>
   </div>
-
-  <div class="container" *ngIf="cartProducts.length > 0 && showDelivery">
-    <h5 class="text-center">Параметры доставки:</h5>
-
-    <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
-
-    <form [formGroup]="form" (ngSubmit)="submit()">
-
-      <div class="form-control">
-        <label for="name">Имя</label>
-        <input #name id="name" type="name" formControlName="name" maxlength="25" placeholder="Иван">
-        <div *ngIf="form.get('name').touched && form.get('name').invalid" class="validation">
-          <small *ngIf="form.get('name').errors.required">Введите имя</small>
-        </div>
-      </div>
-
-      <div class="form-control">
-        <label for="phone">Номер телефона</label>
-        <input id="phone" type="phone" formControlName="phone" maxlength="12" placeholder="+79991112233">
-        <div *ngIf="form.get('phone').touched && form.get('phone').invalid" class="validation">
-          <small *ngIf="form.get('phone').errors.required">Введите номер телефона</small>
-        </div>
-      </div>
-
-      <div class="form-control">
-        <label for="address">Адрес</label>
-        <input id="address" type="address" formControlName="address" maxlength="50" placeholder="655000, г.Москва, ул.Пушкина д.1, кв.23">
-        <div *ngIf="form.get('address').touched && form.get('address').invalid" class="validation">
-          <small *ngIf="form.get('address').errors.required">Введите адрес</small>
-        </div>
-      </div>
-
-      <div class="form-control">
-        <span>Метод оплаты:</span>
-        <select formControlName="payment">
-          <option value="Наличные">Наложенным платежом</option>
-          <option value="Перевод">Переводом на карту</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || submitted">Отправить заявку
-      </button>
-    </form>
-  </div>
+  <ng-template #empty>
+    <h5 class="text-center">Корзина пуста, выберите продукты!</h5>
+  </ng-template>
 </div>
-<ng-template #empty>
-  <h5 class="text-center">Корзина пуста, выберите продукты!</h5>
-</ng-template>
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+  <app-loading></app-loading>
+</div>
