@@ -45,4 +45,8 @@ export class LoginComponent implements OnInit {
     }
     this.store.dispatch(loginAction({request}))
   }
+
+  goBack() {
+    window.history.back();
+  }
 }

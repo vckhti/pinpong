@@ -25,6 +25,7 @@ import {Breadcrumb} from "../../shared/modules/ui-utils/breadcrumbs/breadcrumb";
 import {currentUserSelector} from "../../modules/auth/store/selectors";
 import {CurrentUserInterface} from "../../modules/auth/types/currentUser.interface";
 import {OrderRequestInteface} from "../../shared/types/order-request.inteface";
+import {CustomValidators} from "../../shared/validators";
 
 @Component({
   selector: 'app-cart-page',
@@ -82,15 +83,15 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.calculateProductsQTY();
           this.filterOnlyUniqueProducts();
-          setTimeout(() => this.isLoading = false,1500);
+          setTimeout(() => this.isLoading = false,1500); // Для прорисовки картинок товаров
         })
     );
 
     this.form = new UntypedFormGroup({
       name: new UntypedFormControl(null, Validators.required),
-      phone: new UntypedFormControl(null, Validators.required),
-      address: new UntypedFormControl(null, Validators.required),
-      payment: new UntypedFormControl('Cash'),
+      phone: new UntypedFormControl(null, [CustomValidators.required, Validators.maxLength(12)]),
+      address: new UntypedFormControl(null, [CustomValidators.required, Validators.maxLength(35)]),
+      payment: new UntypedFormControl('Перевод'),
     })
   }
 
