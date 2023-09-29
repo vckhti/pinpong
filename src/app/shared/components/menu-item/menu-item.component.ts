@@ -54,7 +54,6 @@ export class MenuItemComponent implements OnInit {
   }
 
   onPopupMouseEnter(event: Event): void {
-    console.log('onPopupMouseEnter');
     if (!this.isVertical) {
       this.mouseInPopup = true;
     }
@@ -62,7 +61,6 @@ export class MenuItemComponent implements OnInit {
 
   @HostListener('mouseleave', ['$event'])
   onMouseLeave(event): void {
-    console.log('onMouseLeave');
     if (!this.isVertical) {
       this.mouseInItem = false;
     }
@@ -70,10 +68,8 @@ export class MenuItemComponent implements OnInit {
 
   @HostListener('mouseenter')
   onMouseEnter(): void {
-    console.log('onMouseEnter', this.item);
     if (!this.isVertical) {
       if (this.item.children.length) {
-        console.log('mouseInItem');
         this.mouseInItem = true;
         if (this.parentIsPopup) {
           this.popupLeft = 160;

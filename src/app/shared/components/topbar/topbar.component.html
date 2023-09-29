@@ -7,7 +7,7 @@
     <div class="container-fluid p-0 d-flex">
       <div *ngIf="categories" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li *ngFor="let category of categories">
+          <li *ngFor="let category of getOnlyParentCategories()">
 
             <spa-menu-item [item]='category' [parentIsPopup]='false'>
 

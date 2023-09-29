@@ -7,7 +7,7 @@
     padding: 0;
     font-size: 16px;
     /* line-height: 6px; */
-    color: #8d8c8c;
+    color: #fff;
     cursor: pointer;
     box-sizing: border-box;
     width: 100%;
@@ -21,6 +21,7 @@
 .menu-item:hover {
     transform: scale(1.05);
     background-color: rgba(207, 58, 58, 0.8);
+    border-radius: 5px;
 }
 
 .icon {
@@ -79,15 +80,15 @@ span.dropright {
 }
 
 span.dropdown>button.dropdown-toggle::after {
-    border-top-color: #8d8c8c;
+    border-top-color: #fff;
 }
 
 span.dropright>button.dropdown-toggle::after {
-    border-left-color: #8d8c8c;
+    border-left-color: #fff;
 }
 
 span.dropleft>button.dropdown-toggle::before {
-    border-right-color: #8d8c8c;
+    border-right-color: #fff;
 }
 
 .top-overflow{

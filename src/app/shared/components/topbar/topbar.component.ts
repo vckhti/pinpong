@@ -61,7 +61,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
       )
     );
 
-
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
@@ -93,6 +92,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
     //     }
     //   )
     // );
+  }
+
+  getOnlyParentCategories(): any {
+    return this.categories?.filter((item) => item.parent_id === 0 );
   }
 
   setLoadingIndicator() {

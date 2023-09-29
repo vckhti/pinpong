@@ -3,6 +3,9 @@
     <div class="input-group active" #search id="search">
       <input *ngIf="currentRouteUrl === '/'" type="text" class="form-control" placeholder="Поиск" name="s">
     </div>
+    <div>
+      <app-topbar (itemClick)="sidebarVisible = !sidebarVisible"></app-topbar>
+    </div>
     <div class="header-icons">
       <div class="d-flex">
         <a [routerLink]="'/cart'" class="relative" data-bs-toggle="modal" data-bs-target="#cart-modal">
@@ -28,6 +31,6 @@
       </ng-template>
     </div>
   </div>
-  <app-topbar (itemClick)="sidebarVisible = !sidebarVisible"></app-topbar>
+
 
 </div>
