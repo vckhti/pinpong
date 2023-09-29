@@ -45,11 +45,12 @@ export class TopbarComponent implements OnInit, OnDestroy {
         (tempCategory: Menu[]) => {
           // let tempCategory = Object.values(response).filter((item: Menu) => item.language_id === 2);
           for (let i = 0; i < tempCategory.length; i++) {
+            tempCategory[i].children = new Array();
             for (let j = 0; j < tempCategory.length; j++) {
 
               if (tempCategory[i].category_id == tempCategory[j].parent_id) {
                 console.log('===', tempCategory[j].parent_id);
-                tempCategory[i].children = new Array();
+
                 tempCategory[i].children.push(tempCategory[j]);
               }
             }
