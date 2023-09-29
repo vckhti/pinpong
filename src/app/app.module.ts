@@ -37,6 +37,9 @@ import {TopbarMobileComponent} from "./shared/components/topbar-mobile/topbar-mo
 import {ScreenService} from "./shared/services/screen.service";
 import {LoadingModule} from "./shared/modules/loading/loading.module";
 import { MobileTopbarComponent } from './shared/components/mobile-topbar/mobile-topbar.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import {MenuItemComponent} from "./shared/components/menu-item/menu-item.component";
+import {PopupMenuComponent} from "./shared/components/popup-menu/popup-menu.component";
 
 @NgModule({
   declarations: [
@@ -51,6 +54,9 @@ import { MobileTopbarComponent } from './shared/components/mobile-topbar/mobile-
     CategoryPageComponent,
     ComponentWithPaginationComponent,
     MobileTopbarComponent,
+    HeaderComponent,
+    MenuItemComponent,
+    PopupMenuComponent
   ],
   imports: [
     BrowserModule,

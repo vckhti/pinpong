@@ -2,11 +2,11 @@ import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from 
 import {CategoryInterface} from "../../types/category.interface";
 import {Menu} from "../../types/menu.interface";
 import {ProductService} from "../../services/product.service";
-import {delayWhen, distinctUntilChanged, interval, of, Subscription} from "rxjs";
+import {debounceTime, delayWhen, distinctUntilChanged, first, interval, of, Subscription, take} from "rxjs";
 import {ScreenService} from "../../services/screen.service";
 import {Store} from "@ngrx/store";
 import {setLoadingIndicator} from "../../../core/store/app-actions";
-import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
+import {categoriesArraySelector, selectIsLoadingSelector} from "../../../core/store/app-selectors";
 
 @Component({
   selector: 'app-topbar',
@@ -29,15 +29,48 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.subscriptions = new Subscription();
   }
 
-  getChildrens(category: any): any[] {
-    return Object.values(category.children);
-  }
+  // getChildrens(category: any): any[] {
+  //   return Object.values(category.children);
+  // }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.productService.getCategories().pipe(
+        take(1)
+      ).subscribe(
+        (tempCategory: Menu[]) => {
+          // let tempCategory = Object.values(response).filter((item: Menu) => item.language_id === 2);
+          for (let i = 0; i < tempCategory.length; i++) {
+            for (let j = 0; j < tempCategory.length; j++) {
+
+              if (tempCategory[i].category_id == tempCategory[j].parent_id) {
+                console.log('===', tempCategory[j].parent_id);
+                tempCategory[i].children = new Array();
+                tempCategory[i].children.push(tempCategory[j]);
+              }
+            }
+              if(tempCategory[i].category_id === 0) {
+                this.categories.push(tempCategory[i]);
+
+            }
+
+
+            }
+
+          this.categories = tempCategory;
+
+          console.log('this.cat', tempCategory, this.categories);
+
+
+        }
+      )
+    );
+
+
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
@@ -62,13 +95,13 @@ export class TopbarComponent implements OnInit, OnDestroy {
       )
     );
 
-    this.subscriptions.add(
-      this.productService.getMenuItems().subscribe(
-        (response: any) => {
-          this.categories = Object.values(response).filter((item: Menu) => item.language_id === 2);
-        }
-      )
-    );
+    // this.subscriptions.add(
+    //   this.productService.getMenuItems().subscribe(
+    //     (response: any) => {
+    //       this.categories = Object.values(response).filter((item: Menu) => item.language_id === 2);
+    //     }
+    //   )
+    // );
   }
 
   setLoadingIndicator() {

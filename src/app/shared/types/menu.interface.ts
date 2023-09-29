@@ -4,4 +4,6 @@ export interface Menu {
     slug: string;
     category_id: number;
     language_id: number;
+    title?: string;
+    children?: any;
 }

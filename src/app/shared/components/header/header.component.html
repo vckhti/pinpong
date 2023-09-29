@@ -1,0 +1,33 @@
+<div class="header-wrapper">
+  <div *ngIf="!sidebarVisible" class="header-block">
+    <div class="input-group active" #search id="search">
+      <input *ngIf="currentRouteUrl === '/'" type="text" class="form-control" placeholder="Поиск" name="s">
+    </div>
+    <div class="header-icons">
+      <div class="d-flex">
+        <a [routerLink]="'/cart'" class="relative" data-bs-toggle="modal" data-bs-target="#cart-modal">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="badge bg-danger rounded-pill count-items">{{basketArraySelectorCount$ | async}}</span>
+        </a>
+      </div>
+      <div *ngIf="currentUserSelector; else elseBlock" class="dropdown hover-text ">
+
+                <span class="tooltip-text"
+                      [ngClass]="{
+                  'show-tooltip-text': showExitSpan,
+                  }"
+                      (click)="logout()" id="right">Выйти</span>
+        <div class="ava-wrapper">
+          <i class="far fa-user on-hover" (click)="showExitSpan = !showExitSpan"></i>
+          <span class="ava-text">{{currentUserSelector}}</span>
+        </div>
+
+      </div>
+      <ng-template #elseBlock>
+        <a [routerLink]="'/login'" class="signin">Войти</a>
+      </ng-template>
+    </div>
+  </div>
+  <app-topbar (itemClick)="sidebarVisible = !sidebarVisible"></app-topbar>
+
+</div>

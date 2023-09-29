@@ -51,9 +51,9 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.productService.getMenuItems().subscribe(
+      this.productService.getCategories().subscribe(
         (response: any) => {
-          this.categories = Object.values(response).filter((item: Menu) => item.language_id === 2);
+          this.categories = Object.values(response).filter((item: Menu) => item.language_id === 1);
         }
       )
     );
