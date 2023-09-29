@@ -36,6 +36,7 @@ import { TopbarComponent } from './shared/components/topbar/topbar.component';
 import {TopbarMobileComponent} from "./shared/components/topbar-mobile/topbar-mobile.component";
 import {ScreenService} from "./shared/services/screen.service";
 import {LoadingModule} from "./shared/modules/loading/loading.module";
+import { MobileTopbarComponent } from './shared/components/mobile-topbar/mobile-topbar.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {LoadingModule} from "./shared/modules/loading/loading.module";
     CartPageComponent,
     CategoryPageComponent,
     ComponentWithPaginationComponent,
+    MobileTopbarComponent,
   ],
   imports: [
     BrowserModule,

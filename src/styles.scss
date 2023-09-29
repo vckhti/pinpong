@@ -467,6 +467,7 @@ li a.dropdown-item:focus, li a.dropdown-item:hover {
 .header-top {
   background-color: #322d7e;
   position: relative;
+  z-index: 5 !important;
 }
 
 .header-top a {
@@ -534,8 +535,9 @@ li a.dropdown-item:focus, li a.dropdown-item:hover {
 
 /* Header bottom */
 .header-bottom {
-  background-color: #fff;
-  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, .5);
+  // background-color: #fff;
+  // box-shadow: 0 5px 5px -5px rgba(0, 0, 0, .5);
+  z-index: -1 !important;
 }
 
 .header-bottom .navbar-nav li a.nav-link {

@@ -1,0 +1,23 @@
+<div class="hide" [ngClass]="{'activate': sidebarVisible}" >
+ <!-- <button id="menu-toggle"> &#9776; Menu</button>-->
+  <ul *ngFor="let category of categories" id="menu-list">
+    <li
+      class="nav-item ">
+      <a
+        class="nav-link"
+        [routerLink]="['/category/',category?.slug]"
+        [ngClass]="{'disabled': isLoading,'': !isLoading}"
+        (click)="onCategorySelect()"
+      >{{ category?.title }}</a>
+      <ul *ngIf="(category && category.children)" >
+        <li *ngFor="let categoryItem of getChildrens(category); index as i;">
+          <a class="category-item"
+             [routerLink]="['/category/',categoryItem?.slug]">{{categoryItem.title}}<br></a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+
+
