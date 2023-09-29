@@ -1,7 +1,7 @@
 <div class='menu-item' [ngClass]="{'vertical-menu': isVertical, 'active': isActiveRoute}">
     <!--<span class='icon'><img [src]='item.icon' ></span>-->
     <span>{{item.title}}</span>
-    <span *ngIf="item.parent_id && !isVertical">
+    <span *ngIf="item.children.length > 0 && !isVertical">
         <span [ngClass]='parentIsPopup ? "dropright": "dropdown"' ><button class='dropdown-toggle'></button></span>
     </span>
     <span *ngIf="item.parent_id && isVertical">
@@ -10,4 +10,13 @@
 
 </div>
 
-<spa-popup-menu @visibilityPopup *ngIf="mouseInPopup || mouseInItem" [menu]='findItemByParentId(item.parent_id)' [ngClass]='{"vertical-menu": isVertical}' [style.left]='popupLeft+"px"' [style.top]='popupTop+"px"' (mouseleave)='onPopupMouseLeave($event)' (mouseenter)='onPopupMouseEnter($event)'></spa-popup-menu>
+<spa-popup-menu @visibilityPopup *ngIf="mouseInPopup || mouseInItem"
+                [menu]='item.children'
+                [ngClass]='{"vertical-menu": isVertical}'
+                [style.left]='popupLeft+"px"'
+                [style.top]='popupTop+"px"'
+                class="top-overflow"
+                (mouseleave)='onPopupMouseLeave($event)'
+                (mouseenter)='onPopupMouseEnter($event)'>
+
+</spa-popup-menu>

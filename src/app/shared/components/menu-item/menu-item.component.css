@@ -89,3 +89,7 @@ span.dropright>button.dropdown-toggle::after {
 span.dropleft>button.dropdown-toggle::before {
     border-right-color: #8d8c8c;
 }
+
+.top-overflow{
+  z-index: 99999999 !important;
+}

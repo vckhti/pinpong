@@ -1,12 +1,12 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
 import {Menu} from "../../types/menu.interface";
 import {ProductService} from "../../services/product.service";
-import {debounceTime, delayWhen, distinctUntilChanged, first, interval, of, Subscription, take} from "rxjs";
+import {delayWhen, distinctUntilChanged, interval, of, Subscription, take} from "rxjs";
 import {ScreenService} from "../../services/screen.service";
 import {Store} from "@ngrx/store";
 import {setLoadingIndicator} from "../../../core/store/app-actions";
-import {categoriesArraySelector, selectIsLoadingSelector} from "../../../core/store/app-selectors";
+import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
 
 @Component({
   selector: 'app-topbar',
@@ -43,30 +43,20 @@ export class TopbarComponent implements OnInit, OnDestroy {
         take(1)
       ).subscribe(
         (tempCategory: Menu[]) => {
-          // let tempCategory = Object.values(response).filter((item: Menu) => item.language_id === 2);
           for (let i = 0; i < tempCategory.length; i++) {
             tempCategory[i].children = new Array();
             for (let j = 0; j < tempCategory.length; j++) {
 
               if (tempCategory[i].category_id == tempCategory[j].parent_id) {
-                console.log('===', tempCategory[j].parent_id);
-
                 tempCategory[i].children.push(tempCategory[j]);
               }
             }
-              if(tempCategory[i].category_id === 0) {
-                this.categories.push(tempCategory[i]);
-
+            if (tempCategory[i].category_id === 0) {
+              this.categories.push(tempCategory[i]);
             }
-
-
-            }
-
+          }
           this.categories = tempCategory;
-
-          console.log('this.cat', tempCategory, this.categories);
-
-
+          console.log('this.categories', this.categories);
         }
       )
     );

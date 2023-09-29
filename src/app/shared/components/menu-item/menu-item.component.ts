@@ -15,12 +15,12 @@ export class MenuItemComponent implements OnInit {
   @Input() parentIsPopup = true;
   mouseInPopup = false;
 
-  isVertical = true;
+  isVertical = false;
   categories: Menu[] = new Array();
 
   mouseInItem = false;
   popupLeft = 0;
-  popupTop = 42;
+  popupTop = 38;
   isActiveRoute = false;
   private subscriptions = new Subscription;
 
@@ -49,11 +49,12 @@ export class MenuItemComponent implements OnInit {
 
   onPopupMouseLeave(event: Event): void {
     if (!this.isVertical) {
-      this.mouseInPopup = false;
+      setTimeout(() => this.mouseInPopup = false,500);
     }
   }
 
   onPopupMouseEnter(event: Event): void {
+    console.log('onPopupMouseEnter');
     if (!this.isVertical) {
       this.mouseInPopup = true;
     }
@@ -61,6 +62,7 @@ export class MenuItemComponent implements OnInit {
 
   @HostListener('mouseleave', ['$event'])
   onMouseLeave(event): void {
+    console.log('onMouseLeave');
     if (!this.isVertical) {
       this.mouseInItem = false;
     }
@@ -68,8 +70,10 @@ export class MenuItemComponent implements OnInit {
 
   @HostListener('mouseenter')
   onMouseEnter(): void {
+    console.log('onMouseEnter', this.item);
     if (!this.isVertical) {
-      if (this.item.parent_id) {
+      if (this.item.children.length) {
+        console.log('mouseInItem');
         this.mouseInItem = true;
         if (this.parentIsPopup) {
           this.popupLeft = 160;
@@ -82,7 +86,7 @@ export class MenuItemComponent implements OnInit {
   @HostListener('click', ['$event'])
   onClick(event: Event): void {
     event.stopPropagation();
-    if (this.item.parent_id) {
+    if (this.item.children.length > 0) {
       if (this.isVertical) {
         this.mouseInPopup = !this.mouseInPopup;
       }
@@ -93,9 +97,5 @@ export class MenuItemComponent implements OnInit {
     }
   }
 
-  findItemByParentId(parentId: number): Menu[] | undefined {
-    console.log('findItemByParentId', this.categories.filter((v: Menu) => v.parent_id === parentId));
-    return this.categories.filter((v: Menu) => v.parent_id === parentId);
-  }
 
 }

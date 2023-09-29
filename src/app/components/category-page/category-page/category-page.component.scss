@@ -10,3 +10,7 @@
 .exerpt {
   font-size: 12px;
 }
+
+.input-group, input-group-text, form-select {
+  z-index: -1 !important;
+}

@@ -2,10 +2,11 @@
     position: absolute;
     display: inline-block;
     width: 160px;
-    background-color: #16484b;
+    background-color: #cdcbcb;
     border: 1px solid black;
-    z-index: 1;
+    z-index: 99999 !important;
     box-shadow: 2px 2px 5px #bcbcbc;
+    font-size: 16px;
 }
 
 :host(.vertical-menu) {
@@ -15,4 +16,8 @@
     background-color: transparent;
     border: none;
     box-shadow: none;
+}
+
+.in-popup {
+  z-index: 99999999 !important;
 }
