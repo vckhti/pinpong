@@ -55,7 +55,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
             }
           }
           this.categories = tempCategory;
-          console.log('this.categories', this.categories);
         }
       )
     );

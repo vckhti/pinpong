@@ -55,7 +55,6 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
     this.subscriptions.add(
       this.productService.getCategories().subscribe(
         (response: any) => {
-          console.log('resp2', response);
           this.categories = response;
         }
       )

@@ -1,24 +1,13 @@
 <div class="header-wrapper">
   <div class="header-block">
-    <div *ngIf="screenWidth < 1050">
+    <div *ngIf="screenWidth < widthForMobileVersion">
       <div class="hamburger " (click)="onHamburgerClick()" ></div>
     </div>
     <div class="input-group active" #search id="search">
       <input *ngIf="currentRouteUrl === '/'" type="text" class="form-control" placeholder="Поиск" name="s">
     </div>
     <div>
-      <app-topbar *ngIf="screenWidth > 1050" ></app-topbar>
-    <!--  <p-sidebar *ngIf="screenWidth < 900" [(visible)]="sidebarVisible"  [showCloseIcon]="true" position="top">
-        &lt;!&ndash;position="top"&ndash;&gt;
-
-        <ng-template pTemplate="header">
-         &lt;!&ndash; <app-topbar-mobile (itemClick)="sidebarVisible = false"></app-topbar-mobile>&ndash;&gt;
-
-        </ng-template>
-
-        &lt;!&ndash;<app-sidebar ></app-sidebar>&ndash;&gt;
-
-      </p-sidebar>-->
+      <app-topbar *ngIf="screenWidth > widthForMobileVersion" ></app-topbar>
     </div>
     <div class="header-icons">
       <div class="cart-icons">
@@ -46,6 +35,6 @@
     </div>
   </div>
   <div *ngIf="!sidebarVisible" class="margin-bottom"></div>
-  <app-mobile-topbar [sidebarVisible]="sidebarVisible"></app-mobile-topbar>
+  <app-mobile-topbar *ngIf="screenWidth < widthForMobileVersion" [sidebarVisible]="sidebarVisible"></app-mobile-topbar>
 </div>
 

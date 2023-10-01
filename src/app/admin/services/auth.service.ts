@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import {AuthUserInterface} from '../shared/types/authUser.interface';
 import {AuthBackendResponse} from '../shared/types/authBackendResponse';
 import {PersistanceService} from "./persistance.service";
-import {EMPTY, Observable} from "rxjs";
+import {EMPTY, Observable, of} from "rxjs";
 import {OrderProductInterface} from "../shared/types/orderProductInterface";
 import {CurrentUserInterface} from "../shared/types/currentUser.interface";
 import {catchError} from "rxjs/operators";
@@ -25,9 +25,9 @@ export class AuthService {
     const url = environment.serverUrl + '/api/login';
     return this.http.post<any>(url,user).pipe(
       catchError((err) => {
-        this.alert.danger(err);
+        this.alert.danger('Сервеная ошибка');
         console.error(err);
-        return EMPTY;
+        return of(null);
       })
     );
   }

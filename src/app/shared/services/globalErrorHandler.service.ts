@@ -7,9 +7,9 @@ export class GlobalErrorHandlerService implements ErrorHandler {
     private alertService: AlertService
   ) {}
 
-  handleError(error: Error): void {
+  handleError(error: any): void {
     console.error(error);
-    this.alertService.danger(error.message);
+    this.alertService.danger(error?.message ?? 'Сервеная ошибка');
   }
 
 }

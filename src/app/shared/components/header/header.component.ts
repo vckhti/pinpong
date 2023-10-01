@@ -22,13 +22,15 @@ import {ScreenService} from "../../services/screen.service";
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   basketArraySelectorCount$: Observable<number> = this.store.select(basketArraySelectorCount).pipe(filter(res => res !== undefined));
   private subscriptions: Subscription;
-  temp: any[] = [];
   currentRouteUrl: string;
   isAnonymousSelector: boolean;
   currentUserSelector: string;
   sidebarVisible = false;
   showExitSpan = false;
   screenWidth: number;
+
+  widthForMobileVersion=900;
+
   @ViewChild('search') search: ElementRef;
 
   constructor(
@@ -42,11 +44,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.subscriptions = new Subscription();
     this.currentRouteUrl = this.route['_routerState'].snapshot.url;
-  //   try {
-  //     window.addEventListener('click', (event) => this.popupService.close());
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
    }
 
   ngOnInit() {
@@ -70,14 +67,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       this.screenService.getScreenWidth().pipe(
       ).subscribe(
         (response) => {
-          console.log('screenWidth', response);
           this.screenWidth = response;
-         /* if (response < 1050) {
-            this.sidebarVisible = true;
-          } else {
-            this.sidebarVisible = false;
-          }*/
-
         }
       )
     );
@@ -115,7 +105,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
               )
             }),
             catchError((err) => {
-              this.alert.danger(err);
+              this.alert.danger(err ?? 'Сервеная ошибка');
               console.error(err);
               return EMPTY;
             })
@@ -151,7 +141,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   onHamburgerClick(): void {
 
     this.sidebarVisible = !this.sidebarVisible;
-    console.log('onHamburgerClick', this.sidebarVisible);
   }
 
 }
