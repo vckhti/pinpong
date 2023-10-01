@@ -168,8 +168,10 @@ span {
   background-color: #290f6c;
 }
 
-.margin-bottom{
-  margin-bottom: 91px;
+.banner{
+  max-width: 1300px;
+  height:91px;
+  background: url("/assets/img/banner.png") 30% / cover;
 }
 
 .header-icons{
