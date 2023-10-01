@@ -1,0 +1,39 @@
+.hide {
+  display: none;
+}
+
+.activate {
+  background: #290f6c;
+  width: 100%;
+  // line-height: 35px;
+  position: relative;
+  justify-content:left;
+  padding-left: 8px;
+  border-radius: 0 0 3px 3px;
+  border: 1px solid #290f6c;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-items: center;
+}
+
+.nav-item{
+  font-size: 0.8em;
+  min-width: 20px;
+  max-width: 90px;
+  min-height: 35px;
+  max-height: 90px;
+  list-style: none;
+  padding: 2px;
+  margin: 0;
+}
+
+.nav-link {
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 0 4px 0 4px;
+  color: white;
+  text-decoration: none;
+}
+

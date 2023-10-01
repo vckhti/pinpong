@@ -49,58 +49,58 @@ export class MainLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.subscriptions.add(
-      this.store.select(isAnonymousSelector).subscribe(
-        (response) => {
-          this.isAnonymousSelector = response;
-        }
-      )
-    );
-
-    this.subscriptions.add(
-      this.store.select(currentUserSelector).pipe(
-        filter(res => res !== null)
-      ).subscribe(
-        (response: CurrentUserInterface) => {
-          if (response.username) {
-            this.currentUserSelector = response.username;
-          }
-        }
-      )
-    );
-
-    this.subscriptions.add(
-      this.router.events.subscribe((response) => {
-          this.currentRouteUrl = this.route['_routerState'].snapshot.url;
-        }
-      )
-    );
+    // this.subscriptions.add(
+    //   this.store.select(isAnonymousSelector).subscribe(
+    //     (response) => {
+    //       this.isAnonymousSelector = response;
+    //     }
+    //   )
+    // );
+    //
+    // this.subscriptions.add(
+    //   this.store.select(currentUserSelector).pipe(
+    //     filter(res => res !== null)
+    //   ).subscribe(
+    //     (response: CurrentUserInterface) => {
+    //       if (response.username) {
+    //         this.currentUserSelector = response.username;
+    //       }
+    //     }
+    //   )
+    // );
+    //
+    // this.subscriptions.add(
+    //   this.router.events.subscribe((response) => {
+    //       this.currentRouteUrl = this.route['_routerState'].snapshot.url;
+    //     }
+    //   )
+    // );
   }
 
   ngAfterViewInit(): void {
-    this.subscriptions.add(
-      this.keyupAsValue(this.search.nativeElement).pipe(
-        distinctUntilChanged(),
-        debounceTime(300),
-        switchMap((searchString: string) => {
-          return this.productService.getProducts().pipe(
-            map((allProducts: TtproductInterface[]) => {
-              return allProducts.filter((item: TtproductInterface) =>
-                (item.title && item.title.toString().toUpperCase().includes(searchString.toUpperCase()))
-              )
-            }),
-            catchError((err) => {
-              this.alert.danger(err);
-              console.error(err);
-              return EMPTY;
-            })
-          )
-        })
-      ).subscribe(
-        (response: TtproductInterface[]) => {
-          this.store.dispatch(new fetchProductsSuccess({products: response}))
-        })
-    );
+    // this.subscriptions.add(
+    //   this.keyupAsValue(this.search.nativeElement).pipe(
+    //     distinctUntilChanged(),
+    //     debounceTime(300),
+    //     switchMap((searchString: string) => {
+    //       return this.productService.getProducts().pipe(
+    //         map((allProducts: TtproductInterface[]) => {
+    //           return allProducts.filter((item: TtproductInterface) =>
+    //             (item.title && item.title.toString().toUpperCase().includes(searchString.toUpperCase()))
+    //           )
+    //         }),
+    //         catchError((err) => {
+    //           this.alert.danger(err);
+    //           console.error(err);
+    //           return EMPTY;
+    //         })
+    //       )
+    //     })
+    //   ).subscribe(
+    //     (response: TtproductInterface[]) => {
+    //       this.store.dispatch(new fetchProductsSuccess({products: response}))
+    //     })
+    // );
   }
 
   ngOnDestroy(): void {
@@ -113,9 +113,9 @@ export class MainLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   keyupAsValue(elem: any) {
-    return fromEvent(elem, 'keyup').pipe(
-      map((event: any) => event.target.value),
-    );
+    // return fromEvent(elem, 'keyup').pipe(
+    //   map((event: any) => event.target.value),
+    // );
   };
 
   logout() {

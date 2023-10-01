@@ -1,0 +1,207 @@
+.firstImage {
+  width: 32px;
+  height: 32px;
+}
+
+.secondImage {
+  width: 32px;
+  height: 32px;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-header {
+  margin-top: 0 !important;
+  border: 1px solid #290f6c;
+}
+
+.main-content {
+  min-height: 100%;
+  flex: 1;
+  z-index: 3;
+}
+
+.navi {
+  min-height: 50px;
+  z-index: 999;
+}
+
+.auth-menu {
+  select {
+    max-width: 130px;
+    max-height: 32.83px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px 10px !important;
+  }
+
+  select:focus {
+    outline: none;
+  }
+}
+
+.signin {
+  font-size: 16px;
+  margin-left: 5px;
+  text-decoration: none;
+}
+
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 7;
+  width: 130px;
+  height: 30px;
+  color: white;
+  font-size: 16px;
+  background-color: #03043f;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+
+.ava-wrapper {
+  display: flex;
+  min-width: 150px;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+
+  span {
+    text-align: left;
+    float:left;
+  }
+}
+
+.on-hover {
+  cursor: pointer;
+  color: white;
+  padding: 3px 0 0 0;
+}
+
+.ava-text {
+  padding-left: 5px;
+  color: white;
+  cursor: default;
+  min-width: 130px;
+  font-size: 14px;
+
+}
+
+
+.show-tooltip-text {
+  visibility: visible;
+}
+
+#top {
+  top: -50px;
+  left: -30px;
+}
+
+#bottom {
+  top: 25px;
+  left: -50%;
+}
+
+
+
+#left {
+  top: -9px;
+  right: 77%;
+}
+
+#right {
+  top: -5px;
+  left: 15%;
+}
+
+.hover-text {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  text-align: center;
+  z-index: 99999999;
+  cursor: pointer;
+}
+
+span {
+  font-family: "Comic Sans MS";
+}
+
+@media (max-width: 501px) {
+  .tooltip-text {
+    height: 22px;
+    width: 110px;
+    font-size: 15px;
+    padding: 1px;
+  }
+  #right {
+    top: -5px;
+    left: 20%;
+  }
+  .header-icons {
+    margin-right: 10px;
+  }
+}
+
+.header-wrapper {
+  max-width: 1300px;
+
+
+  //text-align: center;
+  margin: 0 auto;
+
+  a{
+    color: white;
+  }
+}
+
+.header-block {
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #290f6c;
+}
+
+.margin-bottom{
+  margin-bottom: 91px;
+}
+
+.header-icons{
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 14px 10px 0 0;
+}
+
+#search {
+  max-width: 200px;
+  margin: 8px 0 0 10px;
+
+}
+
+.hamburger{
+  position: relative;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background: url("/assets/img/menu3.png") 30% / cover;
+}
+
+.cart-icons {
+  display: flex;
+  width: 45px;
+}
+
+.count-items {
+  right: 4px;
+}
+
+
+
+

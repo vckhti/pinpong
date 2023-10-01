@@ -3,9 +3,10 @@ import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms
 import { AuthService } from 'src/app/admin/services/auth.service';
 import { Router } from '@angular/router';
 import {AuthUserInterface} from '../shared/types/authUser.interface';
-import {Subscription} from "rxjs";
+import {Subscription, timer} from "rxjs";
 import {CurrentUserInterface} from "../shared/types/currentUser.interface";
 import {AlertService} from "../../shared/services/alert.service";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-login-page',
@@ -15,6 +16,7 @@ import {AlertService} from "../../shared/services/alert.service";
 export class LoginPageComponent implements OnInit, OnDestroy {
   form: UntypedFormGroup;
   submitted = false;
+
   private subscriptions: Subscription;
 
   constructor(
@@ -49,18 +51,17 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       password: this.form.value.password,
     }
     this.subscriptions.add(
-    this.auth.login(user).subscribe( (user: CurrentUserInterface) => {
+    this.auth.login(user).subscribe( (user: any) => {
       if (user && user.id && user.roles[0] === 'admin') {
       this.auth.setToken({token: 'admin-token'});
       this.form.reset;
       this.router.navigate(['/admin','orders']);
       this.submitted = false;
       } else {
+        this.form.controls.name.setErrors({required:'Неверный пароль'})
         this.alert.danger('Введите учетную запись с правами администратора!');
-        setTimeout(() => location.reload(),1000);
+        setTimeout(() =>  location.reload(),1500);
       }
-    }, () => {
-      this.submitted = false;
     })
     );
 

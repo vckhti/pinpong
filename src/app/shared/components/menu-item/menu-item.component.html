@@ -1,0 +1,19 @@
+<div class='menu-item' [ngClass]="{'vertical-menu': isVertical, 'active': isActiveRoute}">
+    <span>{{item.title}}</span>
+    <span *ngIf="item.children.length > 0 && !isVertical">
+        <span [ngClass]='parentIsPopup ? "dropright": "dropdown"' ><button class='dropdown-toggle'></button></span>
+    </span>
+    <span *ngIf="item.parent_id && isVertical">
+            <span [ngClass]='(mouseInItem || mouseInPopup) ? "dropleft": "dropdown"' ><button class='dropdown-toggle'></button></span>
+    </span>
+</div>
+<spa-popup-menu @visibilityPopup *ngIf="mouseInPopup || mouseInItem"
+                [menu]='item.children'
+                [ngClass]='{"vertical-menu": isVertical}'
+                [style.left]='popupLeft+"px"'
+                [style.top]='popupTop+"px"'
+                class="top-overflow"
+                (mouseleave)='onPopupMouseLeave($event)'
+                (mouseenter)='onPopupMouseEnter($event)'>
+
+</spa-popup-menu>

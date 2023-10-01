@@ -1,0 +1,12 @@
+<div class="hide" [ngClass]="{'activate': sidebarVisible}" >
+  <div *ngFor="let category of getOnlyNoChildrensCategories()" class="nav-item">
+      <a
+        class="nav-link"
+        [routerLink]="['/category/',category?.slug]"
+        (click)="onCategorySelect()"
+      >{{ category?.title }}</a>
+  </div>
+</div>
+
+
+

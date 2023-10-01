@@ -10,7 +10,7 @@
     <div class="col-sm-6">
       <div class="input-group mb-3">
         <label class="input-group-text" for="input-sort">Сортировать по:</label>
-        <select #sortParams class="form-select" id="input-sort" (change)="doSort(sortParams)">
+        <select #sortParams class="form-select" id="input-sort" style="z-index: -1 !important;" (change)="doSort(sortParams)">
           <option selected="" disabled></option>
           <option value="price_asc">Возрастанию цены</option>
           <option value="price_desc">Убыванию цены</option>

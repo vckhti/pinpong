@@ -23,7 +23,7 @@ export class OrderService {
     const url = environment.serverUrl + API_URLS.getCreateOrder;
     return this.http.post(url, order).pipe(
       catchError((err) => {
-        this.alert.danger(err);
+        this.alert.danger(err ?? 'Сервеная ошибка');
         console.error(err);
         return EMPTY;
       })
@@ -33,7 +33,7 @@ export class OrderService {
   getOrders(): Observable<OrderProductInterface[]> {
     return this.http.get<OrderProductInterface[]>(`${environment.serverUrl}/api/orders`).pipe(
       catchError((err) => {
-        this.alert.danger(err);
+        this.alert.danger(err ?? 'Сервеная ошибка');
         console.error(err);
         return EMPTY;
       })
@@ -48,7 +48,7 @@ export class OrderService {
         return model.saveProductsToModel(response);
       }),
       catchError((err: any) => {
-        this.alert.danger(err);
+        this.alert.danger(err ?? 'Сервеная ошибка');
         console.error(err);
         return of(model);
       })
@@ -63,7 +63,7 @@ export class OrderService {
         return model.saveUsersToModel(response);
       }),
       catchError((err: any) => {
-        this.alert.danger(err);
+        this.alert.danger(err ?? 'Сервеная ошибка');
         console.error(err);
         return of(model);
       })

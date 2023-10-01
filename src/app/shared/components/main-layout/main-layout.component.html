@@ -1,6 +1,7 @@
 <div class="main-wrapper">
-  <div class="main-header">
-    <div class="header-top py-2">
+  <app-header></app-header>
+  <!--<div class="main-header">
+    <div class="header-top">
       <div class="container">
         <div class="row justify-content-between">
           <div *ngIf="!sidebarVisible" class="col align-items-center d-flex flex-row justify-content-between">
@@ -34,21 +35,25 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- header-top -->
-    <div class="header-bottom py-2 navi">
-      <div class="container navi" >
-        <p-sidebar [(visible)]="sidebarVisible" styleClass="topbar" [showCloseIcon]="false"
-                   position="top">
-          <ng-template pTemplate="header">
-            <app-topbar-mobile (itemClick)="sidebarVisible = false"></app-topbar-mobile>
-          </ng-template>
-        </p-sidebar>
-        <app-topbar (itemClick)="sidebarVisible = !sidebarVisible"></app-topbar>
+    </div>-->
 
-      </div>
+  <!--<div class="header-bottom py-2 navi">
+    <div class="container navi">
+      <app-mobile-topbar [sidebarVisible]="sidebarVisible" (itemClick)="sidebarVisible = false"></app-mobile-topbar>
     </div>
-  </div>
+  </div>-->
+
+     <!-- <p-sidebar [(visible)]="sidebarVisible" styleClass="topbar" [showCloseIcon]="false"
+                 position="top">
+        <ng-template pTemplate="header">
+          <app-topbar-mobile (itemClick)="sidebarVisible = false"></app-topbar-mobile>
+
+        </ng-template>
+      </p-sidebar>-->
+     <!-- <app-topbar (itemClick)="sidebarVisible = !sidebarVisible"></app-topbar>-->
+
+
+  <!--</div>-->
   <!--end header-top -->
 
   <!--Content-->

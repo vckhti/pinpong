@@ -38,8 +38,8 @@ export class LoginEffect {
             return loginSuccessAction({currentUser});
           }),
           catchError((errorResponse: HttpErrorResponse) => {
-            this.alert.danger(`Возникла ошибка: ${errorResponse.error.message}`);
-            return of(loginFailureAction({errors: errorResponse.error.message}));
+            this.alert.danger(`Возникла ошибка: ${errorResponse.error?.message ?? 'Сервеная ошибка'}`);
+            return of(loginFailureAction({errors: errorResponse.error?.message ?? 'Сервеная ошибка'}));
           })
         )
       })

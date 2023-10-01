@@ -33,9 +33,13 @@ import {PersistanceService} from "./admin/services/persistance.service";
 import {GlobalErrorHandlerService} from "./shared/services/globalErrorHandler.service";
 import {SidebarModule} from "primeng/sidebar";
 import { TopbarComponent } from './shared/components/topbar/topbar.component';
-import {TopbarMobileComponent} from "./shared/components/topbar-mobile/topbar-mobile.component";
 import {ScreenService} from "./shared/services/screen.service";
 import {LoadingModule} from "./shared/modules/loading/loading.module";
+import { MobileTopbarComponent } from './shared/components/mobile-topbar/mobile-topbar.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import {MenuItemComponent} from "./shared/components/menu-item/menu-item.component";
+import {PopupMenuComponent} from "./shared/components/popup-menu/popup-menu.component";
+import {PopupService} from "./shared/services/popup.service";
 
 @NgModule({
   declarations: [
@@ -44,11 +48,14 @@ import {LoadingModule} from "./shared/modules/loading/loading.module";
     AlertComponent,
     MainPageComponent,
     TopbarComponent,
-    TopbarMobileComponent,
     ProductPageComponent,
     CartPageComponent,
     CategoryPageComponent,
     ComponentWithPaginationComponent,
+    MobileTopbarComponent,
+    HeaderComponent,
+    MenuItemComponent,
+    PopupMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +93,7 @@ import {LoadingModule} from "./shared/modules/loading/loading.module";
     ConfirmationService,
     MessageService,
     DialogService,
+    PopupService,
     PersistanceService
   ],
   bootstrap: [AppComponent]

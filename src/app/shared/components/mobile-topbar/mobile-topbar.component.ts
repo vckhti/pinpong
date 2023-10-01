@@ -1,19 +1,20 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
-import {Menu} from "../../types/menu.interface";
-import {ProductService} from "../../services/product.service";
 import {delayWhen, interval, of, Subscription} from "rxjs";
+import {ProductService} from "../../services/product.service";
 import {Store} from "@ngrx/store";
-import {setLoadingIndicator} from "../../../core/store/app-actions";
 import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
+import {setLoadingIndicator} from "../../../core/store/app-actions";
+import {PopupService} from "../../services/popup.service";
 
 @Component({
-  selector: 'app-topbar-mobile',
-  templateUrl: './topbar-mobile.component.html',
-  styleUrls: ['./topbar-mobile.component.scss']
+  selector: 'app-mobile-topbar',
+  templateUrl: './mobile-topbar.component.html',
+  styleUrls: ['./mobile-topbar.component.scss']
 })
-export class TopbarMobileComponent implements OnInit, OnDestroy {
+export class MobileTopbarComponent implements OnInit, OnDestroy{
   @Output() itemClick = new EventEmitter();
+  @Input() sidebarVisible;
 
   categories: CategoryInterface[] = [];
   private subscriptions: Subscription;
@@ -21,14 +22,10 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
+    private popupService: PopupService,
     private store: Store
   ) {
     this.subscriptions = new Subscription();
-  }
-
-
-  getChildrens(category: any): any[] {
-    return Object.values(category.children);
   }
 
   ngOnDestroy(): void {
@@ -40,29 +37,31 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
-        (selectIsLoadingSelector: any) => {
-          if (selectIsLoadingSelector) {
-            this.isLoading = selectIsLoadingSelector;
-          } else {
-            this.isLoading = selectIsLoadingSelector;
-          }
+        (selectIsLoadingSelector) => {
+          this.isLoading = selectIsLoadingSelector;
         }
       )
     );
 
     this.subscriptions.add(
-      this.productService.getMenuItems().subscribe(
-        (response: any) => {
-          this.categories = Object.values(response).filter((item: Menu) => item.language_id === 2);
+      this.productService.getCategories().subscribe(
+        (response: CategoryInterface[]) => {
+          this.categories = response;
         }
       )
     );
+  }
+
+  getOnlyNoChildrensCategories(): any {
+    //TODO Убрать хардкод.
+    return this.categories?.filter((item) => item.category_id !== 9 );
   }
 
   onCategorySelect() {
     //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
+    this.popupService.close();
   }
 
 }

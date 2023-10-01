@@ -1,10 +1,4 @@
-.hamburger{
-  position: relative;
-  top: 20px;
-  width: 30px;
-  height: 30px;
-  background: url("/assets/img/menu2.png") 30% / cover;
-}
+
 
 img{
   width: 30px;
@@ -18,4 +12,45 @@ a {
 a.disabled {
   pointer-events: none;
   }
+
+a, li {
+  color: black;
+}
+
+a:hover {
+  color: #733786;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: #733786;
+}
+
+li a.dropdown-item {
+  color: #000;
+}
+
+li a.dropdown-item:focus, li a.dropdown-item:hover {
+  background-color: #322d7e;
+  color: #000;
+}
+
+.dropdown-menu {
+  min-width: 100%;
+  z-index: 1001;
+}
+
+.dropdown-menu > div, .dropdown-menu {
+  background-color: #f9f9f9;
+  margin: 1px;
+}
+
+.dropdown-menu .emty-cart {
+  text-align: center;
+}
+
+.dropdown-menu .item-row div {
+  text-align: center;
+}
 

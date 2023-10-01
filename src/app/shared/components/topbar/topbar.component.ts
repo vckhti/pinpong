@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
-import {Menu} from "../../types/menu.interface";
 import {ProductService} from "../../services/product.service";
-import {delayWhen, distinctUntilChanged, interval, of, Subscription} from "rxjs";
+import {delayWhen, distinctUntilChanged, interval, of, Subscription, take} from "rxjs";
 import {ScreenService} from "../../services/screen.service";
 import {Store} from "@ngrx/store";
 import {setLoadingIndicator} from "../../../core/store/app-actions";
@@ -29,9 +28,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.subscriptions = new Subscription();
   }
 
-  getChildrens(category: any): any[] {
-    return Object.values(category.children);
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -39,36 +35,40 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
+      this.productService.getCategories().pipe(
+        take(1)
+      ).subscribe(
+        (tempCategory: CategoryInterface[]) => {
+          for (let i = 0; i < tempCategory.length; i++) {
+            tempCategory[i].children = new Array();
+            for (let j = 0; j < tempCategory.length; j++) {
+
+              if (tempCategory[i].category_id == tempCategory[j].parent_id) {
+                tempCategory[i].children.push(tempCategory[j]);
+              }
+            }
+            if (tempCategory[i].category_id === 0) {
+              this.categories.push(tempCategory[i]);
+            }
+          }
+          this.categories = tempCategory;
+        }
+      )
+    );
+
+    this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
-        (selectIsLoadingSelector: any) => {
-          if (selectIsLoadingSelector) {
-            this.isLoading = selectIsLoadingSelector;
-          } else {
-            this.isLoading = selectIsLoadingSelector;
-          }
+        (selectIsLoadingSelector) => {
+          this.isLoading = selectIsLoadingSelector;
         }
       )
     );
+  }
 
-    this.subscriptions.add(
-      this.screenService.getScreenWidth().pipe(
-        distinctUntilChanged()
-      ).subscribe(
-        (width: number) => {
-          this.screenWidth = width;
-        }
-      )
-    );
-
-    this.subscriptions.add(
-      this.productService.getMenuItems().subscribe(
-        (response: any) => {
-          this.categories = Object.values(response).filter((item: Menu) => item.language_id === 2);
-        }
-      )
-    );
+  getOnlyParentCategories(): any {
+    return this.categories?.filter((item) => item.parent_id === 0 );
   }
 
   setLoadingIndicator() {
@@ -77,8 +77,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
   }
 
-  onHamburgerClick(): void {
-    this.itemClick.next(true);
-  }
+
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, share, shareReplay} from 'rxjs/operators';
 import {EMPTY, Observable, of} from "rxjs";
 import {TtproductInterface} from "../types/ttproduct.interface";
 import {API_URLS} from "./config";
@@ -41,7 +41,8 @@ export class ProductService {
 
   getCategories(): Observable<CategoryInterface[]> {
     const url = environment.serverUrl + API_URLS.getCategories;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url).pipe(
+    );
   }
 
   getProductsByCategory(id: number): Observable<TtproductInterface[]> {
