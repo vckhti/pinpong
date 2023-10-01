@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
-import {Menu} from "../../types/menu.interface";
 import {ProductService} from "../../services/product.service";
 import {delayWhen, interval, of, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
@@ -15,7 +14,7 @@ import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
 export class TopbarMobileComponent implements OnInit, OnDestroy {
   @Output() itemClick = new EventEmitter();
 
-  categories: CategoryInterface[] = [];
+  categories: CategoryInterface[] | undefined = [];
   private subscriptions: Subscription;
   isLoading: boolean;
 
@@ -53,7 +52,7 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.productService.getCategories().subscribe(
         (response: any) => {
-          this.categories = Object.values(response).filter((item: Menu) => item.language_id === 1);
+          this.categories = response;
         }
       )
     );
@@ -63,6 +62,10 @@ export class TopbarMobileComponent implements OnInit, OnDestroy {
     //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
+  }
+
+  getOnlyParentCategories(): any {
+    return this.categories?.filter((item) => item.parent_id === 0 );
   }
 
 }

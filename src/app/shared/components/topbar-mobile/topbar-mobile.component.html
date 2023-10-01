@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-light ">
     <div *ngIf="categories" class="collapse navbar-collapse">
-      <ul *ngFor="let category of categories" class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <ul *ngFor="let category of getOnlyParentCategories()" class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li
           class="nav-item ">
           <a

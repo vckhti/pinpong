@@ -1,13 +1,27 @@
 <div class="header-wrapper">
-  <div *ngIf="!sidebarVisible" class="header-block">
+  <div class="header-block">
+    <div *ngIf="screenWidth < 1050">
+      <div class="hamburger " (click)="onHamburgerClick()" ></div>
+    </div>
     <div class="input-group active" #search id="search">
       <input *ngIf="currentRouteUrl === '/'" type="text" class="form-control" placeholder="Поиск" name="s">
     </div>
     <div>
-      <app-topbar (itemClick)="sidebarVisible = !sidebarVisible"></app-topbar>
+      <app-topbar *ngIf="screenWidth > 1050" ></app-topbar>
+    <!--  <p-sidebar *ngIf="screenWidth < 900" [(visible)]="sidebarVisible"  [showCloseIcon]="true" position="top">
+        &lt;!&ndash;position="top"&ndash;&gt;
+
+        <ng-template pTemplate="header">
+         &lt;!&ndash; <app-topbar-mobile (itemClick)="sidebarVisible = false"></app-topbar-mobile>&ndash;&gt;
+
+        </ng-template>
+
+        &lt;!&ndash;<app-sidebar ></app-sidebar>&ndash;&gt;
+
+      </p-sidebar>-->
     </div>
     <div class="header-icons">
-      <div class="d-flex">
+      <div class="cart-icons">
         <a [routerLink]="'/cart'" class="relative" data-bs-toggle="modal" data-bs-target="#cart-modal">
           <i class="fas fa-shopping-cart"></i>
           <span class="badge bg-danger rounded-pill count-items">{{basketArraySelectorCount$ | async}}</span>
@@ -31,6 +45,7 @@
       </ng-template>
     </div>
   </div>
-
-
+  <div *ngIf="!sidebarVisible" class="margin-bottom"></div>
+  <app-mobile-topbar [sidebarVisible]="sidebarVisible"></app-mobile-topbar>
 </div>
+

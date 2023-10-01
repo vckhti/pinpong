@@ -8,6 +8,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
   ) {}
 
   handleError(error: Error): void {
+    console.error(error);
     this.alertService.danger(error.message);
   }
 

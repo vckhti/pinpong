@@ -4,8 +4,8 @@ import {delayWhen, interval, of, Subscription} from "rxjs";
 import {ProductService} from "../../services/product.service";
 import {Store} from "@ngrx/store";
 import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
-import {Menu} from "../../types/menu.interface";
 import {setLoadingIndicator} from "../../../core/store/app-actions";
+import {PopupService} from "../../services/popup.service";
 
 @Component({
   selector: 'app-mobile-topbar',
@@ -22,6 +22,7 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
 
   constructor(
     private productService: ProductService,
+    private popupService: PopupService,
     private store: Store
   ) {
     this.subscriptions = new Subscription();
@@ -51,13 +52,26 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
       )
     );
 
+    this.subscriptions.add(
+      this.productService.getCategories().subscribe(
+        (response: any) => {
+          console.log('resp2', response);
+          this.categories = response;
+        }
+      )
+    );
 
   }
 
+  getOnlyNoChildrensCategories(): any {
+    return this.categories?.filter((item) => item.category_id !== 9 );
+  }
   onCategorySelect() {
     //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
+
+    this.popupService.close();
   }
 
 }

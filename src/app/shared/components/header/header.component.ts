@@ -11,6 +11,8 @@ import {CurrentUserInterface} from "../../../modules/auth/types/currentUser.inte
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {fetchProductsSuccess} from "../../../core/store/app-actions";
 import {logOutAction} from "../../../modules/auth/store/actions/login.action";
+import {PopupService} from "../../services/popup.service";
+import {ScreenService} from "../../services/screen.service";
 
 @Component({
   selector: 'app-header',
@@ -20,13 +22,13 @@ import {logOutAction} from "../../../modules/auth/store/actions/login.action";
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   basketArraySelectorCount$: Observable<number> = this.store.select(basketArraySelectorCount).pipe(filter(res => res !== undefined));
   private subscriptions: Subscription;
-  type = 'Phone';
   temp: any[] = [];
   currentRouteUrl: string;
   isAnonymousSelector: boolean;
   currentUserSelector: string;
   sidebarVisible = false;
   showExitSpan = false;
+  screenWidth: number;
   @ViewChild('search') search: ElementRef;
 
   constructor(
@@ -34,17 +36,48 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private store: Store,
     private productService: ProductService,
     private route: ActivatedRoute,
-    private alert: AlertService
+    private alert: AlertService,
+    private popupService: PopupService,
+    public screenService: ScreenService,
   ) {
     this.subscriptions = new Subscription();
     this.currentRouteUrl = this.route['_routerState'].snapshot.url;
-  }
+  //   try {
+  //     window.addEventListener('click', (event) => this.popupService.close());
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+   }
 
   ngOnInit() {
     this.subscriptions.add(
       this.store.select(isAnonymousSelector).subscribe(
         (response) => {
           this.isAnonymousSelector = response;
+        }
+      )
+    );
+
+    this.subscriptions.add(
+      this.popupService.isVisible$.subscribe(
+        (response) => {
+          this.sidebarVisible = response;
+        }
+      )
+    );
+
+    this.subscriptions.add(
+      this.screenService.getScreenWidth().pipe(
+      ).subscribe(
+        (response) => {
+          console.log('screenWidth', response);
+          this.screenWidth = response;
+         /* if (response < 1050) {
+            this.sidebarVisible = true;
+          } else {
+            this.sidebarVisible = false;
+          }*/
+
         }
       )
     );
@@ -113,6 +146,12 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  onHamburgerClick(): void {
+
+    this.sidebarVisible = !this.sidebarVisible;
+    console.log('onHamburgerClick', this.sidebarVisible);
   }
 
 }

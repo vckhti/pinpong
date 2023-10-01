@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Menu} from "../../types/menu.interface";
+import {CategoryInterface} from "../../types/category.interface";
 
 @Component({
   selector: 'spa-popup-menu',
@@ -7,7 +7,7 @@ import {Menu} from "../../types/menu.interface";
   styleUrls: ['./popup-menu.component.css']
 })
 export class PopupMenuComponent implements OnInit {
-  @Input() menu: Array<Menu>;
+  @Input() menu: Array<CategoryInterface>;
   isVertical = true;
   constructor() { }
 

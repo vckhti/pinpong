@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, ElementRef, HostListener, HostBinding, Renderer2} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
-import {Menu} from "../../types/menu.interface";
 import {debounceTime, delay, distinctUntilChanged, first, Subscription, take} from "rxjs";
 import {ProductService} from "../../services/product.service";
+import {CategoryInterface} from "../../types/category.interface";
 
 @Component({
   selector: 'spa-menu-item',
@@ -10,13 +10,13 @@ import {ProductService} from "../../services/product.service";
   styleUrls: ['./menu-item.component.css'],
 })
 export class MenuItemComponent implements OnInit {
-  @Input() item: Menu;
+  @Input() item: CategoryInterface;
   @HostBinding('class.parent-for-popup')
   @Input() parentIsPopup = true;
   mouseInPopup = false;
 
   isVertical = false;
-  categories: Menu[] = new Array();
+  categories: CategoryInterface[] = new Array();
 
   mouseInItem = false;
   popupLeft = 0;

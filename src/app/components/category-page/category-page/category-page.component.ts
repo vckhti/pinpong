@@ -30,7 +30,7 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
   breadcrumbs: Breadcrumb[] = [];
   private subscriptions: Subscription;
   slug: string;
-  currentCategory: CategoryInterface = {title: ''};
+  currentCategory: CategoryInterface ;
   id: number;
   @ViewChild('search', {static: true}) search: ElementRef;
   @ViewChild('sortParams') sortParams: ElementRef;
@@ -110,7 +110,7 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
             this.currentCategory = response.find((item: CategoryInterface) => item.slug === this.slug);
             this.breadcrumbs = [
               {label: 'Главная', url: '/'},
-              {label: `Товары в категории: ${this.currentCategory.title}`, url: ''},
+              {label: `Товары в категории: ${this.currentCategory?.title}`, url: ''},
             ];
             if (this.currentCategory.id) {
               this.store.dispatch(new fetchProductsByCategory({id: this.currentCategory.id}));

@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
-import {Menu} from "../../types/menu.interface";
 import {ProductService} from "../../services/product.service";
 import {delayWhen, distinctUntilChanged, interval, of, Subscription, take} from "rxjs";
 import {ScreenService} from "../../services/screen.service";
@@ -42,7 +41,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
       this.productService.getCategories().pipe(
         take(1)
       ).subscribe(
-        (tempCategory: Menu[]) => {
+        (tempCategory: CategoryInterface[]) => {
           for (let i = 0; i < tempCategory.length; i++) {
             tempCategory[i].children = new Array();
             for (let j = 0; j < tempCategory.length; j++) {
@@ -75,7 +74,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
       )
     );
 
-    this.subscriptions.add(
+    /*this.subscriptions.add(
       this.screenService.getScreenWidth().pipe(
         distinctUntilChanged()
       ).subscribe(
@@ -83,7 +82,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
           this.screenWidth = width;
         }
       )
-    );
+    );*/
 
     // this.subscriptions.add(
     //   this.productService.getMenuItems().subscribe(
@@ -104,8 +103,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
   }
 
-  onHamburgerClick(): void {
-    this.itemClick.next(true);
-  }
+
 
 }

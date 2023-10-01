@@ -16,6 +16,7 @@
 
 .main-header {
   margin-top: 0 !important;
+  border: 1px solid #290f6c;
 }
 
 .main-content {
@@ -159,9 +160,10 @@ span {
   display: flex;
   justify-content: space-between;
   background-color: #290f6c;
-  border-radius: 6px;
+}
+
+.margin-bottom{
   margin-bottom: 91px;
-  //justify-items: center;
 }
 
 .header-icons{
@@ -173,6 +175,24 @@ span {
   max-width: 200px;
   margin: 8px 0 0 60px;
 
+}
+
+.hamburger{
+  position: relative;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background: url("/assets/img/menu3.png") 30% / cover;
+}
+
+.cart-icons {
+  display: flex;
+  width: 45px;
+}
+
+.count-items {
+  right: 2px;
 }
 
 

@@ -40,6 +40,7 @@ import { MobileTopbarComponent } from './shared/components/mobile-topbar/mobile-
 import { HeaderComponent } from './shared/components/header/header.component';
 import {MenuItemComponent} from "./shared/components/menu-item/menu-item.component";
 import {PopupMenuComponent} from "./shared/components/popup-menu/popup-menu.component";
+import {PopupService} from "./shared/services/popup.service";
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import {PopupMenuComponent} from "./shared/components/popup-menu/popup-menu.comp
     ConfirmationService,
     MessageService,
     DialogService,
+    PopupService,
     PersistanceService
   ],
   bootstrap: [AppComponent]
