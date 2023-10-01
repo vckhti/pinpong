@@ -57,12 +57,8 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
-        (selectIsLoadingSelector: any) => {
-          if (selectIsLoadingSelector) {
-            this.isLoading = selectIsLoadingSelector;
-          } else {
-            this.isLoading = selectIsLoadingSelector;
-          }
+        (selectIsLoadingSelector) => {
+          this.isLoading = selectIsLoadingSelector;
         }
       )
     );

@@ -33,7 +33,6 @@ import {PersistanceService} from "./admin/services/persistance.service";
 import {GlobalErrorHandlerService} from "./shared/services/globalErrorHandler.service";
 import {SidebarModule} from "primeng/sidebar";
 import { TopbarComponent } from './shared/components/topbar/topbar.component';
-import {TopbarMobileComponent} from "./shared/components/topbar-mobile/topbar-mobile.component";
 import {ScreenService} from "./shared/services/screen.service";
 import {LoadingModule} from "./shared/modules/loading/loading.module";
 import { MobileTopbarComponent } from './shared/components/mobile-topbar/mobile-topbar.component';
@@ -49,7 +48,6 @@ import {PopupService} from "./shared/services/popup.service";
     AlertComponent,
     MainPageComponent,
     TopbarComponent,
-    TopbarMobileComponent,
     ProductPageComponent,
     CartPageComponent,
     CategoryPageComponent,

@@ -28,11 +28,6 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
     this.subscriptions = new Subscription();
   }
 
-
-  getChildrens(category: any): any[] {
-    return Object.values(category.children);
-  }
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -42,34 +37,30 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
-        (selectIsLoadingSelector: any) => {
-          if (selectIsLoadingSelector) {
-            this.isLoading = selectIsLoadingSelector;
-          } else {
-            this.isLoading = selectIsLoadingSelector;
-          }
+        (selectIsLoadingSelector) => {
+          this.isLoading = selectIsLoadingSelector;
         }
       )
     );
 
     this.subscriptions.add(
       this.productService.getCategories().subscribe(
-        (response: any) => {
+        (response: CategoryInterface[]) => {
           this.categories = response;
         }
       )
     );
-
   }
 
   getOnlyNoChildrensCategories(): any {
+    //TODO Убрать хардкод.
     return this.categories?.filter((item) => item.category_id !== 9 );
   }
+
   onCategorySelect() {
     //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
-
     this.popupService.close();
   }
 

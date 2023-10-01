@@ -4,23 +4,7 @@
       <div *ngIf="categories" class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li *ngFor="let category of getOnlyParentCategories()">
-
-            <spa-menu-item [item]='category' [parentIsPopup]='false'>
-
-            </spa-menu-item>
-
-<!--            class="nav-item {{(category && category.children && category.children.length > 0) ? 'dropdown' : '' }}">-->
-<!--            <a-->
-<!--              class="nav-link {{(category && category.children && category.children.length > 0) ? 'dropdown-toggle': '' }}"-->
-<!--              [routerLink]="['/category/',category?.slug]" data-bs-toggle="dropdown" (click)="setLoadingIndicator()"-->
-<!--              [ngClass]="{'disabled': isLoading,'': !isLoading}"-->
-<!--            >{{ category?.title }}</a>-->
-<!--            <ul *ngIf="(category && category.children)" class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--              <li *ngFor="let categoryItem of getChildrens(category); index as i;">-->
-<!--                <a class="dropdown-item"-->
-<!--                   [routerLink]="['/category/',categoryItem?.slug]">{{categoryItem.title}}<br></a>-->
-<!--              </li>-->
-<!--            </ul>-->
+            <spa-menu-item [item]='category' [parentIsPopup]='false'></spa-menu-item>
           </li>
         </ul>
       </div>

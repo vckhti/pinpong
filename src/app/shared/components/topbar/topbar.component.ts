@@ -28,9 +28,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.subscriptions = new Subscription();
   }
 
-  // getChildrens(category: any): any[] {
-  //   return Object.values(category.children);
-  // }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -63,33 +60,11 @@ export class TopbarComponent implements OnInit, OnDestroy {
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
       ).subscribe(
-        (selectIsLoadingSelector: any) => {
-          if (selectIsLoadingSelector) {
-            this.isLoading = selectIsLoadingSelector;
-          } else {
-            this.isLoading = selectIsLoadingSelector;
-          }
+        (selectIsLoadingSelector) => {
+          this.isLoading = selectIsLoadingSelector;
         }
       )
     );
-
-    /*this.subscriptions.add(
-      this.screenService.getScreenWidth().pipe(
-        distinctUntilChanged()
-      ).subscribe(
-        (width: number) => {
-          this.screenWidth = width;
-        }
-      )
-    );*/
-
-    // this.subscriptions.add(
-    //   this.productService.getMenuItems().subscribe(
-    //     (response: any) => {
-    //       this.categories = Object.values(response).filter((item: Menu) => item.language_id === 2);
-    //     }
-    //   )
-    // );
   }
 
   getOnlyParentCategories(): any {
