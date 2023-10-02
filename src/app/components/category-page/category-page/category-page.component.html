@@ -8,20 +8,23 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="input-sort">Сортировать по:</label>
-        <select #sortParams class="form-select" id="input-sort" style="z-index: -1 !important;" (change)="doSort(sortParams)">
+      <div class="custom-form-group">
+        <label class="input-group-text" for="input-sort">Сортировать по:
+        <select #sortParams class="form-select" id="input-sort" (change)="doSort(sortParams)">
           <option selected="" disabled></option>
           <option value="price_asc">Возрастанию цены</option>
           <option value="price_desc">Убыванию цены</option>
           <option value="title_asc">По названию, в прямом порядке</option>
           <option value="title_desc">По названию, в обратном порядке</option>
         </select>
+        </label>
       </div>
     </div>
     <div class="col-sm-6">
-      <div class="input-group mb-3">
-        <input #search type="text" class="form-control" placeholder="Фильтровать по названию">
+      <div class="custom-form-group">
+        <label class="input-group-text" >Фильтровать по названию:
+        <input #search type="text" class="form-control" id="input-filter" >
+          </label>
       </div>
     </div>
   </div>

@@ -11,6 +11,20 @@
   font-size: 12px;
 }
 
-.input-group, input-group-text, form-select {
-  z-index: -1 !important;
+.form-select {
+
+}
+
+.input-group-text {
+  max-height: 45px;
+}
+
+.custom-form-group {
+  max-height: 45px;
+  margin: 0;
+  padding: 0;
+}
+
+#input-filter {
+  margin-top: 12px;
 }
