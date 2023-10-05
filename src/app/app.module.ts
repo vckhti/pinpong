@@ -40,6 +40,9 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import {MenuItemComponent} from "./shared/components/menu-item/menu-item.component";
 import {PopupMenuComponent} from "./shared/components/popup-menu/popup-menu.component";
 import {PopupService} from "./shared/services/popup.service";
+import {IConfig, NgxMaskModule} from "ngx-mask";
+
+export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -60,6 +63,7 @@ import {PopupService} from "./shared/services/popup.service";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgxMaskModule.forRoot(),
     ToastModule,
     PaginationModule,
     SidebarModule,
@@ -78,11 +82,6 @@ import {PopupService} from "./shared/services/popup.service";
     AuthModule,
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   multi: true,
-    //   useClass: AuthInterceptor
-    // },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     AlertService,
     ScreenService,
@@ -98,4 +97,4 @@ import {PopupService} from "./shared/services/popup.service";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

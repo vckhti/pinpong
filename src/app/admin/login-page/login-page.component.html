@@ -6,7 +6,7 @@
         <label for="name">Имя</label>
         <input id="name" formControlName="name" focus>
         <div *ngIf="form.get('name').touched && form.get('name').invalid" class="validation">
-            <small *ngIf="form.get('name').errors.required">Введите правильные имя и пароль</small>
+            <small *ngIf="form.get('name').errors.required">Введите имя </small>
         </div>
     </div>
 
@@ -19,6 +19,9 @@
                 Пароль должен содержать  {{form.get('password').errors.minlength.requiredLength}} символов.
                 Вы ввели только {{form.get('password').errors.minlength.actualLength}}
             </small>
+          <small *ngIf="form.get('password').errors.min">
+            Вы ввели неправильные данные.
+          </small>
         </div>
     </div>
 

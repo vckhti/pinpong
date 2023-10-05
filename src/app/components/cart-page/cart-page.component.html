@@ -81,7 +81,7 @@
                  mask="(000)000-00-00" [showMaskTyped]="true">
           <div *ngIf="form.get('phone').touched && form.get('phone').invalid" class="validation">
             <small *ngIf="form.get('phone').errors.required">Введите номер телефона</small>
-            <small *ngIf="form.get('phone').errors.maxlength">Номер телефона не может содержать больше 12 символов</small>
+            <small *ngIf="form.get('phone').errors.minlength">Заполните номер полностью</small>
           </div>
         </div>
 
