@@ -31,7 +31,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.form = new UntypedFormGroup({
       name: new UntypedFormControl(null, [Validators.required]),
-      password: new UntypedFormControl(null, [Validators.required, Validators.minLength(6)]),
+      password: new UntypedFormControl(null, [Validators.required, Validators.minLength(6), Validators.min(1)]),
      })
   }
 
@@ -54,13 +54,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.auth.login(user).subscribe( (user: any) => {
       if (user && user.id && user.roles[0] === 'admin') {
       this.auth.setToken({token: 'admin-token'});
-      this.form.reset;
       this.router.navigate(['/admin','orders']);
-      this.submitted = false;
       } else {
-        this.form.controls.name.setErrors({required:'Неверный пароль'})
+        this.form.controls.password.setErrors({min:'Неверный пароль'})
         this.alert.danger('Введите учетную запись с правами администратора!');
-        setTimeout(() =>  location.reload(),1500);
+        setTimeout(() =>  {this.form.reset();this.submitted = false;},2000);
       }
     })
     );
