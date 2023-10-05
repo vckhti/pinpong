@@ -77,7 +77,8 @@
 
         <div class="form-control">
           <label for="phone">Номер телефона</label>
-          <input id="phone" type="phone" formControlName="phone" placeholder="+79991112233">
+          <input id="phone" type="phone" formControlName="phone" prefix="+7" [dropSpecialCharacters]="false"
+                 mask="(000)000-00-00" [showMaskTyped]="true">
           <div *ngIf="form.get('phone').touched && form.get('phone').invalid" class="validation">
             <small *ngIf="form.get('phone').errors.required">Введите номер телефона</small>
             <small *ngIf="form.get('phone').errors.maxlength">Номер телефона не может содержать больше 12 символов</small>
