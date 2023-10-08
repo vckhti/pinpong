@@ -6,6 +6,7 @@ import {ScreenService} from "../../services/screen.service";
 import {Store} from "@ngrx/store";
 import {setLoadingIndicator} from "../../../core/store/app-actions";
 import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
+import {fetchCategoriesSuccess} from "../../../core/store/app-actions";
 
 @Component({
   selector: 'app-topbar',
@@ -52,6 +53,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
             }
           }
           this.categories = tempCategory;
+          this.store.dispatch(new fetchCategoriesSuccess({categories: tempCategory}));
         }
       )
     );

@@ -32,7 +32,7 @@ export class MainPageComponent extends ComponentWithPaginationComponent implemen
 
   ngOnInit() {
     this.store.dispatch(new fetchProducts());
-    this.store.dispatch(new fetchCategories());
+    // this.store.dispatch(new fetchCategories());
 
     if (this.router.url && this.router.url.split('?')[0]) {
       this.baseUrl = this.router.url.split('?')[0];
