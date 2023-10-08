@@ -72,16 +72,6 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
     );
 
     this.subscriptions.add(
-      this.store.select(categoriesArraySelector).pipe(
-        filter(res => res === undefined)
-      ).subscribe(
-        (response) => {
-          this.store.dispatch(new fetchCategories());
-        }
-      )
-    );
-
-    this.subscriptions.add(
       this.route.params.pipe(
         tap((value) => {
           this.slug = value["slug"];
@@ -90,10 +80,8 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
             this.baseUrl = this.router.url.split('?')[0];
           }
         }),
-        switchMap(() => this.productServ.getCategories().pipe(
+        switchMap(() => this.store.select(categoriesArraySelector).pipe(
           filter(res => res !== undefined),
-          distinctUntilChanged(),
-          debounceTime(1000),
           catchError((err) => {
             this.alert.danger(err);
             console.error(err);
@@ -108,7 +96,7 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
               {label: 'Главная', url: '/'},
               {label: `Товары в категории: ${this.currentCategory?.title}`, url: ''},
             ];
-            if (this.currentCategory.id) {
+            if (this.currentCategory && this.currentCategory.id) {
               this.store.dispatch(new fetchProductsByCategory({id: this.currentCategory.id}));
             }
           }

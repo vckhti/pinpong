@@ -9,7 +9,7 @@ import {AlertService} from "../../services/alert.service";
 import {currentUserSelector, isAnonymousSelector} from "../../../modules/auth/store/selectors";
 import {CurrentUserInterface} from "../../../modules/auth/types/currentUser.interface";
 import {TtproductInterface} from "../../types/ttproduct.interface";
-import {fetchProductsSuccess} from "../../../core/store/app-actions";
+import {fetchCategories, fetchProductsSuccess} from "../../../core/store/app-actions";
 import {logOutAction} from "../../../modules/auth/store/actions/login.action";
 import {PopupService} from "../../services/popup.service";
 import {ScreenService} from "../../services/screen.service";
@@ -47,6 +47,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
    }
 
   ngOnInit() {
+    this.store.dispatch(new fetchCategories());
+
     this.subscriptions.add(
       this.store.select(isAnonymousSelector).subscribe(
         (response) => {

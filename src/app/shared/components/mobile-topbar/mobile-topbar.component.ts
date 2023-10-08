@@ -3,9 +3,10 @@ import {CategoryInterface} from "../../types/category.interface";
 import {delayWhen, interval, of, Subscription} from "rxjs";
 import {ProductService} from "../../services/product.service";
 import {Store} from "@ngrx/store";
-import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
+import {categoriesArraySelector, selectIsLoadingSelector} from "../../../core/store/app-selectors";
 import {setLoadingIndicator} from "../../../core/store/app-actions";
 import {PopupService} from "../../services/popup.service";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-mobile-topbar',
@@ -44,7 +45,9 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
     );
 
     this.subscriptions.add(
-      this.productService.getCategories().subscribe(
+      this.store.select(categoriesArraySelector).pipe(
+        filter(res => res !== undefined),
+      ).subscribe(
         (response: CategoryInterface[]) => {
           this.categories = response;
         }

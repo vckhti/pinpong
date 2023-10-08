@@ -4,9 +4,10 @@ import {ProductService} from "../../services/product.service";
 import {delayWhen, distinctUntilChanged, interval, of, Subscription, take} from "rxjs";
 import {ScreenService} from "../../services/screen.service";
 import {Store} from "@ngrx/store";
-import {setLoadingIndicator} from "../../../core/store/app-actions";
-import {selectIsLoadingSelector} from "../../../core/store/app-selectors";
+import {fetchCategories, setLoadingIndicator} from "../../../core/store/app-actions";
+import {categoriesArraySelector, selectIsLoadingSelector} from "../../../core/store/app-selectors";
 import {fetchCategoriesSuccess} from "../../../core/store/app-actions";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-topbar',
@@ -35,25 +36,27 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.productService.getCategories().pipe(
-        take(1)
-      ).subscribe(
-        (tempCategory: CategoryInterface[]) => {
-          for (let i = 0; i < tempCategory.length; i++) {
-            tempCategory[i].children = new Array();
-            for (let j = 0; j < tempCategory.length; j++) {
 
-              if (tempCategory[i].category_id == tempCategory[j].parent_id) {
-                tempCategory[i].children.push(tempCategory[j]);
+
+    this.subscriptions.add(
+      this.store.select(categoriesArraySelector).pipe(
+        filter(res => res !== undefined),
+      ).subscribe(
+        (categories: CategoryInterface[]) => {
+          for (let i = 0; categories && i < categories.length; i++) {
+            categories[i].children = new Array();
+            for (let j = 0; j < categories.length; j++) {
+
+              if (categories[i].category_id == categories[j].parent_id) {
+                categories[i].children.push(categories[j]);
               }
             }
-            if (tempCategory[i].category_id === 0) {
-              this.categories.push(tempCategory[i]);
+            if (categories[i].category_id === 0) {
+              this.categories.push(categories[i]);
             }
           }
-          this.categories = tempCategory;
-          this.store.dispatch(new fetchCategoriesSuccess({categories: tempCategory}));
+          this.categories = categories;
+          // this.store.dispatch(new fetchCategoriesSuccess({categories: categories}));
         }
       )
     );
