@@ -1,4 +1,4 @@
-import {TtproductInterface} from "../../shared/types/ttproduct.interface";
+import {TtproductInterface} from "../../../shared/types/ttproduct.interface";
 import {UserDescriptionInterface} from "../shared/types/userDescription.interface";
 
 export class OrderModel {

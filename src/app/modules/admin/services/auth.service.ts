@@ -8,7 +8,7 @@ import {EMPTY, Observable, of} from "rxjs";
 import {OrderProductInterface} from "../shared/types/orderProductInterface";
 import {CurrentUserInterface} from "../shared/types/currentUser.interface";
 import {catchError} from "rxjs/operators";
-import {AlertService} from "../../shared/services/alert.service";
+import {AlertService} from "../../../shared/services/alert.service";
 
 @Injectable({
   providedIn: 'root'

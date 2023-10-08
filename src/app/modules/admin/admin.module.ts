@@ -12,7 +12,7 @@ import {ButtonModule} from "primeng/button";
 import {UsernamePipe} from "./shared/pipes/username.pipe";
 import {FocusDirective} from "./shared/directive/focus.directive";
 import {HighlightDirective} from "./shared/directive/highlight.directive";
-import {LoadingModule} from "../shared/modules/loading/loading.module";
+import {LoadingModule} from "../../shared/modules/loading/loading.module";
 
 @NgModule({
   declarations: [

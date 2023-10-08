@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductService} from '../../shared/services/product.service';
+import {ProductService} from '../../services/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {catchError, exhaustMap, filter} from 'rxjs/operators';
-import {productsArraySelector} from "../../core/store/app-selectors";
+import {productsArraySelector} from "../../../core/store/app-selectors";
 import {EMPTY, of, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
-import {TtproductInterface} from "../../shared/types/ttproduct.interface";
-import {Breadcrumb} from "../../shared/modules/ui-utils/breadcrumbs/breadcrumb";
-import {AlertService} from "../../shared/services/alert.service";
-import {addProductToBasket, setLoadingIndicator} from "../../core/store/app-actions";
+import {TtproductInterface} from "../../types/ttproduct.interface";
+import {Breadcrumb} from "../../modules/ui-utils/breadcrumbs/breadcrumb";
+import {AlertService} from "../../services/alert.service";
+import {addProductToBasket, setLoadingIndicator} from "../../../core/store/app-actions";
 
 @Component({
   selector: 'app-product-page',

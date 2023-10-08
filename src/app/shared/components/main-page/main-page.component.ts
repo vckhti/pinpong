@@ -1,16 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ProductService} from '../../shared/services/product.service';
+import {ProductService} from '../../services/product.service';
 import {delayWhen, interval, of, Subscription} from "rxjs";
 import {
   basketArraySelector,
   productsArraySelector,
   selectIsLoadingSelector
-} from "../../core/store/app-selectors";
-import {TtproductInterface} from "../../shared/types/ttproduct.interface";
-import {fetchCategories, fetchProducts} from "../../core/store/app-actions";
+} from "../../../core/store/app-selectors";
+import {TtproductInterface} from "../../types/ttproduct.interface";
+import {fetchCategories, fetchProducts} from "../../../core/store/app-actions";
 import {
   ComponentWithPaginationComponent
-} from "../../shared/components/component-with-pagination/component-with-pagination.component";
+} from "../component-with-pagination/component-with-pagination.component";
 import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({

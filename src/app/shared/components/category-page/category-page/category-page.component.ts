@@ -1,25 +1,25 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TtproductInterface} from "../../../shared/types/ttproduct.interface";
+import {TtproductInterface} from "../../../types/ttproduct.interface";
 import {
   addProductToBasket, fetchCategories,
   fetchProductsByCategory,
   removeProductFromBasket
-} from "../../../core/store/app-actions";
+} from "../../../../core/store/app-actions";
 import {debounceTime, delayWhen, distinctUntilChanged, EMPTY, interval, of, Subscription} from "rxjs";
-import {ProductService} from "../../../shared/services/product.service";
+import {ProductService} from "../../../services/product.service";
 import {
   basketArraySelector,
   categoriesArraySelector,
   productsArraySelector, selectIsLoadingSelector,
-} from "../../../core/store/app-selectors";
+} from "../../../../core/store/app-selectors";
 import {ActivatedRoute, Params} from "@angular/router";
 import {catchError, filter, map, switchMap, tap} from "rxjs/operators";
-import {CategoryInterface} from "../../../shared/types/category.interface";
-import {Breadcrumb} from "../../../shared/modules/ui-utils/breadcrumbs/breadcrumb";
+import {CategoryInterface} from "../../../types/category.interface";
+import {Breadcrumb} from "../../../modules/ui-utils/breadcrumbs/breadcrumb";
 import {
   ComponentWithPaginationComponent
-} from "../../../shared/components/component-with-pagination/component-with-pagination.component";
-import {AlertService} from "../../../shared/services/alert.service";
+} from "../../component-with-pagination/component-with-pagination.component";
+import {AlertService} from "../../../services/alert.service";
 
 @Component({
   selector: 'app-category-page',

@@ -7,25 +7,25 @@ import {
   QueryList,
   ViewChildren
 } from '@angular/core';
-import {ProductService} from '../../shared/services/product.service';
+import {ProductService} from '../../services/product.service';
 import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
 import {Store} from "@ngrx/store";
-import {basketArraySelector} from "../../core/store/app-selectors";
-import {TtproductInterface} from "../../shared/types/ttproduct.interface";
+import {basketArraySelector} from "../../../core/store/app-selectors";
+import {TtproductInterface} from "../../types/ttproduct.interface";
 import {Subscription} from "rxjs";
-import {OrderService} from "../../shared/services/order.service";
-import {AlertService} from "../../shared/services/alert.service";
+import {OrderService} from "../../services/order.service";
+import {AlertService} from "../../services/alert.service";
 import {
   addProductToBasket,
   cleanBasket,
   decremenProductFromBasket,
   removeProductFromBasket, setLoadingIndicator
-} from "../../core/store/app-actions";
-import {Breadcrumb} from "../../shared/modules/ui-utils/breadcrumbs/breadcrumb";
-import {currentUserSelector} from "../../modules/auth/store/selectors";
-import {CurrentUserInterface} from "../../modules/auth/types/currentUser.interface";
-import {OrderRequestInteface} from "../../shared/types/order-request.inteface";
-import {CustomValidators} from "../../shared/validators";
+} from "../../../core/store/app-actions";
+import {Breadcrumb} from "../../modules/ui-utils/breadcrumbs/breadcrumb";
+import {currentUserSelector} from "../../../modules/auth/store/selectors";
+import {CurrentUserInterface} from "../../../modules/auth/types/currentUser.interface";
+import {OrderRequestInteface} from "../../types/order-request.inteface";
+import {CustomValidators} from "../../validators";
 
 @Component({
   selector: 'app-cart-page',

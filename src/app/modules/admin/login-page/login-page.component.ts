@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/admin/services/auth.service';
+import { AuthService } from 'src/app/modules/admin/services/auth.service';
 import { Router } from '@angular/router';
 import {AuthUserInterface} from '../shared/types/authUser.interface';
 import {Subscription, timer} from "rxjs";
 import {CurrentUserInterface} from "../shared/types/currentUser.interface";
-import {AlertService} from "../../shared/services/alert.service";
+import {AlertService} from "../../../shared/services/alert.service";
 import {takeUntil} from "rxjs/operators";
 
 @Component({

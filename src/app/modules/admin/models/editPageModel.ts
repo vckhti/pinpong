@@ -1,7 +1,7 @@
 import {Observable, of} from "rxjs";
 import {OrderProductInterface} from "../shared/types/orderProductInterface";
 import {UserDescriptionInterface} from "../shared/types/userDescription.interface";
-import {OrderInterface} from "../../shared/types/order.interface";
+import {OrderInterface} from "../../../shared/types/order.interface";
 
 export class EditPageModel {
   orderProductId: number;

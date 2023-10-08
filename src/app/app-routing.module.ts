@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
-import { MainPageComponent } from './components/main-page/main-page.component';
-import { ProductPageComponent } from './components/product-page/product-page.component';
-import { CartPageComponent } from './components/cart-page/cart-page.component';
-import {CategoryPageComponent} from "./components/category-page/category-page/category-page.component";
+import { MainPageComponent } from './shared/components/main-page/main-page.component';
+import { ProductPageComponent } from './shared/components/product-page/product-page.component';
+import { CartPageComponent } from './shared/components/cart-page/cart-page.component';
+import {CategoryPageComponent} from "./shared/components/category-page/category-page/category-page.component";
 
 
 const routes: Routes = [
@@ -18,7 +18,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   }
 ];
 
