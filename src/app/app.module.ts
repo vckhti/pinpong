@@ -15,7 +15,7 @@ import {environment} from "../environments/environment.prod";
 import {reducers} from "./core/store/reducers";
 import {EffectsModule} from "@ngrx/effects";
 import {AppEffects} from "./core/store/app-effects";
-import { CategoryPageComponent } from './shared/components/category-page/category-page/category-page.component';
+import { CategoryPageComponent } from './shared/components/category-page/category-page.component';
 import {UiUtilsModule} from "./shared/modules/ui-utils/ui-utils.module";
 import {AlertComponent} from "./shared/components/alert/alert.component";
 import {AlertService} from "./shared/services/alert.service";

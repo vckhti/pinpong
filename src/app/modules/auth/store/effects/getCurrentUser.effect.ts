@@ -29,7 +29,7 @@ export class GetCurrentUserEffect {
               this.router.navigateByUrl('login');
               this.store.dispatch(getCurrentUserFailureAction());
             } else {
-              if (tokenExpire && (new Date().getTime() < tokenExpire) && email && email.split('@')[0]) {
+              if (tokenExpire && (new Date().getTime() < tokenExpire) && email && user_id) {
                 let currentUser: CurrentUserInterface = {
                   id: user_id,
                   username: email.split('@')[0],
@@ -49,16 +49,6 @@ export class GetCurrentUserEffect {
       dispatch: false
     }
   )
-  // redirectAfterSubmit$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(getCurrentUserSuccessAction),
-  //       tap(() => {
-  //         this.router.navigateByUrl('main')
-  //       })
-  //     ),
-  //   {dispatch: false}
-  // )
 
   constructor(
     private actions$: Actions,

@@ -4,7 +4,7 @@ import { MainLayoutComponent } from './shared/components/main-layout/main-layout
 import { MainPageComponent } from './shared/components/main-page/main-page.component';
 import { ProductPageComponent } from './shared/components/product-page/product-page.component';
 import { CartPageComponent } from './shared/components/cart-page/cart-page.component';
-import {CategoryPageComponent} from "./shared/components/category-page/category-page/category-page.component";
+import {CategoryPageComponent} from "./shared/components/category-page/category-page.component";
 
 
 const routes: Routes = [

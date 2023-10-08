@@ -3,7 +3,7 @@ import {ProductService} from '../../services/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {catchError, exhaustMap, filter} from 'rxjs/operators';
 import {productsArraySelector} from "../../../core/store/app-selectors";
-import {EMPTY, of, Subscription} from "rxjs";
+import {of, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {Breadcrumb} from "../../modules/ui-utils/breadcrumbs/breadcrumb";

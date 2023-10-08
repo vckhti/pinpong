@@ -1,5 +1,5 @@
 <div class="hide" [ngClass]="{'activate': sidebarVisible}" >
-  <div *ngFor="let category of getOnlyNoChildrensCategories()" class="nav-item">
+  <div *ngFor="let category of excludeParentCategories()" class="nav-item">
       <a
         class="nav-link"
         [routerLink]="['/category/',category?.slug]"

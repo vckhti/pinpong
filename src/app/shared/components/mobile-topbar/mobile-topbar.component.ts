@@ -55,13 +55,11 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
     );
   }
 
-  getOnlyNoChildrensCategories(): any {
-    //TODO Убрать хардкод.
+  excludeParentCategories(): any {
     return this.categories?.filter((item) => item.category_id !== 9 );
   }
 
   onCategorySelect() {
-    //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
     this.popupService.close();

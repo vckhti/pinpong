@@ -1,12 +1,11 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
 import {ProductService} from "../../services/product.service";
-import {delayWhen, distinctUntilChanged, interval, of, Subscription, take} from "rxjs";
+import {delayWhen, interval, of, Subscription} from "rxjs";
 import {ScreenService} from "../../services/screen.service";
 import {Store} from "@ngrx/store";
-import {fetchCategories, setLoadingIndicator} from "../../../core/store/app-actions";
+import {setLoadingIndicator} from "../../../core/store/app-actions";
 import {categoriesArraySelector, selectIsLoadingSelector} from "../../../core/store/app-selectors";
-import {fetchCategoriesSuccess} from "../../../core/store/app-actions";
 import {filter} from "rxjs/operators";
 
 @Component({
@@ -19,7 +18,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   categories: CategoryInterface[] = [];
   private subscriptions: Subscription;
-  screenWidth: number;
   isLoading: boolean;
 
   constructor(
@@ -56,7 +54,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
             }
           }
           this.categories = categories;
-          // this.store.dispatch(new fetchCategoriesSuccess({categories: categories}));
         }
       )
     );
@@ -77,7 +74,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   setLoadingIndicator() {
-    //TODO Убрать костыль.(Нужен для редких ситуаций).
     this.store.dispatch(new setLoadingIndicator({loading: true}));
     setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
   }

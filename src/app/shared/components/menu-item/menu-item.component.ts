@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, ElementRef, HostListener, HostBinding, Renderer2} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
-import {debounceTime, delay, distinctUntilChanged, first, Subscription, take} from "rxjs";
 import {ProductService} from "../../services/product.service";
 import {CategoryInterface} from "../../types/category.interface";
 
@@ -22,18 +21,14 @@ export class MenuItemComponent implements OnInit {
   popupLeft = 0;
   popupTop = 38;
   isActiveRoute = false;
-  private subscriptions = new Subscription;
 
   constructor(
     private productService: ProductService,
     private router: Router,
-    private el: ElementRef,
-    private renderer: Renderer2) {
+    ) {
   }
 
   ngOnInit() {
-
-
 
     this.checkingActiveRoute(this.router.url);
     this.router.events.subscribe((event) => {
@@ -87,8 +82,6 @@ export class MenuItemComponent implements OnInit {
         this.mouseInPopup = !this.mouseInPopup;
       }
     } else if (this.item.slug) {
-      const newEvent = new MouseEvent('mouseleave', {bubbles: true});
-      //this.renderer.invokeElementMethod(this.el.nativeElement, 'dispatchEvent', [newEvent]);
       this.router.navigate(['category', this.item.slug]);
     }
   }
