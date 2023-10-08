@@ -4,7 +4,10 @@
       <div class="hamburger " (click)="onHamburgerClick()" ></div>
     </div>
     <div class="input-group active" #search id="search">
-      <input *ngIf="currentRouteUrl === '/'" type="text" class="form-control" placeholder="Поиск" name="s">
+      <input [ngClass]="{
+                  'd-block': currentRouteUrl === '/',
+                  'd-none': currentRouteUrl !== '/'
+                  }" type="text" class="form-control" placeholder="Поиск" name="s">
     </div>
     <div>
       <app-topbar *ngIf="screenWidth > widthForMobileVersion" ></app-topbar>

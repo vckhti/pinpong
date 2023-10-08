@@ -30,7 +30,7 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
   breadcrumbs: Breadcrumb[] = [];
   private subscriptions: Subscription;
   slug: string;
-  currentCategory: CategoryInterface ;
+  currentCategory: CategoryInterface;
   id: number;
   @ViewChild('search', {static: true}) search: ElementRef;
   @ViewChild('sortParams') sortParams: ElementRef;
@@ -100,7 +100,9 @@ export class CategoryPageComponent extends ComponentWithPaginationComponent impl
               this.store.dispatch(new fetchProductsByCategory({id: this.currentCategory.id}));
             }
           }
-          this.sortParams.nativeElement.value = '';
+          if (this.sortParams) {
+            this.sortParams.nativeElement.value = '';
+          }
         }
       )
     );

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductService} from '../../shared/services/product.service';
-import {Subscription} from "rxjs";
+import {delayWhen, interval, of, Subscription} from "rxjs";
 import {
   basketArraySelector,
   productsArraySelector,
@@ -32,7 +32,6 @@ export class MainPageComponent extends ComponentWithPaginationComponent implemen
 
   ngOnInit() {
     this.store.dispatch(new fetchProducts());
-    // this.store.dispatch(new fetchCategories());
 
     if (this.router.url && this.router.url.split('?')[0]) {
       this.baseUrl = this.router.url.split('?')[0];
@@ -47,7 +46,9 @@ export class MainPageComponent extends ComponentWithPaginationComponent implemen
     );
 
     this.subscriptions.add(
-      this.store.select(selectIsLoadingSelector).subscribe(
+      this.store.select(selectIsLoadingSelector).pipe(
+        delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
+      ).subscribe(
         (selectIsLoadingSelector: boolean) => {
           this.isLoading = selectIsLoadingSelector;
         }
