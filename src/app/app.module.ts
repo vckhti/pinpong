@@ -24,8 +24,8 @@ import {DialogService} from "primeng/dynamicdialog";
 import {ToastModule} from "primeng/toast";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {
-  ComponentWithPaginationComponent
-} from "./shared/components/component-with-pagination/component-with-pagination.component";
+  ClassWithPagination
+} from "./shared/components/component-with-pagination/class-with-pagination.directive";
 import {PaginationModule} from "./shared/modules/pagination/pagination.module";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {AuthModule} from "./modules/auth/auth.module";
@@ -54,7 +54,7 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     ProductPageComponent,
     CartPageComponent,
     CategoryPageComponent,
-    ComponentWithPaginationComponent,
+    ClassWithPagination,
     MobileTopbarComponent,
     HeaderComponent,
     MenuItemComponent,

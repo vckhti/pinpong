@@ -17,8 +17,8 @@ import {catchError, filter, map, switchMap, tap} from "rxjs/operators";
 import {CategoryInterface} from "../../types/category.interface";
 import {Breadcrumb} from "../../modules/ui-utils/breadcrumbs/breadcrumb";
 import {
-  ComponentWithPaginationComponent
-} from "../component-with-pagination/component-with-pagination.component";
+  ClassWithPagination
+} from "../component-with-pagination/class-with-pagination.directive";
 import {AlertService} from "../../services/alert.service";
 
 @Component({
@@ -26,7 +26,7 @@ import {AlertService} from "../../services/alert.service";
   templateUrl: './category-page.component.html',
   styleUrls: ['./category-page.component.scss']
 })
-export class CategoryPageComponent extends ComponentWithPaginationComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CategoryPageComponent extends ClassWithPagination implements OnInit, OnDestroy, AfterViewInit {
   breadcrumbs: Breadcrumb[] = [];
   private subscriptions: Subscription;
   slug: string;

@@ -1,19 +1,17 @@
-import {Component, inject} from '@angular/core';
+import { Directive, inject} from '@angular/core';
 import {Router} from "@angular/router";
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {fromEvent} from "rxjs";
 import {map} from "rxjs/operators";
 import {SortConfigInterface} from "../../types/sort-config.interface";
-import {addProductToBasket, removeProductFromBasket} from "../../../core/store/app-actions";
+import {addProductToBasket} from "../../../core/store/app-actions";
 import {Store} from "@ngrx/store";
 import {AlertService} from "../../services/alert.service";
 
-@Component({
-  selector: 'app-component-with-pagination',
-  templateUrl: './component-with-pagination.component.html',
-  styleUrls: ['./component-with-pagination.component.scss']
+@Directive({
+  selector: '[base]'
 })
-export class ComponentWithPaginationComponent {
+export class ClassWithPagination {
   protected tableData: TtproductInterface[] = [];
   protected currentPage: number;
   protected tempArray: TtproductInterface[] = [];
@@ -165,9 +163,6 @@ export class ComponentWithPaginationComponent {
     this.alertService.success(`${product.title} успешно добавлен в корзину!`);
   }
 
-  removeItemFromCart(product: TtproductInterface) {
-    this.store.dispatch(new removeProductFromBasket({product: product}));
-  }
 
   productAlreadyInCart(product: TtproductInterface): boolean {
     if (this.productsInBasket && this.productsInBasket.length > 0) {

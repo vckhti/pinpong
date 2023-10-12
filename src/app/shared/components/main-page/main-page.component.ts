@@ -9,8 +9,8 @@ import {
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {fetchCategories, fetchProducts} from "../../../core/store/app-actions";
 import {
-  ComponentWithPaginationComponent
-} from "../component-with-pagination/component-with-pagination.component";
+  ClassWithPagination
+} from "../component-with-pagination/class-with-pagination.directive";
 import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
@@ -18,7 +18,7 @@ import {ActivatedRoute, Params} from "@angular/router";
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss']
 })
-export class MainPageComponent extends ComponentWithPaginationComponent implements OnInit, OnDestroy {
+export class MainPageComponent extends ClassWithPagination implements OnInit, OnDestroy {
   private subscriptions: Subscription;
   tempArray: TtproductInterface[] = [];
 

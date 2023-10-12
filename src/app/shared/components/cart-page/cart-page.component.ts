@@ -47,7 +47,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   form: UntypedFormGroup;
   submitted = false;
 
-  @ViewChildren('name') name: QueryList<ElementRef>;
+  @ViewChildren('name') name: QueryList<ElementRef>
   inputName;
 
   constructor(
