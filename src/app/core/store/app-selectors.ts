@@ -17,8 +17,8 @@ export const categoriesArraySelector = createSelector(selectAppState, state => s
 export const selectedProduct = createSelector(
   selectCurrentRouterReducerParams,
   productsArraySelector,
-  (currentId, productsArray) => {
+  (currentProductId, productsArray) => {
     return productsArray?.find(
-      product => currentId === product.product_id.toString())
+      product => currentProductId === product.product_id.toString())
   }
 );
