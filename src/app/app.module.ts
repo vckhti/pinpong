@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {StoreModule} from "@ngrx/store";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment.prod";
-import {reducers} from "./core/store/reducers";
 import {EffectsModule} from "@ngrx/effects";
 import {AppEffects} from "./core/store/app-effects";
 import { CategoryPageComponent } from './shared/components/category-page/category-page.component';
@@ -41,6 +40,9 @@ import {MenuItemComponent} from "./shared/components/menu-item/menu-item.compone
 import {PopupMenuComponent} from "./shared/components/popup-menu/popup-menu.component";
 import {PopupService} from "./shared/services/popup.service";
 import {IConfig, NgxMaskModule} from "ngx-mask";
+import {RouterStateSerializer, StoreRouterConnectingModule} from "@ngrx/router-store";
+import {CustomSerializer} from "./core/models/CustomSerializer.class";
+import {reducers} from "./core/store/reducers";
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -71,7 +73,8 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     UiUtilsModule,
     LoadingModule,
     HttpClientModule,
-    StoreModule.forRoot({app: reducers}),
+    StoreModule.forRoot( reducers),
+    StoreRouterConnectingModule.forRoot({serializer: CustomSerializer}),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({
       name: 'NgRx Demo App',
@@ -80,8 +83,10 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     FormsModule,
     ReactiveFormsModule,
     AuthModule,
+    StoreRouterConnectingModule
   ],
   providers: [
+   // {provide: RouterStateSerializer, useClass: CustomSerializer},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     AlertService,
     ScreenService,

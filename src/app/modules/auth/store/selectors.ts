@@ -4,7 +4,7 @@ import {AuthStateInterface} from "../types/authState.interface";
 export const authFeatureSelector = createFeatureSelector<
   any,
   AuthStateInterface
->('auth')
+>('auth');
 
 export const isSubmittingSelector = createSelector(
   authFeatureSelector,

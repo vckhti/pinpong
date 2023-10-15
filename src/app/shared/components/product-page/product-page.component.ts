@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../services/product.service';
 import {ActivatedRoute} from '@angular/router';
 import {catchError, exhaustMap, filter} from 'rxjs/operators';
-import {productsArraySelector} from "../../../core/store/app-selectors";
-import {of, Subscription} from "rxjs";
+import {productsArraySelector, selectedProduct} from "../../../core/store/app-selectors";
+import { of, Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {Breadcrumb} from "../../modules/ui-utils/breadcrumbs/breadcrumb";
@@ -38,14 +38,26 @@ export class ProductPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productId = parseInt(this.route.snapshot.params["id"]);
+     this.productId = parseInt(this.route.snapshot.params["id"]);
+
+    // this.subscriptions.add(
+    //   this.store.select(productsArraySelector).subscribe(
+    //     (response: TtproductInterface[]) => {
+    //       if (this.productId && response && response.length > 0) {
+    //         this.isLoading = false;
+    //         this.product = response.find((item: TtproductInterface) => item.id === this.productId);
+    //       }
+    //     }
+    //   )
+    // );
+
     this.subscriptions.add(
-      this.store.select(productsArraySelector).subscribe(
-        (response: TtproductInterface[]) => {
-          if (this.productId && response && response.length > 0) {
-            this.isLoading = false;
-            this.product = response.find((item: TtproductInterface) => item.id === this.productId);
-          }
+      this.store.select(selectedProduct).pipe(
+        filter(res => res !== undefined),
+      ).subscribe(
+        (response) => {
+          this.isLoading = false;
+          this.product = response;
         }
       )
     );
