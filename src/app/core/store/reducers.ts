@@ -2,23 +2,23 @@ import { AppActions} from "./app-actions";
 import {ActionTypes} from "./app-actionTypes";
 import * as R from 'ramda';
 import {TtproductInterface} from "../../shared/types/ttproduct.interface";
-import {AppState} from "../types/appState.interface";
+import {SharedState} from "../types/sharedState.interface";
+import * as fromRouter from "@ngrx/router-store";
+import {ActionReducerMap} from "@ngrx/store";
 
-
-
-const initialState: AppState = {
+const initialState: SharedState = {
   isLoading: false,
   basket: [],
   categories: undefined,
-  products: undefined
+  products: undefined,
 }
 
-export function reducers(state: AppState = initialState, action: AppActions) {
+export function rootReducers(state: SharedState = initialState, action: AppActions) {
   switch (action.type) {
     case ActionTypes.ADD_PRODUCT_TO_BASKET:
       return ({
         ...state,
-        basket: state.basket.concat(action.payload.product)
+        basket: state.basket.concat(action.payload.product),
       })
 
     case ActionTypes.DECREMENT_PRODUCT_IN_BASKET:
@@ -89,4 +89,9 @@ export function reducers(state: AppState = initialState, action: AppActions) {
     default:
       return state
   }
+}
+
+export const reducers: ActionReducerMap<any> = {
+  routerReducer: fromRouter.routerReducer,
+  app: rootReducers,
 }
