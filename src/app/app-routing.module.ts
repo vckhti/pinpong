@@ -10,8 +10,8 @@ import {CategoryPageComponent} from "./shared/components/category-page/category-
 const routes: Routes = [
   {
     path: '', component: MainLayoutComponent, children: [
-      {path: '', redirectTo: '/', pathMatch: 'full'},
-      {path: '', component: MainPageComponent},
+      {path: '', redirectTo: '/main', pathMatch: 'full'},
+      {path: 'main', component: MainPageComponent},
       {path: 'product/:id', component: ProductPageComponent},
       {path: 'cart', component: CartPageComponent},
       {path: 'category/:slug', component: CategoryPageComponent}
