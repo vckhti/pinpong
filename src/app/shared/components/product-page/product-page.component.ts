@@ -40,17 +40,6 @@ export class ProductPageComponent implements OnInit {
   ngOnInit() {
      this.productId = parseInt(this.route.snapshot.params["id"]);
 
-    // this.subscriptions.add(
-    //   this.store.select(productsArraySelector).subscribe(
-    //     (response: TtproductInterface[]) => {
-    //       if (this.productId && response && response.length > 0) {
-    //         this.isLoading = false;
-    //         this.product = response.find((item: TtproductInterface) => item.id === this.productId);
-    //       }
-    //     }
-    //   )
-    // );
-
     this.subscriptions.add(
       this.store.select(selectedProduct).pipe(
         filter(res => res !== undefined),
