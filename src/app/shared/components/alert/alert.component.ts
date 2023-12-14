@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AlertService} from '../../services/alert.service';
 import {Subscription} from 'rxjs';
 import {MessageService} from "primeng/api";
@@ -7,7 +7,8 @@ import {Message} from "primeng/api/message";
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss']
+  styleUrls: ['./alert.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlertComponent implements OnInit, OnDestroy {
 
@@ -20,7 +21,8 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.subscription = new Subscription();
   }

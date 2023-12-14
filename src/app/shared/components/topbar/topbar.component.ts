@@ -1,4 +1,12 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
 import {ProductService} from "../../services/product.service";
 import {delayWhen, interval, of, Subscription} from "rxjs";
@@ -11,7 +19,8 @@ import {filter} from "rxjs/operators";
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+  styleUrls: ['./topbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopbarComponent implements OnInit, OnDestroy {
   @Output() itemClick = new EventEmitter();
@@ -23,7 +32,8 @@ export class TopbarComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private screenService: ScreenService,
-    private store: Store
+    private store: Store,
+    private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
   }
@@ -54,6 +64,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
             }
           }
           this.categories = categories;
+          this.cdr.detectChanges();
         }
       )
     );
@@ -64,6 +75,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
       ).subscribe(
         (selectIsLoadingSelector) => {
           this.isLoading = selectIsLoadingSelector;
+          this.cdr.detectChanges();
         }
       )
     );
@@ -75,7 +87,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   setLoadingIndicator() {
     this.store.dispatch(new setLoadingIndicator({loading: true}));
-    setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
+    setTimeout(() => {
+      this.store.dispatch(new setLoadingIndicator({loading: false}));
+      this.cdr.detectChanges();
+    }, 5000);
   }
 
 

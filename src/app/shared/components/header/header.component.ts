@@ -1,4 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {debounceTime, distinctUntilChanged, EMPTY, fromEvent, Observable, Subscription} from "rxjs";
 import {basketArraySelectorCount} from "../../../core/store/app-selectors";
 import {catchError, filter, map, switchMap} from "rxjs/operators";
@@ -17,7 +25,8 @@ import {ScreenService} from "../../services/screen.service";
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   basketArraySelectorCount$: Observable<number> = this.store.select(basketArraySelectorCount).pipe(filter(res => res !== undefined));
@@ -41,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private alert: AlertService,
     private popupService: PopupService,
     public screenService: ScreenService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
     this.currentRouteUrl = this.route['_routerState'].snapshot.url;
@@ -53,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       this.store.select(isAnonymousSelector).subscribe(
         (response) => {
           this.isAnonymousSelector = response;
+          this.cdr.detectChanges();
         }
       )
     );
@@ -61,15 +72,18 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       this.popupService.isVisible$.subscribe(
         (response) => {
           this.sidebarVisible = response;
+          this.cdr.detectChanges();
         }
       )
     );
 
     this.subscriptions.add(
       this.screenService.getScreenWidth().pipe(
+        // debounceTime(300),
       ).subscribe(
         (response) => {
           this.screenWidth = response;
+          this.cdr.detectChanges();
         }
       )
     );
@@ -81,6 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         (response: CurrentUserInterface) => {
           if (response.username) {
             this.currentUserSelector = response.username;
+            this.cdr.detectChanges();
           }
         }
       )
@@ -88,7 +103,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.subscriptions.add(
       this.router.events.subscribe((response) => {
-          this.currentRouteUrl = this.route['_routerState'].snapshot.url;
+        this.currentRouteUrl = this.route['_routerState'].snapshot.url;
+        this.cdr.detectChanges();
         }
       )
     );
@@ -115,7 +131,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         })
       ).subscribe(
         (response: TtproductInterface[]) => {
-          this.store.dispatch(new fetchProductsSuccess({products: response}))
+          this.store.dispatch(new fetchProductsSuccess({products: response}));
+          this.cdr.detectChanges();
         })
     );
   }

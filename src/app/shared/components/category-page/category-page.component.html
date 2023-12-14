@@ -11,7 +11,7 @@
       <div class="custom-form-group">
         <label class="input-group-text" for="input-sort">Сортировать по:&nbsp;
         <select #sortParams class="form-select" id="input-sort" (change)="doSort(sortParams)">
-          <option selected="" disabled></option>
+          <option selected disabled value="">Выберите способ сортировки</option>
           <option value="price_asc">Возрастанию цены</option>
           <option value="price_desc">Убыванию цены</option>
           <option value="title_asc">По названию, в прямом порядке</option>

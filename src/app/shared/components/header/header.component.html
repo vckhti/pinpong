@@ -5,9 +5,9 @@
     </div>
     <div class="input-group active" #search id="search">
       <input [ngClass]="{
-                  'd-block': currentRouteUrl === '/',
-                  'd-none': currentRouteUrl !== '/'
-                  }" type="text" class="form-control" placeholder="Поиск" name="s">
+                  'd-block': currentRouteUrl === '/main',
+                  'd-none': currentRouteUrl !== '/main'
+                  }" type="text" class="form-control" placeholder="Глобальный поиск" name="s">
     </div>
     <div>
       <app-topbar *ngIf="screenWidth > widthForMobileVersion" ></app-topbar>

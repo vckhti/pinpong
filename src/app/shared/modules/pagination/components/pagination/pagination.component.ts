@@ -1,11 +1,19 @@
-import {Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core'
-import {UtilsService} from "../../services/utils.service";
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy
+} from '@angular/core'
 
 @Component({
   selector: 'mc-pagination',
   templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss']
-
+  styleUrls: ['./pagination.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent implements OnInit, OnChanges {
   @Input('total') totalItemLengthProps: number;

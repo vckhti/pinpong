@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -30,7 +30,8 @@ import {CustomValidators} from "../../validators";
 @Component({
   selector: 'app-cart-page',
   templateUrl: './cart-page.component.html',
-  styleUrls: ['./cart-page.component.scss']
+  styleUrls: ['./cart-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   breadcrumbs: Breadcrumb[] = [];
@@ -54,7 +55,8 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     private productServ: ProductService,
     private orderService: OrderService,
     private store: Store,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
     this.breadcrumbs = [
@@ -67,6 +69,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
       this.store.select(currentUserSelector).pipe(
       ).subscribe((currentUser: CurrentUserInterface) => {
         this.currentUser = currentUser;
+        this.cdr.detectChanges();
       })
     );
 
@@ -83,7 +86,10 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.calculateProductsQTY();
           this.filterOnlyUniqueProducts();
-          setTimeout(() => this.isLoading = false,1500); // Для прорисовки картинок товаров
+          setTimeout(() => {
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          },1500); // Для прорисовки картинок товаров
         })
     );
 
@@ -121,6 +127,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.alertService.success('Ваш заказ отправлен в обработку.');
         this.store.dispatch(new cleanBasket());
         this.submitted = false;
+        this.cdr.detectChanges();
       })
     );
   }
@@ -180,13 +187,19 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   goBack() {
     this.store.dispatch(new setLoadingIndicator({loading: true}));
-    setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 1500);
+    setTimeout(() => {
+      this.store.dispatch(new setLoadingIndicator({loading: false}));
+      this.cdr.detectChanges();
+    }, 1500);
     window.history.back()
   }
 
   checkout() {
     this.showDelivery = !this.showDelivery;
-    setTimeout(() => this.inputName.nativeElement.focus(), 500);
+    setTimeout(() => {
+      this.inputName.nativeElement.focus();
+      this.cdr.detectChanges();
+    }, 500);
   }
 
   ngAfterViewInit(): void {

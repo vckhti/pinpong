@@ -1,4 +1,12 @@
-import {Component, OnInit, Input, ElementRef, HostListener, HostBinding, Renderer2} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  HostListener,
+  HostBinding,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {ProductService} from "../../services/product.service";
 import {CategoryInterface} from "../../types/category.interface";
@@ -7,6 +15,7 @@ import {CategoryInterface} from "../../types/category.interface";
   selector: 'spa-menu-item',
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuItemComponent implements OnInit {
   @Input() item: CategoryInterface;
@@ -25,6 +34,7 @@ export class MenuItemComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     ) {
   }
 
@@ -34,6 +44,7 @@ export class MenuItemComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.checkingActiveRoute(event.url);
+        this.cdr.detectChanges();
       }
     });
   }
@@ -44,7 +55,10 @@ export class MenuItemComponent implements OnInit {
 
   onPopupMouseLeave(event: Event): void {
     if (!this.isVertical) {
-      setTimeout(() => this.mouseInPopup = false,500);
+      setTimeout(() => {
+        this.mouseInPopup = false;
+        this.cdr.detectChanges();
+      },500);
     }
   }
 

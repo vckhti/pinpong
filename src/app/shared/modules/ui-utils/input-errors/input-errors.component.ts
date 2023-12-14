@@ -30,7 +30,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 			]),
 		]),
 	],
-	changeDetection: ChangeDetectionStrategy.Default,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputErrorsComponent implements OnDestroy, OnChanges {
 	@Input() control?: any;

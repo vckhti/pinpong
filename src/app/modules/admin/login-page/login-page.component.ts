@@ -1,17 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/modules/admin/services/auth.service';
 import { Router } from '@angular/router';
 import {AuthUserInterface} from '../shared/types/authUser.interface';
-import {Subscription, timer} from "rxjs";
-import {CurrentUserInterface} from "../shared/types/currentUser.interface";
+import {Subscription} from "rxjs";
 import {AlertService} from "../../../shared/services/alert.service";
-import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  styleUrls: ['./login-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
   form: UntypedFormGroup;
@@ -22,8 +21,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private alert: AlertService
-
+    private alert: AlertService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
   }
@@ -58,7 +57,12 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       } else {
         this.form.controls.password.setErrors({min:'Неверный пароль'})
         this.alert.danger('Введите учетную запись с правами администратора!');
-        setTimeout(() =>  {this.form.reset();this.submitted = false;},2000);
+        this.cdr.detectChanges();
+        setTimeout(() =>  {
+          this.form.reset();
+          this.submitted = false;
+          this.cdr.detectChanges();
+          },2000);
       }
     })
     );

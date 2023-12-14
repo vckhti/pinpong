@@ -1,4 +1,13 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {CategoryInterface} from "../../types/category.interface";
 import {delayWhen, interval, of, Subscription} from "rxjs";
 import {ProductService} from "../../services/product.service";
@@ -11,7 +20,8 @@ import {filter} from "rxjs/operators";
 @Component({
   selector: 'app-mobile-topbar',
   templateUrl: './mobile-topbar.component.html',
-  styleUrls: ['./mobile-topbar.component.scss']
+  styleUrls: ['./mobile-topbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MobileTopbarComponent implements OnInit, OnDestroy{
   @Output() itemClick = new EventEmitter();
@@ -24,7 +34,8 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
   constructor(
     private productService: ProductService,
     private popupService: PopupService,
-    private store: Store
+    private store: Store,
+    private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
   }
@@ -40,6 +51,7 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
       ).subscribe(
         (selectIsLoadingSelector) => {
           this.isLoading = selectIsLoadingSelector;
+          this.cdr.detectChanges();
         }
       )
     );
@@ -49,7 +61,8 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
         filter(res => res !== undefined),
       ).subscribe(
         (response: CategoryInterface[]) => {
-          this.categories = response;
+          this.categories = [...response];
+          this.cdr.detectChanges();
         }
       )
     );
@@ -61,7 +74,10 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
 
   onCategorySelect() {
     this.store.dispatch(new setLoadingIndicator({loading: true}));
-    setTimeout(() => this.store.dispatch(new setLoadingIndicator({loading: false})), 5000);
+    setTimeout(() => {
+      this.store.dispatch(new setLoadingIndicator({loading: false}));
+      this.cdr.detectChanges();
+    }, 5000);
     this.popupService.close();
   }
 

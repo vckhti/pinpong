@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core'
 import {FormGroup, FormBuilder, Validators} from '@angular/forms'
 import {Store, select} from '@ngrx/store'
 import {Observable} from 'rxjs'
@@ -9,7 +9,8 @@ import {loginAction} from "../../store/actions/login.action";
 @Component({
   selector: 'mc-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
   form: FormGroup
