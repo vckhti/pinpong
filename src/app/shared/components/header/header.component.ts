@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.subscriptions.add(
       this.screenService.getScreenWidth().pipe(
-        // debounceTime(300),
+        debounceTime(300),
       ).subscribe(
         (response) => {
           this.screenWidth = response;
