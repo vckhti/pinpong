@@ -17,10 +17,10 @@
         <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="slug">Наименование товара<p-sortIcon field="slug"></p-sortIcon></th>
-          <th pSortableColumn="price">Цена</th>
+          <th pSortableColumn="price">Цена<p-sortIcon field="price"></p-sortIcon></th>
           <th pSortableColumn="note">Контактная информация<p-sortIcon field="note"></p-sortIcon></th>
           <th pSortableColumn="client">Клиент</th>
-          <th pSortableColumn="status">Статус</th>
+          <th pSortableColumn="complete">Статус<p-sortIcon field="complete"></p-sortIcon></th>
           <th pSortableColumn="created_at">Дата<p-sortIcon field="created_at"></p-sortIcon></th>
           <th pSortableColumn="product_qty">Кол-во</th>
           <th pSortableColumn="sum">Сумма</th>
@@ -54,6 +54,13 @@
             </ng-container>
             <ng-container>
               <th>
+                <select
+                  class="table-filter"
+                  (change)="table.filter($any($event).target.value, 'complete' , 'contains')">
+                  <option selected value="">Все</option>
+                  <option value="1">Завершен</option>
+                  <option value="0">Новый</option>
+                </select>
               </th>
             </ng-container>
             <ng-container>
