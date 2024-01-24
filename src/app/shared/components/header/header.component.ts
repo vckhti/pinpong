@@ -29,18 +29,17 @@ import {ScreenService} from "../../services/screen.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('search') search: ElementRef;
   basketArraySelectorCount$: Observable<number> = this.store.select(basketArraySelectorCount).pipe(filter(res => res !== undefined));
-  private subscriptions: Subscription;
   currentRouteUrl: string;
   isAnonymousSelector: boolean;
   currentUserSelector: string;
   sidebarVisible = false;
   showExitSpan = false;
   screenWidth: number;
+  widthForMobileVersion = 900;
 
-  widthForMobileVersion=900;
-
-  @ViewChild('search') search: ElementRef;
+  private subscriptions: Subscription;
 
   constructor(
     private router: Router,
@@ -53,12 +52,23 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
+    this.initCurrentRouteUrl();
+  }
+
+  private initCurrentRouteUrl(): void {
     this.currentRouteUrl = this.route['_routerState'].snapshot.url;
-   }
+  }
 
   ngOnInit() {
     this.store.dispatch(new fetchCategories());
 
+    this.initIsAnonymousSelectorObserver();
+    this.initSidebarVisibleObserver();
+    this.initCurrentUserSelectorObserver();
+    this.initScreenWidthObserver();
+  }
+
+  private initIsAnonymousSelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(isAnonymousSelector).subscribe(
         (response) => {
@@ -67,7 +77,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       )
     );
+  }
 
+  private initSidebarVisibleObserver(): void {
     this.subscriptions.add(
       this.popupService.isVisible$.subscribe(
         (response) => {
@@ -76,7 +88,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       )
     );
+  }
 
+  private initScreenWidthObserver(): void {
     this.subscriptions.add(
       this.screenService.getScreenWidth().pipe(
         debounceTime(300),
@@ -87,7 +101,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       )
     );
+  }
 
+  private initCurrentUserSelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(currentUserSelector).pipe(
         filter(res => res !== null)
@@ -100,17 +116,13 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       )
     );
-
-    this.subscriptions.add(
-      this.router.events.subscribe((response) => {
-        this.currentRouteUrl = this.route['_routerState'].snapshot.url;
-        this.cdr.detectChanges();
-        }
-      )
-    );
   }
 
   ngAfterViewInit(): void {
+    this.initSearchInputObserver();
+  }
+
+  private initSearchInputObserver(): void {
     this.subscriptions.add(
       this.keyupAsValue(this.search.nativeElement).pipe(
         distinctUntilChanged(),
@@ -137,28 +149,22 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  keyupAsValue(elem: any) {
+  private keyupAsValue(elem: any): Observable<any> {
     return fromEvent(elem, 'keyup').pipe(
       map((event: any) => event.target.value),
     );
   };
 
-  logout() {
-    this.store.dispatch(logOutAction());
-    location.reload();
-  }
-
-  getChildrens(category: any): any[] {
-    return Object.values(category.children);
-  }
-
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  onHamburgerClick(): void {
+  public onLogout(): void {
+    this.store.dispatch(logOutAction());
+    location.reload();
+  }
 
+  public onHamburgerClick(): void {
     this.sidebarVisible = !this.sidebarVisible;
   }
 

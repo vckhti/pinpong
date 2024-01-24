@@ -10,7 +10,7 @@ export class PersistanceService {
     }
   }
 
-  delete() {
+  delete(): void {
     localStorage.removeItem('admin-exp');
     localStorage.removeItem('token');
   }

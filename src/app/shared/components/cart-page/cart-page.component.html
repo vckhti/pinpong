@@ -29,11 +29,11 @@
                                                                       src="{{cartProduct.img}}" alt="img"></a>
                 </td>
                 <td><a [routerLink]="['/product', cartProduct.id]">{{cartProduct.title}}</a></td>
-                <td><span class="increment" (click)="incrementProduct(cartProduct)"><b>+</b></span></td>
+                <td><span class="increment" (click)="onIncrementProduct(cartProduct)"><b>+</b></span></td>
                 <td>{{cartProduct.qty}}</td>
-                <td><span class="increment" (click)="decrementProduct(cartProduct)"><b>-</b></span></td>
+                <td><span class="increment" (click)="onDecrementProduct(cartProduct)"><b>-</b></span></td>
                 <td>{{cartProduct.price}} рублей</td>
-                <td><i class="far fa-trash-alt trash" (click)="deleteProductFromCart(cartProduct)"></i></td>
+                <td><i class="far fa-trash-alt trash" (click)="onDeleteProductFromCart(cartProduct)"></i></td>
               </tr>
               <tr>
                 <td colspan="4" class="text-end">Кол-во:</td>
@@ -47,14 +47,14 @@
             </table>
           </div>
           <div class="d-flex float-right">
-            <button type="button" class="btn btn-success ripple" (click)="goBack()" data-bs-dismiss="modal">Продолжить
+            <button type="button" class="btn btn-success ripple" (click)="onPressGoBack()" data-bs-dismiss="modal">Продолжить
               покупки
             </button>
             <div *ngIf="cartProducts && cartProducts.length > 0">
-              <a (click)="checkout()"
+              <a (click)="onCheckout()"
                  class="btn btn-primary">{{showDelivery ? 'Вернуться в корзину' : 'Оформить заказ'}}</a>
             </div>
-            <button type="button" id="clear-cart" class="btn btn-danger" (click)="cleanCart()">Очистить корзину</button>
+            <button type="button" id="clear-cart" class="btn btn-danger" (click)="onCleanCart()">Очистить корзину</button>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
 
       <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
 
-      <form [formGroup]="form" (ngSubmit)="submit()">
+      <form [formGroup]="form" (ngSubmit)="submitForm()">
 
         <div class="form-control">
           <label for="name">Имя:</label>

@@ -94,9 +94,9 @@ export class ProductService {
   setStatusConfirm(id: number, orderIsConfirm: boolean): Observable<number> {
     return this.http.post<any>(`${environment.serverUrl}/api/change_order_status`, {id: id, status: orderIsConfirm? 1 : 0}).pipe(
       catchError((err: any) => {
-        this.alert.danger(err);
+        this.alert.danger('Возникла ошибка при смене статуса товара');
         console.error(err);
-        return of(orderIsConfirm? 1 : 0);
+        return of(null);
       })
     )
   }

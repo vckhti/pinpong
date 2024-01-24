@@ -58,7 +58,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     this.pagesCount = Math.ceil(this.totalItemLengthProps / this.limitProps);
   }
 
-  onClicked(v: number): void {
+  public onClicked(v: number): void {
     this.updateVisiblePages();
     this.newItemEvent.emit(v.toString());
   }

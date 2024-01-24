@@ -24,10 +24,10 @@ import {filter} from "rxjs/operators";
 })
 export class TopbarComponent implements OnInit, OnDestroy {
   @Output() itemClick = new EventEmitter();
-
   categories: CategoryInterface[] = [];
-  private subscriptions: Subscription;
   isLoading: boolean;
+
+  private subscriptions: Subscription;
 
   constructor(
     private productService: ProductService,
@@ -38,14 +38,16 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.subscriptions = new Subscription();
   }
 
+  ngOnInit(): void {
+    this.initCategoriesArraySelectorObserver();
+    this.initSelectIsLoadingSelectorObserver();
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  ngOnInit(): void {
-
-
+  private initCategoriesArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(categoriesArraySelector).pipe(
         filter(res => res !== undefined),
@@ -54,7 +56,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
           for (let i = 0; categories && i < categories.length; i++) {
             categories[i].children = new Array();
             for (let j = 0; j < categories.length; j++) {
-
               if (categories[i].category_id == categories[j].parent_id) {
                 categories[i].children.push(categories[j]);
               }
@@ -68,7 +69,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
         }
       )
     );
+  }
 
+  private initSelectIsLoadingSelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
@@ -81,16 +84,8 @@ export class TopbarComponent implements OnInit, OnDestroy {
     );
   }
 
-  getOnlyParentCategories(): any {
-    return this.categories?.filter((item) => item.parent_id === 0 );
-  }
-
-  setLoadingIndicator() {
-    this.store.dispatch(new setLoadingIndicator({loading: true}));
-    setTimeout(() => {
-      this.store.dispatch(new setLoadingIndicator({loading: false}));
-      this.cdr.detectChanges();
-    }, 5000);
+  public getOnlyParentCategories(): CategoryInterface[] {
+    return this.categories?.filter((item) => item.parent_id === 0);
   }
 
 

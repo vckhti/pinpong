@@ -22,12 +22,19 @@ export class AlertComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private messageService: MessageService,
-    private cdr: ChangeDetectorRef,
   ) {
     this.subscription = new Subscription();
   }
 
   ngOnInit() {
+    this.initAlertObserver();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private initAlertObserver(): void {
     this.subscription.add(
       this.alertService.alert$.subscribe(alert => {
         const message: Message = {
@@ -39,12 +46,5 @@ export class AlertComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  closeWindow() {
-    this.text = '';
-  }
 
 }

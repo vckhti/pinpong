@@ -61,9 +61,9 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-success btn-flat" (click)="setStatusConfirm(orderProduct?.id)">Завершить</button>
-      <button class="btn btn-danger btn-flat" (click)="setStatusNotConfirm(orderProduct?.id)">В обработку</button>
-      <button class="btn btn-dark" (click)="goBack()">Назад</button>
+      <button class="btn btn-success btn-flat" (click)="onSetStatusConfirm(orderProduct?.id)">Завершить</button>
+      <button class="btn btn-danger btn-flat" (click)="onSetStatusNotConfirm(orderProduct?.id)">В обработку</button>
+      <button class="btn btn-dark" (click)="onPressGoBack()">Назад</button>
     </div>
   </div>
 </div>

@@ -9,9 +9,8 @@ import {
 } from '@angular/core';
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {
-  addProductToBasket, fetchCategories,
+  addProductToBasket,
   fetchProductsByCategory,
-  removeProductFromBasket
 } from "../../../core/store/app-actions";
 import {debounceTime, delayWhen, distinctUntilChanged, EMPTY, interval, of, Subscription} from "rxjs";
 import {ProductService} from "../../services/product.service";
@@ -37,33 +36,43 @@ import {AlertService} from "../../services/alert.service";
 })
 export class CategoryPageComponent extends ClassWithPagination implements OnInit, OnDestroy, AfterViewInit {
   breadcrumbs: Breadcrumb[] = [];
-  private subscriptions: Subscription;
   slug: string;
   currentCategory: CategoryInterface;
   id: number;
   @ViewChild('search', {static: true}) search: ElementRef;
   @ViewChild('sortParams') sortParams: ElementRef;
 
+  private subscriptions: Subscription;
+
   constructor(
     private productServ: ProductService,
     private route: ActivatedRoute,
     private alert: AlertService,
-    private cdr: ChangeDetectorRef,
   ) {
     super();
     this.subscriptions = new Subscription();
-
   }
 
   ngOnInit() {
+    this.initQueryParamsObserver();
+    this.initSelectIsLoadingSelectorObserver();
+    this.initBasketArraySelectorObserver();
+    this.initSlugAndCategoriesArraySelectorObserver();
+    this.initProductsArraySelectorObserver();
+
+  }
+
+  private initQueryParamsObserver(): void {
     this.subscriptions.add(this.route.queryParams.subscribe(
-      (params: Params) => {
-        this.currentPage = Number(params['page'] || '1');
-        this.cdr.detectChanges();
-      }
+        (params: Params) => {
+          this.currentPage = Number(params['page'] || '1');
+          this.cdr.detectChanges();
+        }
       )
     );
+  }
 
+  private initSelectIsLoadingSelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
@@ -74,7 +83,9 @@ export class CategoryPageComponent extends ClassWithPagination implements OnInit
         }
       )
     );
+  }
 
+  private initBasketArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(basketArraySelector).subscribe(
         (response: TtproductInterface[]) => {
@@ -83,7 +94,9 @@ export class CategoryPageComponent extends ClassWithPagination implements OnInit
         }
       )
     );
+  }
 
+  private initSlugAndCategoriesArraySelectorObserver(): void {
     this.subscriptions.add(
       this.route.params.pipe(
         tap((value) => {
@@ -94,12 +107,12 @@ export class CategoryPageComponent extends ClassWithPagination implements OnInit
           }
         }),
         switchMap(() => this.store.select(categoriesArraySelector).pipe(
-          filter(res => res !== undefined),
-          catchError((err) => {
-            this.alert.danger(err);
-            console.error(err);
-            return EMPTY;
-          }),
+            filter(res => res !== undefined),
+            catchError((err) => {
+              this.alert.danger(err);
+              console.error(err);
+              return EMPTY;
+            }),
           )
         )
       ).subscribe((response) => {
@@ -116,11 +129,13 @@ export class CategoryPageComponent extends ClassWithPagination implements OnInit
           if (this.sortParams) {
             this.sortParams.nativeElement.value = '';
           }
-        this.cdr.detectChanges();
+          this.cdr.detectChanges();
         }
       )
     );
+  }
 
+  private initProductsArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(productsArraySelector).pipe(
         filter(res => res !== undefined)
@@ -136,7 +151,10 @@ export class CategoryPageComponent extends ClassWithPagination implements OnInit
 
   ngAfterViewInit(): void {
     this.sortParams.nativeElement.value = '';
+    this.initSearchInputObserver();
+  }
 
+  private initSearchInputObserver(): void {
     this.subscriptions.add(
       this.keyupAsValue(this.search.nativeElement).pipe(
         distinctUntilChanged(),
@@ -166,13 +184,5 @@ export class CategoryPageComponent extends ClassWithPagination implements OnInit
     this.baseUrl = null;
   }
 
-  addItemToCart(product: TtproductInterface) {
-    this.store.dispatch(new addProductToBasket({product: product}));
-    this.alertService.success(`${product.title} успешно добавлен в корзину!`);
-  }
-
-  removeItemFromCart(product: TtproductInterface) {
-    this.store.dispatch(new removeProductFromBasket({product: product}));
-  }
 
 }

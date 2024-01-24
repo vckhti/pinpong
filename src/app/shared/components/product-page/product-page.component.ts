@@ -17,17 +17,12 @@ import {addProductToBasket, setLoadingIndicator} from "../../../core/store/app-a
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductPageComponent implements OnInit,OnDestroy {
-  breadcrumbs: Breadcrumb[] = [
-    {label: 'Главная', url: '/'},
-  ];
-  private subscriptions: Subscription;
+  breadcrumbs: Breadcrumb[] = [{label: 'Главная', url: '/'}];
   product: TtproductInterface | undefined = undefined;
   productId: number;
-  isLoading=true;
+  isLoading = true;
 
-  editorStyle = {
-    height: '200px'
-  };
+  private subscriptions: Subscription;
 
   constructor(
     private productServ: ProductService,
@@ -37,11 +32,23 @@ export class ProductPageComponent implements OnInit,OnDestroy {
     private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
+    this.initProductId();
+  }
+
+  private initProductId(): void {
+    this.productId = parseInt(this.route.snapshot.params["id"]);
   }
 
   ngOnInit() {
-     this.productId = parseInt(this.route.snapshot.params["id"]);
+    this.initSelectedProductObserver();
+    this.initProductsArraySelectorObserver();
+  }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  private initSelectedProductObserver(): void {
     this.subscriptions.add(
       this.store.select(selectedProduct).pipe(
         filter(res => res !== undefined),
@@ -53,7 +60,9 @@ export class ProductPageComponent implements OnInit,OnDestroy {
         }
       )
     );
+  }
 
+  private initProductsArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(productsArraySelector).pipe(
         filter((response) => (response === undefined || this.product === undefined)),
@@ -77,22 +86,19 @@ export class ProductPageComponent implements OnInit,OnDestroy {
     );
   }
 
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
-  }
-
-  addProduct(product: TtproductInterface) {
+  public onAddProduct(product: TtproductInterface): void {
     this.store.dispatch(new addProductToBasket({product: product}));
     this.alertService.success(`${product.title} успешно добавлен в корзину!`);
   }
 
-  goBack() {
+  public onPressGoBack(): void {
     this.store.dispatch(new setLoadingIndicator({loading: true}));
+    window.history.back();
+
     setTimeout(() => {
       this.store.dispatch(new setLoadingIndicator({loading: false}));
-      this.cdr.detectChanges();
     }, 1500);
-    window.history.back()
+
   }
 
 }

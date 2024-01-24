@@ -1,7 +1,7 @@
-import { Directive, inject} from '@angular/core';
+import {ChangeDetectorRef, Directive, inject} from '@angular/core';
 import {Router} from "@angular/router";
 import {TtproductInterface} from "../../types/ttproduct.interface";
-import {fromEvent} from "rxjs";
+import {fromEvent, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {SortConfigInterface} from "../../types/sort-config.interface";
 import {addProductToBasket} from "../../../core/store/app-actions";
@@ -22,11 +22,12 @@ export class ClassWithPagination {
   private _sortConfig: SortConfigInterface;
 
   protected filterString='';
+  protected router = inject(Router);
+  protected store = inject(Store);
+  protected alertService = inject(AlertService);
+  protected cdr = inject(ChangeDetectorRef);
 
   public productsInBasket: TtproductInterface[] = [];
-  public router = inject(Router);
-  public store = inject(Store);
-  public alertService = inject(AlertService);
 
   constructor() {
     this.isLoading = true;
@@ -35,7 +36,7 @@ export class ClassWithPagination {
     this._sortConfig = { asc: false, column: 'id' } as SortConfigInterface;
   }
 
-  protected setPaginationToFirstPageAndPaginate() {
+  protected setPaginationToFirstPageAndPaginate(): void  {
     if (this.filterString.length > 0) {
       this.currentPage = 1;
     }
@@ -90,23 +91,13 @@ export class ClassWithPagination {
     return result;
   }
 
-  uniqueNumbers(array: number[]): number[] {
-    let result = array.reduce((acc: number[], item: number) => {
-      if (acc.includes(item)) {
-        return acc;
-      }
-      return [...acc, item];
-    }, []);
-    return result;
-  }
-
-  keyupAsValue(elem: any) {
+  protected keyupAsValue(elem: any): Observable<any> {
     return fromEvent(elem, 'keyup').pipe(
       map((event: any) => event.target.value),
     );
   };
 
-  public doSort(sortParams: any): void {
+  public onDoSort(sortParams: any): void {
     switch (sortParams.value) {
       case 'price_asc': {
         this._sortConfig = {asc: true, column: 'price'};
@@ -158,13 +149,13 @@ export class ClassWithPagination {
     this.paginate()
   }
 
-  addItemToCart(product: TtproductInterface) {
+  public onAddItemToCart(product: TtproductInterface): void {
     this.store.dispatch(new addProductToBasket({product: product}));
     this.alertService.success(`${product.title} успешно добавлен в корзину!`);
   }
 
 
-  productAlreadyInCart(product: TtproductInterface): boolean {
+  public productAlreadyInCart(product: TtproductInterface): boolean {
     if (this.productsInBasket && this.productsInBasket.length > 0) {
       for (let i = 0; i < this.productsInBasket.length; i++) {
         if (this.productsInBasket[i].id === product.id) {

@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/modules/admin/services/auth.service';
-import { Router } from '@angular/router';
+import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/modules/admin/services/auth.service';
+import {Router} from '@angular/router';
 import {AuthUserInterface} from '../shared/types/authUser.interface';
 import {Subscription} from "rxjs";
 import {AlertService} from "../../../shared/services/alert.service";
@@ -25,21 +25,26 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
+    this.initFormControls();
   }
 
-  ngOnInit() {
+  private initFormControls(): void {
     this.form = new UntypedFormGroup({
       name: new UntypedFormControl(null, [Validators.required]),
       password: new UntypedFormControl(null, [Validators.required, Validators.minLength(6), Validators.min(1)]),
-     })
+    });
+  }
+
+  ngOnInit() {
+
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  submit() {
-    if (  this.form.invalid ) {
+  onSubmit(): void {
+    if (this.form.invalid) {
       return;
     }
 
@@ -50,23 +55,22 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       password: this.form.value.password,
     }
     this.subscriptions.add(
-    this.auth.login(user).subscribe( (user: any) => {
-      if (user && user.id && user.roles[0] === 'admin') {
-      this.auth.setToken({token: 'admin-token'});
-      this.router.navigate(['/admin','orders']);
-      } else {
-        this.form.controls.password.setErrors({min:'Неверный пароль'})
-        this.alert.danger('Введите учетную запись с правами администратора!');
-        this.cdr.detectChanges();
-        setTimeout(() =>  {
-          this.form.reset();
-          this.submitted = false;
+      this.auth.login(user).subscribe((user: any) => {
+        if (user && user.id && user.roles[0] === 'admin') {
+          this.auth.setToken({token: 'admin-token'});
+          this.router.navigate(['/admin', 'orders']);
+        } else {
+          this.form.controls.password.setErrors({min: 'Неверный пароль'})
+          this.alert.danger('Введите учетную запись с правами администратора!');
           this.cdr.detectChanges();
-          },2000);
-      }
-    })
+          setTimeout(() => {
+            this.form.reset();
+            this.submitted = false;
+            this.cdr.detectChanges();
+          }, 2000);
+        }
+      })
     );
-
   }
 
 }

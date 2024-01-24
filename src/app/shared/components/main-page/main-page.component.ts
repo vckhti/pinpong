@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductService} from '../../services/product.service';
 import {delayWhen, interval, of, Subscription} from "rxjs";
 import {
@@ -26,19 +26,28 @@ export class MainPageComponent extends ClassWithPagination implements OnInit, On
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
   ) {
     super();
     this.subscriptions = new Subscription();
+    this.initBaseUrl();
+  }
+
+  private initBaseUrl(): void {
+    if (this.router.url && this.router.url.split('?')[0]) {
+      this.baseUrl = this.router.url.split('?')[0];
+    }
   }
 
   ngOnInit() {
     this.store.dispatch(new fetchProducts());
 
-    if (this.router.url && this.router.url.split('?')[0]) {
-      this.baseUrl = this.router.url.split('?')[0];
-    }
+    this.initBasketArraySelectorObserver();
+    this.initSelectIsLoadingSelectorObserver();
+    this.initProductsArraySelectorObserver();
+    this.initQueryParamsObserver();
+  }
 
+  private initBasketArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(basketArraySelector).subscribe(
         (response: TtproductInterface[]) => {
@@ -47,7 +56,9 @@ export class MainPageComponent extends ClassWithPagination implements OnInit, On
         }
       )
     );
+  }
 
+  private initSelectIsLoadingSelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
@@ -58,7 +69,9 @@ export class MainPageComponent extends ClassWithPagination implements OnInit, On
         }
       )
     );
+  }
 
+  private initProductsArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(productsArraySelector).pipe(
       ).subscribe(
@@ -69,7 +82,9 @@ export class MainPageComponent extends ClassWithPagination implements OnInit, On
         }
       )
     );
+  }
 
+  private initQueryParamsObserver(): void {
     this.subscriptions.add(this.route.queryParams.subscribe(
         (params: Params) => {
           this.currentPage = Number(params['page'] || '1');

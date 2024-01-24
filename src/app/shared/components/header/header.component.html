@@ -25,7 +25,7 @@
                       [ngClass]="{
                   'show-tooltip-text': showExitSpan,
                   }"
-                      (click)="logout()" id="right">Выйти</span>
+                      (click)="onLogout()" id="right">Выйти</span>
         <div class="ava-wrapper">
           <i class="far fa-user on-hover" (click)="showExitSpan = !showExitSpan"></i>
           <span class="ava-text">{{currentUserSelector}}</span>

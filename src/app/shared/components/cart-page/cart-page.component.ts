@@ -59,12 +59,41 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     private cdr: ChangeDetectorRef,
   ) {
     this.subscriptions = new Subscription();
+    this.initBreadcrumbs();
+    this.initFormControls();
+  }
+
+  private initBreadcrumbs(): void {
     this.breadcrumbs = [
       {label: 'Главная', url: '/'},
     ];
   }
 
-  ngOnInit() {
+  private initFormControls(): void {
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl(null, Validators.required),
+      phone: new UntypedFormControl(null, [CustomValidators.required, Validators.minLength(16)]),
+      address: new UntypedFormControl(null, [CustomValidators.required, Validators.maxLength(35)]),
+      payment: new UntypedFormControl('Перевод'),
+    });
+  }
+
+  ngOnInit(): void  {
+    this.initCurrentUserSelectorObserver();
+    this.initBasketArraySelectorObserver();
+  }
+
+  ngAfterViewInit(): void {
+    this.name.changes.subscribe((v) => {
+      this.inputName = v.first;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  private initCurrentUserSelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(currentUserSelector).pipe(
       ).subscribe((currentUser: CurrentUserInterface) => {
@@ -72,15 +101,17 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cdr.detectChanges();
       })
     );
+  }
 
+  private initBasketArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(basketArraySelector)
         .subscribe((basket: TtproductInterface[]) => {
           this.cartProducts = basket.sort((a: TtproductInterface, b: TtproductInterface) => {
             if (a.title > b.title) {
-              return  1 ;
+              return 1;
             } else if (a.title < b.title) {
-              return  -1;
+              return -1;
             }
             return 0;
           });
@@ -89,29 +120,21 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
           setTimeout(() => {
             this.isLoading = false;
             this.cdr.detectChanges();
-          },1500); // Для прорисовки картинок товаров
+          }, 1500); // Для прорисовки картинок товаров
         })
     );
-
-    this.form = new UntypedFormGroup({
-      name: new UntypedFormControl(null, Validators.required),
-      phone: new UntypedFormControl(null, [CustomValidators.required, Validators.minLength(16)]),
-      address: new UntypedFormControl(null, [CustomValidators.required, Validators.maxLength(35)]),
-      payment: new UntypedFormControl('Перевод'),
-    })
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  submit() {
+  public submitForm(): void {
     if (this.form.invalid) {
       return;
     }
 
     this.submitted = true;
+    this.createOrderObserver();
+  }
 
+  private createOrderObserver(): void {
     const order: OrderRequestInteface = {
       user_id: this.currentUser?.id ? this.currentUser?.id : 1,
       note: this.form.value.name + '_' + this.form.value.phone + '_' + this.form.value.address + '_' + this.form.value.payment,
@@ -119,7 +142,6 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
       cart_qty: this.totalQTY,
       orders: this.uniqueCartProducts,
     }
-
     this.subscriptions.add(
       this.orderService.create(order).subscribe(res => {
         this.form.reset();
@@ -133,7 +155,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
-  containsObject(obj, list): boolean {
+  private containsObject(obj, list): boolean {
     for (let i = 0; i < list.length; i++) {
       if (JSON.stringify(list[i]) === JSON.stringify(obj)) {
         return true;
@@ -143,7 +165,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     return false;
   }
 
-  filterOnlyUniqueProducts() {
+  private filterOnlyUniqueProducts(): void {
     this.uniqueCartProducts = [];
     this.uniqueCartProducts.push(this.cartProducts[0]);
     for (let i = 0; i < this.cartProducts.length; i++) {
@@ -153,7 +175,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  calculateProductsQTY() {
+  private calculateProductsQTY(): void {
     this.totalPrice = 0;
     this.totalQTY = 0;
     for (let i = 0; i < this.cartProducts.length; i++) {
@@ -169,23 +191,23 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  incrementProduct(cartProduct: TtproductInterface) {
+  public onIncrementProduct(cartProduct: TtproductInterface): void {
     this.store.dispatch(new addProductToBasket({product: cartProduct}));
   }
 
-  decrementProduct(cartProduct: TtproductInterface) {
+  public onDecrementProduct(cartProduct: TtproductInterface): void {
     this.store.dispatch(new decremenProductFromBasket({product: cartProduct}));
   }
 
-  deleteProductFromCart(cartProduct: TtproductInterface) {
+  public onDeleteProductFromCart(cartProduct: TtproductInterface): void {
     this.store.dispatch(new removeProductFromBasket({product: cartProduct}));
   }
 
-  cleanCart() {
+  public onCleanCart(): void {
     this.store.dispatch(new cleanBasket());
   }
 
-  goBack() {
+  public onPressGoBack(): void {
     this.store.dispatch(new setLoadingIndicator({loading: true}));
     setTimeout(() => {
       this.store.dispatch(new setLoadingIndicator({loading: false}));
@@ -194,7 +216,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     window.history.back()
   }
 
-  checkout() {
+  public onCheckout(): void {
     this.showDelivery = !this.showDelivery;
     setTimeout(() => {
       this.inputName.nativeElement.focus();
@@ -202,10 +224,5 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 500);
   }
 
-  ngAfterViewInit(): void {
-    this.name.changes.subscribe((v) => {
-      this.inputName = v.first;
-    })
-  }
 
 }

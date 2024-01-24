@@ -45,6 +45,11 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    this.initSelectIsLoadingSelectorObserver();
+    this.initCategoriesArraySelectorObserver();
+  }
+
+  private initSelectIsLoadingSelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(selectIsLoadingSelector).pipe(
         delayWhen(IsLoading => !IsLoading ? interval(1500) : of(true))
@@ -55,30 +60,33 @@ export class MobileTopbarComponent implements OnInit, OnDestroy{
         }
       )
     );
+  }
 
+  private initCategoriesArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(categoriesArraySelector).pipe(
         filter(res => res !== undefined),
       ).subscribe(
         (response: CategoryInterface[]) => {
-          this.categories = [...response];
+          this.categories = response;
           this.cdr.detectChanges();
         }
       )
     );
   }
 
-  excludeParentCategories(): any {
+  public excludeParentCategories(): any {
     return this.categories?.filter((item) => item.category_id !== 9 );
   }
 
-  onCategorySelect() {
+  public onCategorySelect(): void {
     this.store.dispatch(new setLoadingIndicator({loading: true}));
+    this.popupService.close();
+
     setTimeout(() => {
       this.store.dispatch(new setLoadingIndicator({loading: false}));
       this.cdr.detectChanges();
     }, 5000);
-    this.popupService.close();
   }
 
 }

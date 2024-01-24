@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {ProductService} from 'src/app/shared/services/product.service';
 import {switchMap} from 'rxjs/operators';
@@ -15,7 +15,7 @@ import {AlertService} from "../../../shared/services/alert.service";
   styleUrls: ['./edit-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditPageComponent implements OnInit {
+export class EditPageComponent implements OnInit, OnDestroy {
   model: EditPageModel;
   form: UntypedFormGroup;
   order: OrderInterface;
@@ -37,7 +37,7 @@ export class EditPageComponent implements OnInit {
     this.subscriptions = new Subscription()
   }
 
-  ngOnInit() {
+  private initEditPageModelObserver(): void {
     this.subscriptions.add(
       this.listInitializer.pipe(
         switchMap((model: EditPageModel) => this.route.params),
@@ -57,29 +57,43 @@ export class EditPageComponent implements OnInit {
     );
   }
 
-  goBack() {
+  ngOnInit() {
+    this.initEditPageModelObserver();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  public onPressGoBack(): void {
     window.history.back();
   }
 
-  setStatusConfirm(orderProductId: number) {
+  public onSetStatusConfirm(orderProductId: number): void {
     this.subscriptions.add(
-      this.productService.setStatusConfirm(orderProductId, true).subscribe(
+      this.productService.setStatusConfirm(orderProductId, true)
+        .subscribe(
         (response: number) => {
-          this.alert.success('Заказ завершен!');
-          this.orderProduct.complete = response;
-          this.cdr.detectChanges();
+          if (response) {
+            this.alert.success('Заказ завершен!');
+            this.orderProduct.complete = response;
+            this.cdr.detectChanges();
+          }
         }
       )
     );
   }
 
-  setStatusNotConfirm(orderProductId: number) {
+  public onSetStatusNotConfirm(orderProductId: number) {
     this.subscriptions.add(
-      this.productService.setStatusConfirm(orderProductId, false).subscribe(
+      this.productService.setStatusConfirm(orderProductId, false)
+        .subscribe(
         (response: number) => {
-          this.alert.warning('Заказ отправлен в обработку!');
-          this.orderProduct.complete = response;
-          this.cdr.detectChanges();
+          if (response) {
+            this.alert.success('Заказ отправлен в обработку!');
+            this.orderProduct.complete = response;
+            this.cdr.detectChanges();
+          }
         }
       )
     );

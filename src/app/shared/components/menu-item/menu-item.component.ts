@@ -5,11 +5,12 @@ import {
   HostListener,
   HostBinding,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef, OnDestroy
 } from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {ProductService} from "../../services/product.service";
 import {CategoryInterface} from "../../types/category.interface";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'spa-menu-item',
@@ -17,7 +18,7 @@ import {CategoryInterface} from "../../types/category.interface";
   styleUrls: ['./menu-item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MenuItemComponent implements OnInit {
+export class MenuItemComponent implements OnInit, OnDestroy {
   @Input() item: CategoryInterface;
   @HostBinding('class.parent-for-popup')
   @Input() parentIsPopup = true;
@@ -31,26 +32,37 @@ export class MenuItemComponent implements OnInit {
   popupTop = 38;
   isActiveRoute = false;
 
+  private subscriptions = new Subscription();
+
   constructor(
     private productService: ProductService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    ) {
+  ) {
   }
 
   ngOnInit() {
-
     this.checkingActiveRoute(this.router.url);
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.checkingActiveRoute(event.url);
-        this.cdr.detectChanges();
-      }
-    });
+    this.initRouterEventsObserver();
   }
 
-  checkingActiveRoute(route: string): void {
+  private checkingActiveRoute(route: string): void {
     this.isActiveRoute = (route === this.item.slug);
+  }
+
+  private initRouterEventsObserver(): void {
+    this.subscriptions.add(
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.checkingActiveRoute(event.url);
+          this.cdr.detectChanges();
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   onPopupMouseLeave(event: Event): void {
@@ -58,7 +70,7 @@ export class MenuItemComponent implements OnInit {
       setTimeout(() => {
         this.mouseInPopup = false;
         this.cdr.detectChanges();
-      },500);
+      }, 500);
     }
   }
 
