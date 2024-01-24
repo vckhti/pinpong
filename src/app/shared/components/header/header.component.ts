@@ -66,6 +66,20 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.initSidebarVisibleObserver();
     this.initCurrentUserSelectorObserver();
     this.initScreenWidthObserver();
+    this.initRouterEventsObserver();
+  }
+
+  private initRouterEventsObserver(): void {
+    this.subscriptions.add(
+      this.router.events.pipe(
+        debounceTime(200)
+      )
+        .subscribe((response) => {
+          this.initCurrentRouteUrl();
+          this.cdr.detectChanges();
+        }
+      )
+    );
   }
 
   private initIsAnonymousSelectorObserver(): void {
