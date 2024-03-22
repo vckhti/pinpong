@@ -1,0 +1,21 @@
+  <div class="product-card">
+    <div class="product-tumb">
+      <a [routerLink]="['../product/',itemProps.id]"><img src="{{itemProps.img}}" alt=""></a>
+    </div>
+    <div class="product-details">
+      <h6><a class="nav-link" [routerLink]="['../product/',itemProps.id]"
+      >{{itemProps.title}}</a></h6>
+      <p class="exerpt">{{itemProps.exerpt}} </p>
+      <div class="product-bottom-details d-flex justify-content-between">
+        <div class="product-price"><small>{{itemProps.old_price}}</small>{{itemProps.price}}</div>
+        <span *ngIf="itemProps.hit === 1" class="hit ">&nbsp; Хит продаж &nbsp; </span>
+        <div class="product-links">
+          <a><i class="fas" [ngClass]="{
+                  'fa-shopping-cart': !productAlreadyInCart(itemProps),
+                  'fa-luggage-cart': productAlreadyInCart(itemProps)
+                  }"
+                (click)="onAddItemToCart(itemProps)"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>

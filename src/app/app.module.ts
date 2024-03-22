@@ -40,9 +40,10 @@ import {MenuItemComponent} from "./shared/components/menu-item/menu-item.compone
 import {PopupMenuComponent} from "./shared/components/popup-menu/popup-menu.component";
 import {PopupService} from "./shared/services/popup.service";
 import {IConfig, NgxMaskModule} from "ngx-mask";
-import {RouterStateSerializer, StoreRouterConnectingModule} from "@ngrx/router-store";
+import {StoreRouterConnectingModule} from "@ngrx/router-store";
 import {CustomSerializer} from "./core/models/CustomSerializer.class";
 import {reducers} from "./core/store/reducers";
+import {CardItemComponent} from "./shared/components/card-item/card-item.component";
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -60,7 +61,8 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     MobileTopbarComponent,
     HeaderComponent,
     MenuItemComponent,
-    PopupMenuComponent
+    PopupMenuComponent,
+    CardItemComponent
   ],
   imports: [
     BrowserModule,

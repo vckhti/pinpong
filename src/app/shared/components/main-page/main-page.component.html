@@ -11,28 +11,9 @@
         </div>
 
         <div *ngFor="let product of tempArray" class="col-lg-4 col-sm-6 mb-3">
-          <div class="product-card">
-            <div class="product-tumb">
-              <a [routerLink]="['../product/',product.id]"><img src="{{product.img}}" alt=""></a>
-            </div>
-            <div class="product-details">
-              <h6><a class="nav-link" [routerLink]="['../product/',product.id]"
-              >{{product.title}}</a></h6>
-              <p class="exerpt">{{product.exerpt}} </p>
-              <div class="product-bottom-details d-flex justify-content-between">
-                <div class="product-price"><small>{{product.old_price}}</small>{{product.price}}</div>
-                <span *ngIf="product.hit === 1" class="hit ">&nbsp; Хит продаж &nbsp; </span>
-                <div class="product-links">
-                  <a><i class="fas" [ngClass]="{
-                  'fa-shopping-cart': !productAlreadyInCart(product),
-                  'fa-luggage-cart': productAlreadyInCart(product)
-                  }"
-                        (click)="onAddItemToCart(product)"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-card-item [item]="product" [productsInBasket]="productsInBasket"></app-card-item>
         </div>
+
       </div>
     </div>
   </section>
