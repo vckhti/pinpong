@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {addProductToBasket} from "../../../core/store/app-actions";
 import {Store} from "@ngrx/store";
@@ -7,9 +7,11 @@ import {AlertService} from "../../services/alert.service";
 @Component({
   selector: 'app-card-item',
   templateUrl: './card-item.component.html',
-  styleUrls: ['./card-item.component.scss']
+  styleUrls: ['./card-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardItemComponent {
+  @Input('routerPrefix') routerPrefixProps?: string = '/product/';
   @Input('item') itemProps: TtproductInterface;
   @Input() productsInBasket: any;
 

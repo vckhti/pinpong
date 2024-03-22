@@ -1,9 +1,9 @@
   <div class="product-card">
     <div class="product-tumb">
-      <a [routerLink]="['../product/',itemProps.id]"><img src="{{itemProps.img}}" alt=""></a>
+      <a [routerLink]="[routerPrefixProps,itemProps.id]"><img src="{{itemProps.img}}" alt=""></a>
     </div>
     <div class="product-details">
-      <h6><a class="nav-link" [routerLink]="['../product/',itemProps.id]"
+      <h6><a class="nav-link" [routerLink]="[routerPrefixProps,itemProps.id]"
       >{{itemProps.title}}</a></h6>
       <p class="exerpt">{{itemProps.exerpt}} </p>
       <div class="product-bottom-details d-flex justify-content-between">

@@ -35,15 +35,14 @@
         <div class="col-12 ">
           <h6 class="section-title">Товары в выбранной категории:</h6>
         </div>
-        <div *ngFor="let product of tempArray" class="col-lg-4 col-sm-6 mb-3">
 
-          <app-card-item [item]="product" [productsInBasket]="productsInBasket"></app-card-item>
-
+        <div *ngFor="let product of tempArray" class="col-lg-3 col-sm-6 mb-3">
+            <app-card-item [item]="product" [productsInBasket]="productsInBasket"></app-card-item>
         </div>
+
       </div>
     </div>
   </section>
-
   <mc-pagination
     [total]="totalArrayLengthForPagination"
     [limit]="limit"
@@ -51,8 +50,8 @@
     [currentPage]="currentPage"
     (newItemEvent)="handleCurrentPage($event)"
   ></mc-pagination>
-
 </div>
+
 <div *ngIf="isLoading" class="d-flex justify-content-center" >
   <app-loading></app-loading>
 </div>

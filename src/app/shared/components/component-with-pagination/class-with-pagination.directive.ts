@@ -32,7 +32,7 @@ export class ClassWithPagination {
   constructor() {
     this.isLoading = true;
     this.currentPage = 1;
-    this.limit = 6;
+    this.limit = 8;
     this._sortConfig = { asc: false, column: 'id' } as SortConfigInterface;
   }
 

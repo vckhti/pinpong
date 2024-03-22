@@ -10,8 +10,8 @@
           <h6 class="section-title">Главная страница</h6>
         </div>
 
-        <div *ngFor="let product of tempArray" class="col-lg-4 col-sm-6 mb-3">
-          <app-card-item [item]="product" [productsInBasket]="productsInBasket"></app-card-item>
+        <div *ngFor="let product of tempArray" class="col-lg-3 col-sm-6 mb-3">
+          <app-card-item [routerPrefix]="'../product/'" [item]="product" [productsInBasket]="productsInBasket"></app-card-item>
         </div>
 
       </div>
