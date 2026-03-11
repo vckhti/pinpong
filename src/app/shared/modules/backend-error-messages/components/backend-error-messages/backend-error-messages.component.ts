@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core'
 
 @Component({
   selector: 'mc-backend-error-messages',
-  templateUrl: './backendErrorMessages.component.html',
-  styleUrls: ['./backendErrorMessages.components.scss'],
+  templateUrl: './backend-error-messages.component.html',
+  styleUrls: ['./backend-error-messages.components.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BackendErrorMessagesComponent implements OnInit {

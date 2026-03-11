@@ -10,7 +10,7 @@ import {AuthService} from "./services/auth.service";
 import {LoginEffect} from "./store/effects/login.effect";
 import {LoginComponent} from "./components/login/login.component";
 import {GetCurrentUserEffect} from "./store/effects/getCurrentUser.effect";
-import {BackendErrorMessagesModule} from "../../shared/modules/backendErrorMessages/backendErrorMessages.module";
+import {BackendErrorMessagesModule} from "../../shared/modules/backend-error-messages/backend-error-messages.module";
 import {PersistanceService} from "./services/persistance.service";
 
 const routes = [
