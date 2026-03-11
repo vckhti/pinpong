@@ -1,5 +1,5 @@
 import {TtproductInterface} from "../../../shared/types/ttproduct.interface";
-import {UserDescriptionInterface} from "../shared/types/userDescription.interface";
+import {UserDescriptionInterface} from "../types/userDescription.interface";
 
 export class OrderModel {
   success: boolean

@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {OrderService} from 'src/app/shared/services/order.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {OrderModel} from "../models/orderModel";
+import {OrderModel} from "../../models/orderModel";
 import {switchMap} from "rxjs/operators";
-import {OrderProductInterface} from "../shared/types/orderProductInterface";
+import {OrderProductInterface} from "../../types/orderProductInterface";
 
 @Component({
   selector: 'app-orders-page',

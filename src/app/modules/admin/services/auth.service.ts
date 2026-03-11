@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
-import {AuthUserInterface} from '../shared/types/authUser.interface';
-import {AuthBackendResponse} from '../shared/types/authBackendResponse';
+import {AuthUserInterface} from '../types/authUser.interface';
+import {AuthBackendResponse} from '../types/authBackendResponse';
 import {PersistanceService} from "./persistance.service";
 import {Observable, of} from "rxjs";
-import {CurrentUserInterface} from "../shared/types/currentUser.interface";
+import {CurrentUserInterface} from "../types/currentUser.interface";
 import {catchError} from "rxjs/operators";
 import {AlertService} from "../../../shared/services/alert.service";
 

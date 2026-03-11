@@ -2,9 +2,9 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit
 import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
 import {AuthService} from 'src/app/modules/admin/services/auth.service';
 import {Router} from '@angular/router';
-import {AuthUserInterface} from '../shared/types/authUser.interface';
+import {AuthUserInterface} from '../../types/authUser.interface';
 import {Subscription} from "rxjs";
-import {AlertService} from "../../../shared/services/alert.service";
+import {AlertService} from "../../../../shared/services/alert.service";
 
 @Component({
   selector: 'app-login-page',

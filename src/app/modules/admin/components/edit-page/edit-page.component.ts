@@ -4,10 +4,10 @@ import {ProductService} from 'src/app/shared/services/product.service';
 import {switchMap} from 'rxjs/operators';
 import {UntypedFormGroup} from '@angular/forms';
 import {BehaviorSubject, Subscription} from "rxjs";
-import {EditPageModel} from "../models/editPageModel";
-import {OrderProductInterface} from "../shared/types/orderProductInterface";
-import {OrderInterface} from "../../../shared/types/order.interface";
-import {AlertService} from "../../../shared/services/alert.service";
+import {EditPageModel} from "../../models/editPageModel";
+import {OrderProductInterface} from "../../types/orderProductInterface";
+import {OrderInterface} from "../../../../shared/types/order.interface";
+import {AlertService} from "../../../../shared/services/alert.service";
 
 @Component({
   selector: 'app-edit-page',

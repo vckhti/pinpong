@@ -7,9 +7,9 @@ import {TtproductInterface} from "../types/ttproduct.interface";
 import {API_URLS} from "./config";
 import {CategoryInterface} from "../types/category.interface";
 import {EditPageModel} from "../../modules/admin/models/editPageModel";
-import {UserDescriptionInterface} from "../../modules/admin/shared/types/userDescription.interface";
+import {UserDescriptionInterface} from "../../modules/admin/types/userDescription.interface";
 import {OrderInterface} from "../types/order.interface";
-import {OrderProductInterface} from "../../modules/admin/shared/types/orderProductInterface";
+import {OrderProductInterface} from "../../modules/admin/types/orderProductInterface";
 import {AlertService} from "./alert.service";
 
 @Injectable({

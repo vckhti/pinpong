@@ -5,7 +5,7 @@ import {catchError, map} from 'rxjs/operators';
 import {EMPTY, Observable, of} from "rxjs";
 import {OrderModel} from "../../modules/admin/models/orderModel";
 import {API_URLS} from "./config";
-import {OrderProductInterface} from "../../modules/admin/shared/types/orderProductInterface";
+import {OrderProductInterface} from "../../modules/admin/types/orderProductInterface";
 import {OrderRequestInteface} from "../types/order-request.inteface";
 import {AlertService} from "./alert.service";
 

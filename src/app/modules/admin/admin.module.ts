@@ -1,17 +1,17 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {AdminLayoutComponent} from './shared/admin-layout/admin-layout.component';
-import {LoginPageComponent} from './login-page/login-page.component';
-import {OrdersPageComponent} from './orders-page/orders-page.component';
-import {EditPageComponent} from './edit-page/edit-page.component';
+import {AdminLayoutComponent} from './components/admin-layout/admin-layout.component';
+import {LoginPageComponent} from './components/login-page/login-page.component';
+import {OrdersPageComponent} from './components/orders-page/orders-page.component';
+import {EditPageComponent} from './components/edit-page/edit-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {AuthGuard} from './services/auth.guard';
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
-import {UsernamePipe} from "./shared/pipes/username.pipe";
-import {FocusDirective} from "./shared/directive/focus.directive";
-import {HighlightDirective} from "./shared/directive/highlight.directive";
+import {UsernamePipe} from "./pipes/username.pipe";
+import {FocusDirective} from "./directives/focus.directive";
+import {HighlightDirective} from "./directives/highlight.directive";
 import {LoadingModule} from "../../shared/modules/loading/loading.module";
 
 @NgModule({
