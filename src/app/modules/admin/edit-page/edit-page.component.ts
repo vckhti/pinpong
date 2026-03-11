@@ -74,7 +74,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
       this.productService.setStatusConfirm(orderProductId, true)
         .subscribe(
         (response: number) => {
-          if (response) {
+          if (response === 1) {
             this.alert.success('Заказ завершен!');
             this.orderProduct.complete = response;
             this.cdr.detectChanges();
@@ -89,8 +89,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
       this.productService.setStatusConfirm(orderProductId, false)
         .subscribe(
         (response: number) => {
-          if (response) {
-            this.alert.success('Заказ отправлен в обработку!');
+          if (response === 0) {
+            this.alert.warning('Заказ отправлен в обработку!');
             this.orderProduct.complete = response;
             this.cdr.detectChanges();
           }
