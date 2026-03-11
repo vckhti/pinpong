@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AlertService} from '../../services/alert.service';
 import {Subscription} from 'rxjs';
 import {MessageService} from "primeng/api";

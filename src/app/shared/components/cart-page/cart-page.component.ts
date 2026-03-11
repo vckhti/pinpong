@@ -107,7 +107,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.add(
       this.store.select(basketArraySelector)
         .subscribe((basket: TtproductInterface[]) => {
-          this.cartProducts = basket.sort((a: TtproductInterface, b: TtproductInterface) => {
+          this.cartProducts = basket.sort((a: TtproductInterface, b: TtproductInterface) => { //TODO вынести сортировку в отдельную функцию, для улучшение читаемости кода
             if (a.title > b.title) {
               return 1;
             } else if (a.title < b.title) {
@@ -117,7 +117,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.calculateProductsQTY();
           this.filterOnlyUniqueProducts();
-          setTimeout(() => {
+          setTimeout(() => { //TODO избавиться от setTimeout
             this.isLoading = false;
             this.cdr.detectChanges();
           }, 1500); // Для прорисовки картинок товаров

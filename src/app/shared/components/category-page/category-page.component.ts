@@ -1,6 +1,6 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   OnDestroy,
@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import {TtproductInterface} from "../../types/ttproduct.interface";
 import {
-  addProductToBasket,
   fetchProductsByCategory,
 } from "../../../core/store/app-actions";
 import {debounceTime, delayWhen, distinctUntilChanged, EMPTY, interval, of, Subscription} from "rxjs";

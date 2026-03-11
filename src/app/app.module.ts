@@ -88,7 +88,6 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
     StoreRouterConnectingModule
   ],
   providers: [
-   // {provide: RouterStateSerializer, useClass: CustomSerializer},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     AlertService,
     ScreenService,

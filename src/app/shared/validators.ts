@@ -31,9 +31,7 @@ export class ValidatorsUtils {
     } else {
       return null;
     }
-
   }
-
 }
 
 export class CustomValidators {
@@ -67,73 +65,6 @@ export class CustomValidators {
     return !value.match(regExp)
       ? { readableSymbols: true }
       : null;
-  }
-
-  static requireCheckboxesToBeChecked(minRequired: number = 1, max: number | null = null): ValidatorFn {
-		return function validate(abstractControl: AbstractControl): ValidationErrors | null {
-			let checked = 0;
-			const formGroup = abstractControl as UntypedFormGroup;
-
-			Object.keys(formGroup.controls).forEach(key => {
-				const control = formGroup.controls[key];
-
-				if (control.value === true) {
-					checked ++;
-				}
-			});
-
-			const errors: any = {};
-
-			if ( checked < minRequired ){
-			  errors.minCheckboxesChecked = true;
-      }
-
-			if ( max !== null && checked > max ) {
-        errors.maxCheckboxesChecked = true;
-			}
-
-			return Object.keys(errors).length === 0 ? null : errors;
-		};
-	}
-
-	static ogrn(abstractControl: AbstractControl): ValidationErrors | null {
-    const formControl = abstractControl as UntypedFormControl;
-    const value: string = formControl.value;
-
-    if ( ValidatorsUtils.isEmpty(value) ) {
-      return {};
-    }
-
-    let error;
-
-    if ( /[^0-9]/.test(value) || value.length !== 13 ){
-      error = true;
-    } else {
-      const n13 = parseInt((parseInt(value.slice(0, -1), 10) % 11).toString().slice(-1), 10);
-      error = n13 !== parseInt(value[12], 10);
-    }
-
-    return error ? {ogrn: true} : {};
-  }
-
-  static ogrnip(abstractControl: AbstractControl): ValidationErrors | null {
-    const formControl = abstractControl as UntypedFormControl;
-    const value: string = formControl.value;
-
-    if ( ValidatorsUtils.isEmpty(value) ) {
-      return {};
-    }
-
-    let error;
-
-    if ( /[^0-9]/.test(value) || value.length !== 15 ){
-      error = true;
-    } else {
-      const n15 = parseInt((parseInt(value.slice(0, -1), 10) % 13).toString().slice(-1), 10);
-      error = n15 !== parseInt(value[14], 10);
-    }
-
-    return error ? {ogrnip: true} : {};
   }
 
   static dateRange(formControlStartName: string, formControlEndName: string, maxInterval: number | null = null): ValidatorFn {

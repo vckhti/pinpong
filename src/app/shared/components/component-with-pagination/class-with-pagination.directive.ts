@@ -4,7 +4,6 @@ import {TtproductInterface} from "../../types/ttproduct.interface";
 import {fromEvent, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {SortConfigInterface} from "../../types/sort-config.interface";
-import {addProductToBasket} from "../../../core/store/app-actions";
 import {Store} from "@ngrx/store";
 import {AlertService} from "../../services/alert.service";
 
@@ -148,12 +147,6 @@ export class ClassWithPagination {
     });
     this.paginate()
   }
-
-  public onAddItemToCart(product: TtproductInterface): void {
-    this.store.dispatch(new addProductToBasket({product: product}));
-    this.alertService.success(`${product.title} успешно добавлен в корзину!`);
-  }
-
 
   public productAlreadyInCart(product: TtproductInterface): boolean {
     if (this.productsInBasket && this.productsInBasket.length > 0) {

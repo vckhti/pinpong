@@ -12,7 +12,6 @@ import {ProductService} from "../../services/product.service";
 import {delayWhen, interval, of, Subscription} from "rxjs";
 import {ScreenService} from "../../services/screen.service";
 import {Store} from "@ngrx/store";
-import {setLoadingIndicator} from "../../../core/store/app-actions";
 import {categoriesArraySelector, selectIsLoadingSelector} from "../../../core/store/app-selectors";
 import {filter} from "rxjs/operators";
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {catchError, map, share, shareReplay} from 'rxjs/operators';
-import {EMPTY, Observable, of} from "rxjs";
+import {catchError, map} from 'rxjs/operators';
+import {Observable, of} from "rxjs";
 import {TtproductInterface} from "../types/ttproduct.interface";
 import {API_URLS} from "./config";
 import {CategoryInterface} from "../types/category.interface";
@@ -23,16 +23,6 @@ export class ProductService {
     private alert: AlertService
     ) { }
 
-  getMenuItems(): Observable<any> {
-    const url = environment.serverUrl + API_URLS.getMenuItems;
-    return this.http.get<any>(url).pipe(
-      catchError((err) => {
-        this.alert.danger(err);
-        console.error(err);
-        return EMPTY;
-      })
-    );
-  }
 
   getProducts(): Observable<TtproductInterface[]> {
     const url = environment.serverUrl + API_URLS.getProducts;
