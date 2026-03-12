@@ -63,7 +63,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
           this.form.controls.password.setErrors({min: 'Неверный пароль'})
           this.alert.danger('Введите учетную запись с правами администратора!');
           this.cdr.detectChanges();
-          setTimeout(() => {
+          setTimeout(() => { // setTimeout тут для того чтобы пользователь успел прочитать сообщение об ошибке.
             this.form.reset();
             this.submitted = false;
             this.cdr.detectChanges();

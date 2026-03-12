@@ -78,7 +78,7 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  ngOnInit(): void  {
+  ngOnInit(): void {
     this.initCurrentUserSelectorObserver();
     this.initBasketArraySelectorObserver();
   }
@@ -106,18 +106,11 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
   private initBasketArraySelectorObserver(): void {
     this.subscriptions.add(
       this.store.select(basketArraySelector)
-        .subscribe((basket: TtproductInterface[]) => {
-          this.cartProducts = basket.sort((a: TtproductInterface, b: TtproductInterface) => { //TODO вынести сортировку в отдельную функцию, для улучшение читаемости кода
-            if (a.title > b.title) {
-              return 1;
-            } else if (a.title < b.title) {
-              return -1;
-            }
-            return 0;
-          });
+        .subscribe((basketProducts: TtproductInterface[]) => {
+          this.cartProducts = this.doSortProductsInBasketByTitle(basketProducts);
           this.calculateProductsQTY();
           this.filterOnlyUniqueProducts();
-          setTimeout(() => { //TODO избавиться от setTimeout
+          setTimeout(() => {
             this.isLoading = false;
             this.cdr.detectChanges();
           }, 1500); // Для прорисовки картинок товаров
@@ -129,9 +122,19 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.form.invalid) {
       return;
     }
-
     this.submitted = true;
     this.createOrderObserver();
+  }
+
+  private doSortProductsInBasketByTitle(response: TtproductInterface[]): TtproductInterface[] {
+    return response.sort((a: TtproductInterface, b: TtproductInterface) => {
+      if (a.title > b.title) {
+        return 1;
+      } else if (a.title < b.title) {
+        return -1;
+      }
+      return 0;
+    });
   }
 
   private createOrderObserver(): void {
@@ -153,7 +156,6 @@ export class CartPageComponent implements OnInit, OnDestroy, AfterViewInit {
       })
     );
   }
-
 
   private containsObject(obj, list): boolean {
     for (let i = 0; i < list.length; i++) {
