@@ -37,6 +37,17 @@ export class PaginationComponent implements OnInit, OnChanges {
       this.updateVisiblePages();
     }
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.totalItemLengthProps) {
+      this.updateTotalPages();
+      this.updateVisiblePages();
+    }
+  }
+
+  public onClicked(v: number): void {
+    this.updateVisiblePages();
+    this.newItemEvent.emit(v.toString());
+  }
 
   private updateVisiblePages(): void {
     const length = Math.min(this.pagesCount, this.visibleRangeLength);
@@ -58,15 +69,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     this.pagesCount = Math.ceil(this.totalItemLengthProps / this.limitProps);
   }
 
-  public onClicked(v: number): void {
-    this.updateVisiblePages();
-    this.newItemEvent.emit(v.toString());
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.totalItemLengthProps) {
-      this.updateTotalPages();
-      this.updateVisiblePages();
-    }
-  }
+
+
 }
